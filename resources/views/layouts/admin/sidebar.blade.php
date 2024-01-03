@@ -17,32 +17,6 @@
     <!-- Sidebar content -->
     <div class="sidebar-content">
 
-        <!-- User menu -->
-        <div class="sidebar-user">
-            <div class="card-body">
-                <div class="media">
-                    <div class="mr-3">
-                        <a href="#"><img
-                                src="{{ asset('limitless/') }}/global_assets/images/placeholders/placeholder.jpg"
-                                width="38" height="38" class="rounded-circle" alt=""></a>
-                    </div>
-
-                    <div class="media-body">
-                        <div class="media-title font-weight-semibold">Victoria Baker</div>
-                        <div class="font-size-xs opacity-50">
-                            <i class="icon-pin font-size-sm"></i> &nbsp;Santa Ana, CA
-                        </div>
-                    </div>
-
-                    <div class="ml-3 align-self-center">
-                        <a href="#" class="text-white"><i class="icon-cog3"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /user menu -->
-
-
         <!-- Main navigation -->
         <div class="card card-sidebar-mobile">
             <ul class="nav nav-sidebar" data-nav-type="accordion">
@@ -60,7 +34,21 @@
                         </span>
                     </a>
                 </li>
-                <li class="nav-item nav-item-submenu">
+                <li
+                    class="nav-item nav-item-submenu {{ request()->is('karyawan') || request()->is('gaji') ? 'nav-item-expanded nav-item-open' : '' }}">
+                    <a href="#" class="nav-link"><i class="icon-people"></i> <span>Data Karyawan</span></a>
+                    <ul class="nav nav-group-sub" data-submenu-title="User pages">
+                        <li class="nav-item"><a href="{{ url('karyawan') }}"
+                                class="nav-link {{ request()->is('karyawan') ? 'active' : '' }}"
+                                class="nav-link">Karyawan</a>
+                        </li>
+                        <li class="nav-item"><a href="{{ url('gaji') }}"
+                                class="nav-link {{ request()->is('gaji') ? 'active' : '' }}" class="nav-link">Gaji</a>
+                        </li>
+                    </ul>
+                </li>
+                <li
+                    class="nav-item nav-item-submenu {{ request()->is('user') || request()->is('role') || request()->is('permission') ? 'nav-item-expanded nav-item-open' : '' }}">
                     <a href="#" class="nav-link"><i class="icon-people"></i> <span>User
                             management</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="User pages">

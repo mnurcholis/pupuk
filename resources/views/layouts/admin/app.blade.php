@@ -5,10 +5,17 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Limitless - Responsive Web Application Kit by Eugene Kopyov</title>
+    <title>{{ get_setting()->title }}</title>
+    <link rel="icon"
+        href="{{ get_setting()->favicon ? route('helper.show-picture', ['path' => get_setting()->favicon]) : asset('limitless/global_assets/images/pie-chart.png') }}"
+        type="image/x-icon">
+    <link rel="shortcut icon"
+        href="{{ get_setting()->favicon ? route('helper.show-picture', ['path' => get_setting()->favicon]) : asset('limitless/global_assets/images/pie-chart.png') }}"
+        type="image/x-icon">
 
     <!-- Global stylesheets -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet"
+        type="text/css">
     <link href="{{ asset('limitless/') }}/global_assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
     <link href="{{ asset('limitless/layout_1/LTR/default/full/') }}/assets/css/bootstrap.min.css" rel="stylesheet"
         type="text/css">
@@ -78,8 +85,7 @@
 
                 <div class="navbar-collapse collapse" id="navbar-footer">
                     <span class="navbar-text">
-                        &copy; 2023 <a href="https://wa.me/6285157392291">Tri Maryanto</a> And <a
-                            href="https://wa.me/6282243041272" target="_blank">M Nurcholis</a>
+                        &copy; 2023
                     </span>
                 </div>
             </div>

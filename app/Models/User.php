@@ -23,7 +23,6 @@ class User extends Authenticatable implements Auditable
     use TwoFactorAuthenticatable;
     use HasRoles;
     use AuditableTrait;
-    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

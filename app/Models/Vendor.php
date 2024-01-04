@@ -7,16 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 
-class Gaji extends Model implements Auditable
+class Vendor extends Model implements Auditable
 {
     use HasFactory;
 
     use AuditableTrait;
 
     protected $guarded = [];
-
-    public function karyawan()
-    {
-        return $this->belongsTo(Karyawan::class, 'karyawan_id');
-    }
 }

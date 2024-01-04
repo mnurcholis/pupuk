@@ -27,16 +27,50 @@
                         title="Main"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('home') }}" class="nav-link">
+                    <a href="{{ route('home') }}" class="nav-link {{ request()->is('dashboard') ? 'active' : '' }}">
                         <i class="icon-home4"></i>
                         <span>
                             Dashboard
                         </span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('dataproduct') }}"
+                        class="nav-link {{ request()->is('dataproduct') ? 'active' : '' }}">
+                        <i class="icon-store2"></i>
+                        <span>
+                            Data Product
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('agent') }}" class="nav-link {{ request()->is('agent') ? 'active' : '' }}">
+                        <i class="icon-collaboration"></i>
+                        <span>
+                            Data Agent
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('vendor') }}" class="nav-link {{ request()->is('vendor') ? 'active' : '' }}">
+                        <i class="icon-accessibility"></i>
+                        <span>
+                            Data Vendor
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('operasional') }}"
+                        class="nav-link {{ request()->is('operasional') ? 'active' : '' }}">
+                        <i class="icon-accessibility"></i>
+                        <span>
+                            Data Operasional
+                        </span>
+                    </a>
+                </li>
                 <li
                     class="nav-item nav-item-submenu {{ request()->is('karyawan') || request()->is('gaji') ? 'nav-item-expanded nav-item-open' : '' }}">
-                    <a href="#" class="nav-link"><i class="icon-people"></i> <span>Data Karyawan</span></a>
+                    <a href="#" class="nav-link"><i class="icon-users4"></i> <span>Data Karyawan</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="User pages">
                         <li class="nav-item"><a href="{{ url('karyawan') }}"
                                 class="nav-link {{ request()->is('karyawan') ? 'active' : '' }}"
@@ -49,7 +83,7 @@
                 </li>
                 <li
                     class="nav-item nav-item-submenu {{ request()->is('user') || request()->is('role') || request()->is('permission') ? 'nav-item-expanded nav-item-open' : '' }}">
-                    <a href="#" class="nav-link"><i class="icon-people"></i> <span>User
+                    <a href="#" class="nav-link"><i class="icon-user-lock"></i> <span>User
                             management</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="User pages">
                         <li class="nav-item"><a href="{{ url('user') }}"

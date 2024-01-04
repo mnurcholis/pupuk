@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Livewire\Admin\Pages\Karyawan;
+namespace App\Livewire\Admin\Pages\Product;
 
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use App\Models\Gaji;
+use App\Models\Product;
 
-class GajiKaryawanTable extends DataTableComponent
+class DataProductTable extends DataTableComponent
 {
-    protected $model = Gaji::class;
+    protected $model = Product::class;
 
     public function configure(): void
     {
@@ -18,17 +18,15 @@ class GajiKaryawanTable extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make("Nama", "karyawan.name")
+            Column::make("Nama", "name")
                 ->sortable()->searchable(),
-            Column::make("Nama", "karyawan.address")
+            Column::make("Beli", "harga_beli")
                 ->sortable()->searchable(),
-            Column::make("Number", "karyawan.number")
+            Column::make("Jual", "harga_jual")
                 ->sortable()->searchable(),
-            Column::make("Rekening", "karyawan.account")
+            Column::make("Qty", "qty")
                 ->sortable()->searchable(),
-            Column::make("Gaji", "gaji")
-                ->sortable()->searchable(),
-            Column::make("Bonus", "bonus")
+            Column::make("Total", "total")
                 ->sortable()->searchable(),
             Column::make('Action', 'id')->view('components.table-action'),
         ];

@@ -20,6 +20,8 @@ class ComCodeSeeder extends Seeder
             ['code_cd' => 'STATUS_KARYAWAN_02', 'code_nm' => 'Karyawan Tidak Tetap', 'code_group' => 'STATUS_KARYAWAN', 'code_value' => ''],
             ['code_cd' => 'GAJI_01', 'code_nm' => 'Bulan', 'code_group' => 'STATUS_GAJI', 'code_value' => ''],
             ['code_cd' => 'GAJI_02', 'code_nm' => 'Harian', 'code_group' => 'STATUS_GAJI', 'code_value' => ''],
+            ['code_cd' => 'STATUS_AGENT_01', 'code_nm' => 'Agent Tetap', 'code_group' => 'STATUS_AGENT', 'code_value' => ''],
+            ['code_cd' => 'STATUS_AGENT_02', 'code_nm' => 'Agent Tidak Tetap', 'code_group' => 'STATUS_AGENT', 'code_value' => ''],
         ];
 
         foreach ($data as $dt) {

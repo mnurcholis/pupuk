@@ -125,8 +125,8 @@
                 </div>
                 <hr>
             @else
+                <livewire:admin.pages.karyawan.gaji-karyawan-table />
             @endif
-            <livewire:admin.pages.karyawan.gaji-karyawan-table />
         </div>
     </div>
     <livewire:admin.global.konfirmasi-hapus />

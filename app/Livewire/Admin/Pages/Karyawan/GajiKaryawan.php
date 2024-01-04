@@ -46,9 +46,11 @@ class GajiKaryawan extends Component
         $data = Gaji::find($id);
         $this->idNya = $data->id;
         $this->karyawan_id = $data->karyawan_id;
+        $this->karyawan = Karyawan::find($this->karyawan_id);
         $this->gaji = $data->gaji;
         $this->bonus = $data->bonus;
         $this->kategori = $data->kategori;
+        $this->total = $this->gaji + $this->bonus;
     }
     public function save()
     {
@@ -85,7 +87,7 @@ class GajiKaryawan extends Component
         $this->cancel();
         $this->dispatchBrowserEvent('swal:modal', [
             'type' => 'success', // Jenis alert, misalnya 'success', 'error', atau 'warning
-            'text' => 'Karyawan Berhasil di perbaharui...', // Isi pesan
+            'text' => 'Gaji Berhasil di perbaharui...', // Isi pesan
         ]);
     }
 

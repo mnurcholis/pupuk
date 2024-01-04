@@ -1,13 +1,17 @@
 <?php
 
 use App\Http\Controllers\HelperController;
+use App\Livewire\Admin\Pages\Agent\DataAgent;
 use App\Livewire\Admin\Pages\Permission;
 use App\Livewire\Admin\Pages\Role;
 use App\Livewire\Admin\Pages\User;
 use App\Livewire\Admin\Pages\Home;
 use App\Livewire\Admin\Pages\Karyawan\DataKaryawan;
 use App\Livewire\Admin\Pages\Karyawan\GajiKaryawan;
+use App\Livewire\Admin\Pages\Operasional\DataOpersional;
+use App\Livewire\Admin\Pages\Product\DataProduct;
 use App\Livewire\Admin\Pages\SettingWeb;
+use App\Livewire\Admin\Pages\Vendor\DataVendor;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
 
@@ -39,7 +43,11 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', Home::class)->name('home');
     Route::get('/karyawan', DataKaryawan::class)->name('karyawan');
+    Route::get('/agent', DataAgent::class)->name('agent');
+    Route::get('/vendor', DataVendor::class)->name('vendor');
+    Route::get('/operasional', DataOpersional::class)->name('operasional');
     Route::get('/gaji', GajiKaryawan::class)->name('gaji');
+    Route::get('/dataproduct', DataProduct::class)->name('dataproduct');
     Route::get('/user', User::class)->name('user');
     Route::get('/role', Role::class)->name('role');
     Route::get('/permission', Permission::class)->name('permission');

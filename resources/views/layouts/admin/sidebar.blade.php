@@ -69,6 +69,16 @@
                     </a>
                 </li>
                 <li
+                    class="nav-item nav-item-submenu {{ request()->is('beli') ? 'nav-item-expanded nav-item-open' : '' }}">
+                    <a href="#" class="nav-link"><i class="icon-cart"></i> <span>Transaksi</span></a>
+                    <ul class="nav nav-group-sub" data-submenu-title="User pages">
+                        <li class="nav-item"><a href="{{ url('beli') }}"
+                                class="nav-link {{ request()->is('beli') ? 'active' : '' }}" class="nav-link">Transaksi
+                                Barang Datang</a>
+                        </li>
+                    </ul>
+                </li>
+                <li
                     class="nav-item nav-item-submenu {{ request()->is('karyawan') || request()->is('gaji') ? 'nav-item-expanded nav-item-open' : '' }}">
                     <a href="#" class="nav-link"><i class="icon-users4"></i> <span>Data Karyawan</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="User pages">

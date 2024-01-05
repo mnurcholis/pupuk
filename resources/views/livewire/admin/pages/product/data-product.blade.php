@@ -29,7 +29,20 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Satuan:</label>
+                            {{ Form::text(null, null, [
+                                'class' => 'form-control' . ($errors->has('satuan') ? ' border-danger' : null),
+                                'placeholder' => 'Satuan',
+                                'wire:model' => 'satuan',
+                            ]) }}
+                            @error('satuan')
+                                <span class="form-text text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label>Harga Beli:</label>
                             {{ Form::number(null, null, [
@@ -42,7 +55,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label>Harga Jual:</label>
                             {{ Form::number(null, null, [
@@ -55,7 +68,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label>Total:</label>
                         {{ Form::text(null, null, [
                             'class' => 'form-control' . ($errors->has('total') ? ' border-danger' : null),

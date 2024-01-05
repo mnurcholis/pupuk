@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Pages\Karyawan;
 
 use App\Models\Karyawan;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class DataKaryawan extends Component
@@ -89,13 +90,25 @@ class DataKaryawan extends Component
 
     public function delete($id)
     {
-        $user = Karyawan::find($id);
-        $user->delete();
-        $this->emit('refreshDatatable');
-        $this->dispatchBrowserEvent('swal:modal', [
-            'type' => 'success', // Jenis alert, misalnya 'success', 'error', atau 'warning
-            'text' => 'Karyawan Berhasil dihapus...', // Isi pesan
-        ]);
+        $this->idNya = $id;
+        try {
+            DB::transaction(function () {
+                $user = Karyawan::find($this->idNya);
+                $user->delete();
+            });
+            $this->emit('refreshDatatable');
+            $this->idNya = '';
+            $this->dispatchBrowserEvent('swal:modal', [
+                'type' => 'success', // Jenis alert, misalnya 'success', 'error', atau 'warning
+                'text' => 'Karyawan Berhasil dihapus...', // Isi pesan
+            ]);
+        } catch (\Exception $e) {
+            $this->emit('refreshDatatable');
+            $this->dispatchBrowserEvent('swal:modal', [
+                'type' => 'error', // Jenis alert, misalnya 'success', 'error', atau 'warning
+                'text' => 'Karyawan Tidak dapat dihapus...', // Isi pesan
+            ]);
+        }
     }
 
     public function render()

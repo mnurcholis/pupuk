@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Pages\Vendor;
 
 use App\Models\Vendor;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class DataVendor extends Component
@@ -75,13 +76,25 @@ class DataVendor extends Component
 
     public function delete($id)
     {
-        $user = Vendor::find($id);
-        $user->delete();
-        $this->emit('refreshDatatable');
-        $this->dispatchBrowserEvent('swal:modal', [
-            'type' => 'success', // Jenis alert, misalnya 'success', 'error', atau 'warning
-            'text' => 'Vendor Berhasil dihapus...', // Isi pesan
-        ]);
+        $this->idNya = $id;
+        try {
+            DB::transaction(function () {
+                $user = Vendor::find($this->idNya);
+                $user->delete();
+            });
+            $this->emit('refreshDatatable');
+            $this->idNya = '';
+            $this->dispatchBrowserEvent('swal:modal', [
+                'type' => 'success', // Jenis alert, misalnya 'success', 'error', atau 'warning
+                'text' => 'Vendor Berhasil dihapus...', // Isi pesan
+            ]);
+        } catch (\Exception $e) {
+            $this->emit('refreshDatatable');
+            $this->dispatchBrowserEvent('swal:modal', [
+                'type' => 'error', // Jenis alert, misalnya 'success', 'error', atau 'warning
+                'text' => 'Vendor Tidak dapat dihapus...', // Isi pesan
+            ]);
+        }
     }
 
     public function render()

@@ -4,20 +4,20 @@ namespace App\Livewire\Admin\Table;
 
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use App\Models\Karyawan;
+use App\Models\Vendor;
 
-class PilihKaryawan extends DataTableComponent
+class PilihVendor extends DataTableComponent
 {
-    protected $model = Karyawan::class;
+    protected $model = Vendor::class;
 
     public function configure(): void
     {
         $this->setPrimaryKey('id');
     }
 
-    public function PilihUser($user_id)
+    public function PilihVendor($user_id)
     {
-        $this->emit('SelectUserPemohon', $user_id);
+        $this->emit('SelectVendor', $user_id);
     }
 
     public function columns(): array
@@ -29,16 +29,10 @@ class PilihKaryawan extends DataTableComponent
                 ->sortable()->searchable(),
             Column::make("Alamat", "address")
                 ->sortable()->searchable(),
-            Column::make("Bank", "bank")
-                ->sortable()->searchable(),
-            Column::make("No Rekening", "account")
-                ->sortable()->searchable(),
-            Column::make("Status", "comcode.code_nm")
-                ->sortable()->searchable(),
             Column::make('Action', 'id')
                 ->format(
                     function ($value, $row, Column $column) {
-                        return '<button href="#" class="btn btn-primary" wire:click="PilihUser(' . $row->id . ')")">Pilih</button>';
+                        return '<button href="#" class="btn btn-primary" wire:click="PilihVendor(' . $row->id . ')")">Pilih</button>';
                     }
                 )
                 ->html(),

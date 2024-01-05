@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('gajis', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('karyawan_id')->nullable();
+            $table->unsignedBigInteger('karyawan_id');
             $table->integer('gaji')->nullable();
             $table->integer('bonus')->nullable();
             $table->string('kategori')->nullable();
             $table->timestamps();
 
-            $table->foreign('karyawan_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('karyawan_id')->references('id')->on('karyawans')->onUpdate('restrict')->onDelete('restrict');
         });
     }
 

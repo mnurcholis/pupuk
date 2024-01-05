@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('harga_beli')->nullable()->default(0);
             $table->integer('harga_jual')->nullable()->default(0);
             $table->integer('total')->nullable()->default(0);
+            $table->string('satuan')->nullable();
             $table->timestamps();
         });
     }

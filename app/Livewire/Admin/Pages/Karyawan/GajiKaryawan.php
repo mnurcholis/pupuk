@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Pages\Karyawan;
 
 use App\Models\Gaji;
 use App\Models\Karyawan;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class GajiKaryawan extends Component
@@ -93,13 +94,25 @@ class GajiKaryawan extends Component
 
     public function delete($id)
     {
-        $user = Gaji::find($id);
-        $user->delete();
-        $this->emit('refreshDatatable');
-        $this->dispatchBrowserEvent('swal:modal', [
-            'type' => 'success', // Jenis alert, misalnya 'success', 'error', atau 'warning
-            'text' => 'Karyawan Berhasil dihapus...', // Isi pesan
-        ]);
+        $this->idNya = $id;
+        try {
+            DB::transaction(function () {
+                $user = Gaji::find($this->idNya);
+                $user->delete();
+            });
+            $this->emit('refreshDatatable');
+            $this->idNya = '';
+            $this->dispatchBrowserEvent('swal:modal', [
+                'type' => 'success', // Jenis alert, misalnya 'success', 'error', atau 'warning
+                'text' => 'Gaji Berhasil dihapus...', // Isi pesan
+            ]);
+        } catch (\Exception $e) {
+            $this->emit('refreshDatatable');
+            $this->dispatchBrowserEvent('swal:modal', [
+                'type' => 'error', // Jenis alert, misalnya 'success', 'error', atau 'warning
+                'text' => 'Gaji Tidak dapat dihapus...', // Isi pesan
+            ]);
+        }
     }
 
     public function pilihKaryawan()

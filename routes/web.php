@@ -11,6 +11,7 @@ use App\Livewire\Admin\Pages\Karyawan\GajiKaryawan;
 use App\Livewire\Admin\Pages\Operasional\DataOpersional;
 use App\Livewire\Admin\Pages\Product\DataProduct;
 use App\Livewire\Admin\Pages\SettingWeb;
+use App\Livewire\Admin\Pages\Transaksi\TransaksiBeli;
 use App\Livewire\Admin\Pages\Vendor\DataVendor;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
@@ -45,6 +46,7 @@ Route::middleware([
     Route::get('/karyawan', DataKaryawan::class)->name('karyawan');
     Route::get('/agent', DataAgent::class)->name('agent');
     Route::get('/vendor', DataVendor::class)->name('vendor');
+    Route::get('/beli', TransaksiBeli::class)->name('beli');
     Route::get('/operasional', DataOpersional::class)->name('operasional');
     Route::get('/gaji', GajiKaryawan::class)->name('gaji');
     Route::get('/dataproduct', DataProduct::class)->name('dataproduct');

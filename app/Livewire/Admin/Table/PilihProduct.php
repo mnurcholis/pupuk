@@ -4,20 +4,20 @@ namespace App\Livewire\Admin\Table;
 
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use App\Models\Karyawan;
+use App\Models\Product;
 
-class PilihKaryawan extends DataTableComponent
+class PilihProduct extends DataTableComponent
 {
-    protected $model = Karyawan::class;
+    protected $model = Product::class;
 
     public function configure(): void
     {
         $this->setPrimaryKey('id');
     }
 
-    public function PilihUser($user_id)
+    public function PilihProduct($user_id)
     {
-        $this->emit('SelectUserPemohon', $user_id);
+        $this->emit('SelectProduct', $user_id);
     }
 
     public function columns(): array
@@ -25,20 +25,18 @@ class PilihKaryawan extends DataTableComponent
         return [
             Column::make("Nama", "name")
                 ->sortable()->searchable(),
-            Column::make("Nomor", "number")
+            Column::make("Beli", "harga_beli")
                 ->sortable()->searchable(),
-            Column::make("Alamat", "address")
+            Column::make("Jual", "harga_jual")
                 ->sortable()->searchable(),
-            Column::make("Bank", "bank")
+            Column::make("Qty", "qty")
                 ->sortable()->searchable(),
-            Column::make("No Rekening", "account")
-                ->sortable()->searchable(),
-            Column::make("Status", "comcode.code_nm")
+            Column::make("Total", "total")
                 ->sortable()->searchable(),
             Column::make('Action', 'id')
                 ->format(
                     function ($value, $row, Column $column) {
-                        return '<button href="#" class="btn btn-primary" wire:click="PilihUser(' . $row->id . ')")">Pilih</button>';
+                        return '<button href="#" class="btn btn-primary" wire:click="PilihProduct(' . $row->id . ')")">Pilih</button>';
                     }
                 )
                 ->html(),

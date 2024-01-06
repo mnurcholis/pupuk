@@ -2,19 +2,20 @@
 
 namespace App\Livewire\Admin\Pages\Transaksi;
 
-use App\Models\DetailTransaksiBeli;
+use App\Models\Agent;
 use App\Models\Product;
-use App\Models\TransaksiBeli as ModelsTransaksiBeli;
-use App\Models\Vendor;
+use App\Models\TransaksiJualPagi as ModelsTransaksiJualPagi;
+use App\Models\TransaksiJualPagiDetail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 
-class TransaksiBeli extends Component
+class TransaksiJualPagi extends Component
 {
-    public $idNya, $product_id, $product, $harga_beli, $qty, $sub_total, $satuan, $list_add_product = [], $jumlah = 0, $total = 0, $vendor_id, $vendor, $bayar = 0, $sisa, $invoice, $beli;
+    public $idNya, $product_id, $product, $harga_beli, $harga_jual, $stock, $qty, $sub_total, $satuan, $list_add_product = [], $jumlah = 0, $total = 0, $agent_id, $agent, $invoice, $jual;
     public $isEdit = false;
 
-    protected $listeners = ['SelectProduct', 'SelectVendor', 'CetakInvoiceBeli', 'ConfirmBatalBeli', 'DetailBeli'];
+    protected $listeners = ['SelectProduct', 'SelectAgent', 'CetakInvoice', 'ConfirmBatal', 'Detail'];
 
     public function add()
     {
@@ -27,21 +28,31 @@ class TransaksiBeli extends Component
         $this->idNya = null;
     }
 
-    public function updatedHargaBeli()
-    {
-        $this->sub_total = $this->qty * $this->harga_beli;
-    }
-
     public function updatedQty()
     {
-        $this->sub_total = $this->qty * $this->harga_beli;
+        $rules = [
+            'qty' => 'required|numeric|not_in:0',
+        ];
+
+        // Validasi apakah stock kurang dari atau sama dengan qty
+        if ($this->qty > $this->stock) {
+            throw ValidationException::withMessages([
+                'qty' => 'Qty Sudah Maksimal Barang yang tersedia.',
+            ]);
+        }
+
+        $this->validate($rules);
+
+        // Jika validasi berhasil, hitung sub_total
+        $this->sub_total = $this->qty * $this->harga_jual;
     }
 
     public function tambahProduct()
     {
         $rules['product_id'] = 'required';
         $rules['harga_beli'] = 'required';
-        $rules['qty'] = 'required';
+        $rules['harga_jual'] = 'required';
+        $rules['qty'] = 'required|not_in:0';
         $rules['sub_total'] = 'required';
         $this->validate($rules);
 
@@ -51,9 +62,8 @@ class TransaksiBeli extends Component
         if ($existingProductIndex !== false) {
             // If the product already exists, update quantity, harga_beli, and sub_total
             $this->list_add_product[$existingProductIndex]['qty'] += $this->qty;
-            $this->list_add_product[$existingProductIndex]['harga_beli'] = $this->harga_beli;
             $this->total = $this->total - $this->list_add_product[$existingProductIndex]['sub_total'];
-            $this->list_add_product[$existingProductIndex]['sub_total'] = $this->list_add_product[$existingProductIndex]['qty'] * $this->harga_beli;
+            $this->list_add_product[$existingProductIndex]['sub_total'] = $this->list_add_product[$existingProductIndex]['qty'] * $this->harga_jual;
             $this->total += $this->list_add_product[$existingProductIndex]['sub_total'];
         } else {
             // If the product doesn't exist, add it to the list
@@ -63,8 +73,9 @@ class TransaksiBeli extends Component
                 'product_id' => $this->product_id,
                 'name' => $this->product->name,
                 'harga_beli' => $this->harga_beli,
+                'harga_jual' => $this->harga_jual,
                 'qty' => $this->qty,
-                'sub_total' => $this->qty * $this->harga_beli,
+                'sub_total' => $this->qty * $this->harga_jual,
             ];
             $this->list_add_product[] = $newProduct;
             $this->total += $this->sub_total;
@@ -74,6 +85,7 @@ class TransaksiBeli extends Component
         $this->product_id = null;
         $this->product = null;
         $this->harga_beli = null;
+        $this->harga_jual = null;
         $this->qty = null;
         $this->sub_total = null;
         $this->satuan = null;
@@ -87,56 +99,34 @@ class TransaksiBeli extends Component
         });
     }
 
-    public function updatedBayar()
-    {
-        if ($this->bayar == '') {
-            $this->sisa = $this->total;
-        } else {
-            $this->sisa = $this->total - $this->bayar;
-        }
-    }
-
-    public function updatedTotal()
-    {
-        if ($this->bayar == '') {
-            $this->sisa = $this->total;
-        } else {
-            $this->sisa = $this->total - $this->bayar;
-        }
-    }
-
     public function Transaksi()
     {
         $rules['list_add_product'] = 'required';
-        $rules['vendor_id'] = 'required';
-        $rules['bayar'] = 'required';
+        $rules['agent_id'] = 'required';
         $rules['total'] = 'required';
-        $rules['sisa'] = 'required';
         $this->validate($rules);
         try {
             DB::transaction(function () {
                 $this->invoice = time();
-                $b = ModelsTransaksiBeli::create([
-                    'vendor_id' => $this->vendor_id,
+                $b = ModelsTransaksiJualPagi::create([
+                    'agent_id' => $this->agent_id,
                     'invoice' => $this->invoice,
                     'tanggal' => date('Y-m-d'),
                     'total' => $this->total,
-                    'bayar' => $this->bayar,
-                    'sisa' => $this->sisa,
                 ]);
 
                 foreach ($this->list_add_product as $v) {
-                    $a['transaksi_beli_id'] = $b->id;
+                    $a['transaksi_jual_pagi_id'] = $b->id;
                     $a['product_id'] = $v['product_id'];
                     $a['harga_beli'] = $v['harga_beli'];
+                    $a['harga_jual'] = $v['harga_jual'];
                     $a['qty'] = $v['qty'];
                     $a['sub_total'] = $v['sub_total'];
-                    DetailTransaksiBeli::create($a);
+                    TransaksiJualPagiDetail::create($a);
                     $c = Product::find($v['product_id']);
                     $c->update([
-                        'harga_beli' => $v['harga_beli'],
-                        'qty' => $v['qty'] + $c->qty,
-                        'total' => ($v['qty'] + $c->qty) * $c->harga_jual,
+                        'qty' => $c->qty - $v['qty'],
+                        'total' => ($c->qty - $v['qty']) * $c->harga_jual,
                     ]);
                 }
             });
@@ -147,10 +137,8 @@ class TransaksiBeli extends Component
                 'text' => 'Transaksi Berhasil...', // Isi pesan
             ]);
             $this->list_add_product = [];
-            $this->vendor_id = null;
-            $this->bayar = null;
+            $this->agent_id = null;
             $this->total = null;
-            $this->sisa = null;
             $this->dispatchBrowserEvent('show-print-modal');
         } catch (\Exception $e) {
             $this->emit('refreshDatatable');
@@ -161,7 +149,7 @@ class TransaksiBeli extends Component
         }
     }
 
-    public function CetakInvoiceBeli($invoice)
+    public function CetakInvoice($invoice)
     {
         $this->emit('cetakInvoice', $invoice);
         // $this->dispatchBrowserEvent('close-print-modal');
@@ -170,62 +158,62 @@ class TransaksiBeli extends Component
     public function CetakResi()
     {
         $this->emit('cetakInvoice', $this->invoice);
-        // $this->dispatchBrowserEvent('close-print-modal');
+        $this->dispatchBrowserEvent('close-print-modal');
     }
 
-    public function ConfirmBatalBeli($id)
+    public function ConfirmBatal($id)
     {
         $this->idNya = $id;
         $this->dispatchBrowserEvent('show-batal-beli-modal');
     }
 
-    public function CancelBatalBeli()
+    public function CancelBatal()
     {
         $this->idNya = null;
         $this->dispatchBrowserEvent('close-batal-beli-modal');
     }
 
-    public function BatalBeli()
+    public function Batal()
     {
         try {
             DB::transaction(function () {
-                $beli = ModelsTransaksiBeli::find($this->idNya);
-                foreach ($beli->detailTransaksiBeli as $d) {
+                $jual = ModelsTransaksiJualPagi::find($this->idNya);
+                foreach ($jual->detailTransaksiJual as $d) {
                     $c = Product::find($d->product_id);
                     $c->update([
-                        'qty' =>  $c->qty - $d->qty,
-                        'total' => ($c->qty - $d->qty) * $c->harga_jual,
+                        'qty' =>  $c->qty + $d->qty,
+                        'total' => ($c->qty + $d->qty) * $c->harga_jual,
                     ]);
-                    DetailTransaksiBeli::find($d->id)->delete();
+                    TransaksiJualPagiDetail::find($d->id)->delete();
                 }
-                $beli->delete();
+                $jual->delete();
             });
             $this->emit('refreshDatatable');
             $this->idNya = '';
             $this->dispatchBrowserEvent('close-batal-beli-modal');
             $this->dispatchBrowserEvent('swal:modal', [
                 'type' => 'success', // Jenis alert, misalnya 'success', 'error', atau 'warning
-                'text' => 'Transaksi Beli Berhasil Dibatal...', // Isi pesan
+                'text' => 'Transaksi Jual Pagi Berhasil Dibatal...', // Isi pesan
             ]);
         } catch (\Exception $e) {
             $this->emit('refreshDatatable');
             $this->dispatchBrowserEvent('swal:modal', [
                 'type' => 'error', // Jenis alert, misalnya 'success', 'error', atau 'warning
-                'text' => 'Transaksi Beli Gagal Dibatal...', // Isi pesan
+                'text' => 'Transaksi Jual Pagi Gagal Dibatal...', // Isi pesan
             ]);
         }
     }
 
-    public function pilihVendor()
+    public function pilihAgent()
     {
-        $this->dispatchBrowserEvent('show-select-vendor-modal');
+        $this->dispatchBrowserEvent('show-select-agent-modal');
     }
 
-    public function SelectVendor($id)
+    public function SelectAgent($id)
     {
-        $this->vendor_id = $id;
-        $this->vendor = Vendor::find($id);
-        $this->dispatchBrowserEvent('close-select-vendor-modal');
+        $this->agent_id = $id;
+        $this->agent = Agent::find($id);
+        $this->dispatchBrowserEvent('close-select-agent-modal');
     }
 
     public function pilihProduct()
@@ -238,18 +226,20 @@ class TransaksiBeli extends Component
         $this->product_id = $id;
         $this->product = Product::find($id);
         $this->harga_beli = $this->product->harga_beli;
+        $this->harga_jual = $this->product->harga_jual;
+        $this->stock = $this->product->qty;
         $this->satuan = $this->product->satuan;
         $this->dispatchBrowserEvent('close-select-user-modal');
     }
 
-    public function DetailBeli($id)
+    public function Detail($id)
     {
-        $this->beli = ModelsTransaksiBeli::find($id);
+        $this->jual = ModelsTransaksiJualPagi::find($id);
         $this->dispatchBrowserEvent('show-detail-modal');
     }
 
     public function render()
     {
-        return view('livewire.admin.pages.transaksi.transaksi-beli');
+        return view('livewire.admin.pages.transaksi.transaksi-jual-pagi');
     }
 }

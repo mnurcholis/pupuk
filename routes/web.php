@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CetakInvoiceController;
 use App\Http\Controllers\HelperController;
 use App\Livewire\Admin\Pages\Agent\DataAgent;
 use App\Livewire\Admin\Pages\Permission;
@@ -12,6 +13,8 @@ use App\Livewire\Admin\Pages\Operasional\DataOpersional;
 use App\Livewire\Admin\Pages\Product\DataProduct;
 use App\Livewire\Admin\Pages\SettingWeb;
 use App\Livewire\Admin\Pages\Transaksi\TransaksiBeli;
+use App\Livewire\Admin\Pages\Transaksi\TransaksiJualPagi;
+use App\Livewire\Admin\Pages\Transaksi\TransaksiJualSore;
 use App\Livewire\Admin\Pages\Vendor\DataVendor;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File;
@@ -43,10 +46,14 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', Home::class)->name('home');
+    Route::get('invoice-print/{id}', [CetakInvoiceController::class, 'printInvoiceBeli']);
+    Route::get('invoice-pagi-print/{id}', [CetakInvoiceController::class, 'printInvoicePagi']);
     Route::get('/karyawan', DataKaryawan::class)->name('karyawan');
     Route::get('/agent', DataAgent::class)->name('agent');
     Route::get('/vendor', DataVendor::class)->name('vendor');
     Route::get('/beli', TransaksiBeli::class)->name('beli');
+    Route::get('/jualpagi', TransaksiJualPagi::class)->name('jualpagi');
+    Route::get('/jualsore', TransaksiJualSore::class)->name('jualsore');
     Route::get('/operasional', DataOpersional::class)->name('operasional');
     Route::get('/gaji', GajiKaryawan::class)->name('gaji');
     Route::get('/dataproduct', DataProduct::class)->name('dataproduct');

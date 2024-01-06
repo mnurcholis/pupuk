@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 
-class DetailTransaksiBeli extends Model implements Auditable
+class TransaksiJualSoreDetail extends Model implements Auditable
 {
     use HasFactory;
 

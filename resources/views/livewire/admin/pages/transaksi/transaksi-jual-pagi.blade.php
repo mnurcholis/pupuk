@@ -1,13 +1,13 @@
 <div>
     <x-slot name="header">
-        <livewire:admin.global.page-header judul="Transaksi" subjudul="Barang Datang" :breadcrumb="['Transaksi Barang Datang']" />
+        <livewire:admin.global.page-header judul="Transaksi" subjudul="Jual Pagi" :breadcrumb="['Transaksi Jual Pagi']" />
     </x-slot>
     <div class="card">
         <div class="card-header">
             @if ($isEdit)
                 <a href="#" wire:click='cancel' class="btn btn-warning mt-md-0 mt-2 ml-md-8">Cancel</a>
             @else
-                <a href="#" wire:click='add' class="btn btn-primary mt-md-0 mt-2">Tambah Barang Datang</a>
+                <a href="#" wire:click='add' class="btn btn-primary mt-md-0 mt-2">Tambah Jual Pagi</a>
             @endif
 
         </div>
@@ -26,7 +26,7 @@
                             <label>Nama Product:</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('product_id') ? ' border-danger' : null }}"
-                                value="{{ $product->name ?? '' }}" disabled>
+                                value="{{ $product->name ?? '' }}" readonly>
                             @error('product_id')
                                 <span class="form-text text-danger">{{ $message }}</span>
                             @enderror
@@ -34,10 +34,10 @@
                     </div>
                     <div class="col-md-1 pl-0 pr-0">
                         <div class="form-group">
-                            <label>Jual:</label>
+                            <label>Beli:</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('product_id') ? ' border-danger' : null }}"
-                                value="{{ $product->harga_jual ?? '' }}" disabled>
+                                value="{{ $product->harga_beli ?? '' }}" readonly>
                         </div>
                     </div>
                     <div class="col-md-1 pl-0 pr-0">
@@ -45,16 +45,16 @@
                             <label>Satuan:</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('product_id') ? ' border-danger' : null }}"
-                                wire:model="satuan" disabled>
+                                wire:model="satuan" readonly>
                         </div>
                     </div>
                     <div class="col-md-2 pl-0 pr-0">
                         <div class="form-group">
-                            <label>Harga Beli:</label>
+                            <label>Jual:</label>
                             <input type="number"
-                                class="form-control {{ $errors->has('harga_beli') ? ' border-danger' : null }}"
-                                wire:model="harga_beli">
-                            @error('harga_beli')
+                                class="form-control {{ $errors->has('harga_jual') ? ' border-danger' : null }}"
+                                wire:model="harga_jual" readonly>
+                            @error('harga_jual')
                                 <span class="form-text text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -64,7 +64,7 @@
                             <label>QTY:</label>
                             <input type="number"
                                 class="form-control {{ $errors->has('qty') ? ' border-danger' : null }}"
-                                wire:model="qty">
+                                wire:model="qty" min="1" max="{{ $stock + 1 }}">
                             @error('qty')
                                 <span class="form-text text-danger">{{ $message }}</span>
                             @enderror
@@ -75,7 +75,7 @@
                             <label>Sub Total:</label>
                             <input type="number"
                                 class="form-control {{ $errors->has('sub_total') ? ' border-danger' : null }}"
-                                wire:model="sub_total">
+                                wire:model="sub_total" readonly>
                             @error('sub_total')
                                 <span class="form-text text-danger">{{ $message }}</span>
                             @enderror
@@ -96,7 +96,8 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Harga Beli</th>
+                                        <th>Beli</th>
+                                        <th>Jual</th>
                                         <th>Qty</th>
                                         <th>Sub Total</th>
                                         <th>Action</th>
@@ -108,6 +109,7 @@
                                             <td>{{ $a['id'] }}</td>
                                             <td>{{ $a['name'] }}</td>
                                             <td>{{ $a['harga_beli'] }}</td>
+                                            <td>{{ $a['harga_jual'] }}</td>
                                             <td>{{ $a['qty'] }}</td>
                                             <td>{{ $a['sub_total'] }}</td>
                                             <td><button type="button"
@@ -121,7 +123,7 @@
                                         @endphp
                                     @endforeach
                                     <tr>
-                                        <td colspan="3"></td>
+                                        <td colspan="4"></td>
                                         <td><b>{{ $jumlah }}</b></td>
                                         <td><b>{{ $total }}</b></td>
                                     </tr>
@@ -134,17 +136,17 @@
                     </div>
                 </div>
                 <div class="form-group row mt-2">
-                    <label class="col-form-label col-lg-2">Vendor</label>
+                    <label class="col-form-label col-lg-2">Agent</label>
                     <div class="col-lg-10">
                         <div class="input-group">
                             <input type="text"
-                                class="form-control {{ $errors->has('vendor_id') ? ' border-danger' : null }}"
-                                placeholder="Pilih Vendor" value="{{ $vendor->name ?? '' }}">
+                                class="form-control {{ $errors->has('agent_id') ? ' border-danger' : null }}"
+                                placeholder="Pilih Agent" value="{{ $agent->name ?? '' }}">
                             <span class="input-group-append">
-                                <button class="btn bg-teal" type="button" wire:click="pilihVendor">Pilih</button>
+                                <button class="btn bg-teal" type="button" wire:click="pilihAgent">Pilih</button>
                             </span>
                         </div>
-                        @error('vendor_id')
+                        @error('agent_id')
                             <span class="form-text text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -154,29 +156,8 @@
                     <div class="col-lg-10">
                         <input type="text"
                             class="form-control {{ $errors->has('total') ? ' border-danger' : null }}"
-                            value="{{ $total }}" disabled>
+                            value="{{ $total }}" readonly>
                         @error('total')
-                            <span class="form-text text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-lg-2">Bayar</label>
-                    <div class="col-lg-10">
-                        <input type="number"
-                            class="form-control {{ $errors->has('bayar') ? ' border-danger' : null }}"
-                            wire:model="bayar">
-                        @error('bayar')
-                            <span class="form-text text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-lg-2">Sisa</label>
-                    <div class="col-lg-10">
-                        <input type="number" class="form-control {{ $errors->has('sisa') ? ' border-danger' : null }}"
-                            wire:model="sisa" disabled>
-                        @error('sisa')
                             <span class="form-text text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -188,7 +169,7 @@
                     </div>
                 </div>
             @else
-                <livewire:admin.pages.transaksi.transaksi-beli-table />
+                <livewire:admin.pages.transaksi.transaksi-jual-pagi-table />
             @endif
         </div>
     </div>
@@ -211,18 +192,18 @@
             </div>
         </div>
     </div>
-    <div wire:ignore.self class="modal fade" id="SelectVendor" tabindex="-1" data-backdrop="static"
+    <div wire:ignore.self class="modal fade" id="SelectAgent" tabindex="-1" data-backdrop="static"
         data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
         <div class="modal-dialog modal-full" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Pilih Vendor</h5>
+                    <h5 class="modal-title">Pilih Agent</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <livewire:admin.table.pilih-vendor />
+                    <livewire:admin.table.pilih-agent />
                 </div>
             </div>
         </div>
@@ -265,50 +246,51 @@
                 <div class="modal-footer">
                     <button type="button" class="btn bg-warning" data-dismiss="modal"
                         wire:click="CancelBatalBeli">Tidak</button>
-                    <button type="button" class="btn bg-primary" wire:click="BatalBeli">Ya</button>
+                    <button type="button" class="btn bg-primary" wire:click="Batal">Ya</button>
                 </div>
             </div>
         </div>
     </div>
-    @if ($beli)
+    @if ($jual)
         <div wire:ignore.self class="modal fade" id="DetailTransaksi" tabindex="-1" data-backdrop="static"
             data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
             <div class="modal-dialog modal-full" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Detail Transaksi Beli</h5>
+                        <h5 class="modal-title">Detail Transaksi Jual Pagi</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p><strong>Invoice Number:</strong> {{ $beli->invoice }}</p>
-                        <p><strong>Invoice Date:</strong> {{ $beli->tanggal }}</p>
-                        <p><strong>Nama Vendor:</strong> {{ $beli->vendor->name }}</p>
+                        <p><strong>Invoice Number:</strong> {{ $jual->invoice }}</p>
+                        <p><strong>Invoice Date:</strong> {{ $jual->tanggal }}</p>
+                        <p><strong>Nama Agent:</strong> {{ $jual->agent->name }}</p>
+                        <p><strong>Status Agent:</strong> {{ $jual->agent->comcode->code_nm }}</p>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th>Barang</th>
                                     <th>Quantity</th>
                                     <th>Harga Beli</th>
+                                    <th>Harga Jual</th>
                                     <th>Sub Total</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($beli->detailTransaksiBeli as $item)
+                                @foreach ($jual->detailTransaksiJual as $item)
                                     <tr>
                                         <td>{{ $item->product->name }}</td>
                                         <td>{{ $item->qty }}</td>
                                         <td>{{ number_format($item->harga_beli, 0, ',', '.') }}</td>
+                                        <td>{{ number_format($item->harga_jual, 0, ',', '.') }}</td>
                                         <td>{{ number_format($item->sub_total, 0, ',', '.') }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                         <div class="text-right mt-2">
-                            <p><strong>Total :</strong> {{ number_format($beli->total, 0, ',', '.') }}</p>
-                            <p><strong>Bayar:</strong> {{ number_format($beli->bayar, 0, ',', '.') }}</p>
-                            <p><strong>Hutang:</strong> {{ number_format($beli->sisa, 0, ',', '.') }}</p>
+                            <p><strong>Total :</strong> {{ number_format($jual->total, 0, ',', '.') }}</p>
                         </div>
                     </div>
                 </div>
@@ -331,12 +313,12 @@
                 $('#SelectUserPemohon').modal('hide');
             });
 
-            window.addEventListener('show-select-vendor-modal', event => {
-                $('#SelectVendor').modal('show');
+            window.addEventListener('show-select-agent-modal', event => {
+                $('#SelectAgent').modal('show');
             });
 
-            window.addEventListener('close-select-vendor-modal', event => {
-                $('#SelectVendor').modal('hide');
+            window.addEventListener('close-select-agent-modal', event => {
+                $('#SelectAgent').modal('hide');
             });
 
             window.addEventListener('show-print-modal', event => {
@@ -361,7 +343,7 @@
         });
 
         Livewire.on('cetakInvoice', ($invoice) => {
-            var myWindow = window.open(`{{ url('invoice-print') }}/${$invoice}`, "cetak-invoice",
+            var myWindow = window.open(`{{ url('invoice-pagi-print') }}/${$invoice}`, "cetak-pagi-invoice",
                 "width=1800,height=5000");
 
             // Print the contents of the new window

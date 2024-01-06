@@ -14,4 +14,14 @@ class TransaksiBeli extends Model implements Auditable
     use AuditableTrait;
 
     protected $guarded = [];
+
+    public function vendor()
+    {
+        return $this->belongsTo(Vendor::class, 'vendor_id');
+    }
+
+    public function detailTransaksiBeli()
+    {
+        return $this->hasMany(DetailTransaksiBeli::class, 'transaksi_beli_id');
+    }
 }

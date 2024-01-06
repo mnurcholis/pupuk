@@ -62,19 +62,24 @@
                 <li class="nav-item">
                     <a href="{{ route('operasional') }}"
                         class="nav-link {{ request()->is('operasional') ? 'active' : '' }}">
-                        <i class="icon-accessibility"></i>
+                        <i class="icon-accessibility2"></i>
                         <span>
                             Data Operasional
                         </span>
                     </a>
                 </li>
                 <li
-                    class="nav-item nav-item-submenu {{ request()->is('beli') ? 'nav-item-expanded nav-item-open' : '' }}">
+                    class="nav-item nav-item-submenu {{ request()->is('beli') || request()->is('jualpagi') || request()->is('jualsore') ? 'nav-item-expanded nav-item-open' : '' }}">
                     <a href="#" class="nav-link"><i class="icon-cart"></i> <span>Transaksi</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="User pages">
-                        <li class="nav-item"><a href="{{ url('beli') }}"
-                                class="nav-link {{ request()->is('beli') ? 'active' : '' }}" class="nav-link">Transaksi
-                                Barang Datang</a>
+                        <li class="nav-item"><a href="{{ route('beli') }}"
+                                class="nav-link {{ request()->is('beli') ? 'active' : '' }}">Barang Datang</a>
+                        </li>
+                        <li class="nav-item"><a href="{{ route('jualpagi') }}"
+                                class="nav-link {{ request()->is('jualpagi') ? 'active' : '' }}">Jual Pagi</a>
+                        </li>
+                        <li class="nav-item"><a href="{{ route('jualsore') }}"
+                                class="nav-link {{ request()->is('jualsore') ? 'active' : '' }}">Jual Sore</a>
                         </li>
                     </ul>
                 </li>

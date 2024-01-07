@@ -76,7 +76,9 @@
                 <thead>
                     <tr>
                         <th>Barang</th>
-                        <th>Quantity</th>
+                        <th>QTY Asal</th>
+                        <th>QTY Keluar</th>
+                        <th>QTY Sisa</th>
                         <th>Harga Jual</th>
                         <th>Sub Total</th>
                     </tr>
@@ -85,7 +87,9 @@
                     @foreach ($data->detailTransaksiJual as $item)
                         <tr>
                             <td>{{ $item->product->name }}</td>
-                            <td>{{ $item->qty }}</td>
+                            <td>{{ $item->qty_asal }}</td>
+                            <td>{{ $item->qty_keluar }}</td>
+                            <td>{{ $item->qty_sisa }}</td>
                             <td>{{ number_format($item->harga_jual, 0, ',', '.') }}</td>
                             <td>{{ number_format($item->sub_total, 0, ',', '.') }}</td>
                         </tr>
@@ -95,6 +99,8 @@
 
             <div class="invoice-total">
                 <p><strong>Total :</strong> {{ number_format($data->total, 0, ',', '.') }}</p>
+                <p><strong>Bayar :</strong> {{ number_format($data->bayar, 0, ',', '.') }}</p>
+                <p><strong>Sisa :</strong> {{ number_format($data->sisa, 0, ',', '.') }}</p>
             </div>
         </div>
     </div>

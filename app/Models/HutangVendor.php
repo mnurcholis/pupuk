@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use OwenIt\Auditing\Auditable as AuditableTrait;
 
-class Agent extends Model implements Auditable
+class HutangVendor extends Model implements Auditable
 {
     use HasFactory;
 
@@ -15,13 +15,8 @@ class Agent extends Model implements Auditable
 
     protected $guarded = [];
 
-    public function comcode()
+    public function HutangVendorDetail()
     {
-        return $this->belongsTo(ComCode::class, 'status', 'code_cd');
-    }
-
-    public function transaksi_pagi()
-    {
-        return $this->belongsTo(TransaksiJualPagi::class, 'id', 'agent_id');
+        return $this->hasMany(HutangVendorDetail::class, 'hutang_vendor_id', 'id');
     }
 }

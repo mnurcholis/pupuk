@@ -80,7 +80,7 @@
                             <label>QTY:</label>
                             <input type="number"
                                 class="form-control {{ $errors->has('qty') ? ' border-danger' : null }}"
-                                wire:model="qty" min="1" max="{{ $stock + 1 }}">
+                                wire:model="qty" min="0" max="{{ $stock }}">
                             @error('qty')
                                 <span class="form-text text-danger">{{ $message }}</span>
                             @enderror
@@ -181,7 +181,8 @@
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Sisa</label>
                     <div class="col-lg-10">
-                        <input type="number" class="form-control {{ $errors->has('sisa') ? ' border-danger' : null }}"
+                        <input type="number"
+                            class="form-control {{ $errors->has('sisa') ? ' border-danger' : null }}"
                             wire:model="sisa" readonly>
                         @error('sisa')
                             <span class="form-text text-danger">{{ $message }}</span>
@@ -229,7 +230,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <livewire:admin.table.pilih-agent />
+                    <livewire:admin.table.pilih-agent-jual />
                 </div>
             </div>
         </div>
@@ -259,9 +260,9 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-orange">
-                    <h5 class="modal-title">Batal Beli ?</h5>
+                    <h5 class="modal-title">Batal ?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                        wire:click="CancelBatalBeli">
+                        wire:click="CancelBatal">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -271,7 +272,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn bg-warning" data-dismiss="modal"
-                        wire:click="CancelBatalBeli">Tidak</button>
+                        wire:click="CancelBatal">Tidak</button>
                     <button type="button" class="btn bg-primary" wire:click="Batal">Ya</button>
                 </div>
             </div>
@@ -297,7 +298,9 @@
                             <thead>
                                 <tr>
                                     <th>Barang</th>
-                                    <th>Quantity</th>
+                                    <th>QTY Asal</th>
+                                    <th>QTY Keluar</th>
+                                    <th>QTY Sisa</th>
                                     <th>Harga Beli</th>
                                     <th>Harga Jual</th>
                                     <th>Sub Total</th>
@@ -307,7 +310,9 @@
                                 @foreach ($jual->detailTransaksiJual as $item)
                                     <tr>
                                         <td>{{ $item->product->name }}</td>
-                                        <td>{{ $item->qty }}</td>
+                                        <td>{{ $item->qty_asal }}</td>
+                                        <td>{{ $item->qty_keluar }}</td>
+                                        <td>{{ $item->qty_sisa }}</td>
                                         <td>{{ number_format($item->harga_beli, 0, ',', '.') }}</td>
                                         <td>{{ number_format($item->harga_jual, 0, ',', '.') }}</td>
                                         <td>{{ number_format($item->sub_total, 0, ',', '.') }}</td>
@@ -317,6 +322,8 @@
                         </table>
                         <div class="text-right mt-2">
                             <p><strong>Total :</strong> {{ number_format($jual->total, 0, ',', '.') }}</p>
+                            <p><strong>Bayar :</strong> {{ number_format($jual->bayar, 0, ',', '.') }}</p>
+                            <p><strong>Sisa :</strong> {{ number_format($jual->sisa, 0, ',', '.') }}</p>
                         </div>
                     </div>
                 </div>
@@ -369,7 +376,7 @@
         });
 
         Livewire.on('cetakInvoice', ($invoice) => {
-            var myWindow = window.open(`{{ url('invoice-pagi-print') }}/${$invoice}`, "cetak-pagi-invoice",
+            var myWindow = window.open(`{{ url('invoice-sore-print') }}/${$invoice}`, "cetak-sore-invoice",
                 "width=1800,height=5000");
 
             // Print the contents of the new window

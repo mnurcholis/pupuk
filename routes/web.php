@@ -7,8 +7,11 @@ use App\Livewire\Admin\Pages\Permission;
 use App\Livewire\Admin\Pages\Role;
 use App\Livewire\Admin\Pages\User;
 use App\Livewire\Admin\Pages\Home;
+use App\Livewire\Admin\Pages\Hutang\DataHutangAgent;
+use App\Livewire\Admin\Pages\Hutang\DataHutangVendor;
 use App\Livewire\Admin\Pages\Karyawan\DataKaryawan;
 use App\Livewire\Admin\Pages\Karyawan\GajiKaryawan;
+use App\Livewire\Admin\Pages\Laporan\Laporan;
 use App\Livewire\Admin\Pages\Operasional\DataOpersional;
 use App\Livewire\Admin\Pages\Product\DataProduct;
 use App\Livewire\Admin\Pages\SettingWeb;
@@ -48,6 +51,7 @@ Route::middleware([
     Route::get('/dashboard', Home::class)->name('home');
     Route::get('invoice-print/{id}', [CetakInvoiceController::class, 'printInvoiceBeli']);
     Route::get('invoice-pagi-print/{id}', [CetakInvoiceController::class, 'printInvoicePagi']);
+    Route::get('invoice-sore-print/{id}', [CetakInvoiceController::class, 'printInvoiceSore']);
     Route::get('/karyawan', DataKaryawan::class)->name('karyawan');
     Route::get('/agent', DataAgent::class)->name('agent');
     Route::get('/vendor', DataVendor::class)->name('vendor');
@@ -57,6 +61,11 @@ Route::middleware([
     Route::get('/operasional', DataOpersional::class)->name('operasional');
     Route::get('/gaji', GajiKaryawan::class)->name('gaji');
     Route::get('/dataproduct', DataProduct::class)->name('dataproduct');
+    // Hutang
+    Route::get('/datahutangvendor', DataHutangVendor::class)->name('datahutangvendor');
+    Route::get('/datahutangagent', DataHutangAgent::class)->name('datahutangagent');
+    // LAPORAN
+    Route::get('/laporan', Laporan::class)->name('laporan');
     Route::get('/user', User::class)->name('user');
     Route::get('/role', Role::class)->name('role');
     Route::get('/permission', Permission::class)->name('permission');

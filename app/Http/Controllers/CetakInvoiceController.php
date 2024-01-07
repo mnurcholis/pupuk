@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TransaksiBeli;
 use App\Models\TransaksiJualPagi;
+use App\Models\TransaksiJualSore;
 use Illuminate\Http\Request;
 
 class CetakInvoiceController extends Controller
@@ -18,5 +19,11 @@ class CetakInvoiceController extends Controller
     {
         $data = TransaksiJualPagi::where('invoice', $invoice)->first();
         return view('print_pagi', compact('data'));
+    }
+    
+    public function printInvoiceSore($invoice)
+    {
+        $data = TransaksiJualSore::where('invoice', $invoice)->first();
+        return view('print_sore', compact('data'));
     }
 }

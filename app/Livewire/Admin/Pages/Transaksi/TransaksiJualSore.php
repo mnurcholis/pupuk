@@ -33,7 +33,7 @@ class TransaksiJualSore extends Component
     public function updatedQty()
     {
         $rules = [
-            'qty' => 'required|numeric|not_in:0',
+            'qty' => 'required|numeric',
         ];
 
         // Validasi apakah stock kurang dari atau sama dengan qty
@@ -54,7 +54,7 @@ class TransaksiJualSore extends Component
         $rules['product_id'] = 'required';
         $rules['harga_beli'] = 'required';
         $rules['harga_jual'] = 'required';
-        $rules['qty'] = 'required|not_in:0';
+        $rules['qty'] = 'required';
         $rules['sub_total'] = 'required';
         $this->validate($rules);
 
@@ -154,6 +154,7 @@ class TransaksiJualSore extends Component
                 $this->invoice = time();
                 $b = ModelsTransaksiJualSore::create([
                     'agent_id' => $this->agent_id,
+                    'transaksi_jual_pagi_id' => $this->invoice_pagi,
                     'invoice' => $this->invoice,
                     'tanggal' => date('Y-m-d'),
                     'total' => $this->total,
@@ -230,8 +231,8 @@ class TransaksiJualSore extends Component
                 foreach ($jual->detailTransaksiJual as $d) {
                     $c = Product::find($d->product_id);
                     $c->update([
-                        'qty' =>  $c->qty + $d->qty,
-                        'total' => ($c->qty + $d->qty) * $c->harga_jual,
+                        'qty' =>  $c->qty - $d->qty_sisa,
+                        'total' => ($c->qty - $d->qty_sisa) * $c->harga_jual,
                     ]);
                     TransaksiJualSoreDetail::find($d->id)->delete();
                 }

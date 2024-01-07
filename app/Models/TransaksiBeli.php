@@ -20,6 +20,11 @@ class TransaksiBeli extends Model implements Auditable
         return $this->belongsTo(Vendor::class, 'vendor_id');
     }
 
+    public function HutangVendor()
+    {
+        return $this->belongsTo(HutangVendor::class, 'id', 'transaksi_beli_id');
+    }
+
     public function detailTransaksiBeli()
     {
         return $this->hasMany(DetailTransaksiBeli::class, 'transaksi_beli_id');

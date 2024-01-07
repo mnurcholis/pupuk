@@ -7,7 +7,7 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Agent;
 use Illuminate\Database\Eloquent\Builder;
 
-class PilihAgent extends DataTableComponent
+class PilihAgentJual extends DataTableComponent
 {
     protected $model = Agent::class;
 
@@ -16,6 +16,12 @@ class PilihAgent extends DataTableComponent
         $this->setPrimaryKey('id');
     }
 
+    public function builder(): Builder
+    {
+        return Agent::whereHas('transaksi_pagi', function ($a) {
+            $a->where('tanggal', date('Y-m-d'));
+        });
+    }
     public function PilihAgent($user_id)
     {
         $this->emit('SelectAgent', $user_id);

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Livewire\Admin\Pages\Transaksi;
+namespace App\Livewire\Admin\Pages\Hutang;
 
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\TransaksiJualSore;
+use Illuminate\Database\Eloquent\Builder;
 
-class TransaksiJualSoreTable extends DataTableComponent
+class DataHutangAgentTable extends DataTableComponent
 {
     protected $model = TransaksiJualSore::class;
 
@@ -15,19 +16,22 @@ class TransaksiJualSoreTable extends DataTableComponent
         $this->setPrimaryKey('id');
     }
 
+    public function builder(): Builder
+    {
+        return TransaksiJualSore::where('sisa', '>', 0)
+            ->orWhereHas('HutangAgent', function ($query) {
+                $query->where('bayar', '>', 0);
+            });
+    }
+
+    public function Bayar($id)
+    {
+        $this->emit('Bayar', $id);
+    }
+
     public function Detail($id)
     {
         $this->emit('Detail', $id);
-    }
-
-    public function CetakInvoice($invoice)
-    {
-        $this->emit('CetakInvoice', $invoice);
-    }
-
-    public function ConfirmBatal($id)
-    {
-        $this->emit('ConfirmBatal', $id);
     }
 
     public function columns(): array
@@ -38,7 +42,7 @@ class TransaksiJualSoreTable extends DataTableComponent
                 ->sortable(),
             Column::make("Tanggal", "tanggal")
                 ->sortable(),
-            Column::make('Total', 'total')
+            Column::make('Piutang', 'total')
                 ->format(
                     function ($value, $row, Column $column) {
                         return number_format($row->total, 0, ',', '.');
@@ -64,8 +68,7 @@ class TransaksiJualSoreTable extends DataTableComponent
                     function ($value, $row, Column $column) {
                         return '
                         <button type="button" class="btn btn-outline-info btn-sm" wire:click="Detail(' . $row->id . ')")"><i class="icon-eye"></i></button>
-                        <button type="button" class="btn btn-outline-success btn-sm" wire:click="CetakInvoice(' . $row->invoice . ')")"><i class="icon-printer"></i></button>
-                        <button type="button" class="btn btn-outline-primary btn-sm" wire:click="ConfirmBatal(' . $row->id . ')")"><i class="icon-stack-cancel"></i> Batal</button>
+                        <button type="button" class="btn btn-outline-warning btn-sm" wire:click="Bayar(' . $row->id . ')")"><i class="icon-cart4"></i> Bayar</button>
                         ';
                     }
                 )

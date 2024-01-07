@@ -84,8 +84,22 @@
                     </ul>
                 </li>
                 <li
+                    class="nav-item nav-item-submenu {{ request()->is('datahutangvendor') || request()->is('datahutangagent') ? 'nav-item-expanded nav-item-open' : '' }}">
+                    <a href="#" class="nav-link"><i class="icon-drawer-out"></i> <span>Data Hutang</span></a>
+                    <ul class="nav nav-group-sub" data-submenu-title="User pages">
+                        <li class="nav-item"><a href="{{ url('datahutangvendor') }}"
+                                class="nav-link {{ request()->is('datahutangvendor') ? 'active' : '' }}"
+                                class="nav-link">Hutang Vendor</a>
+                        </li>
+                        <li class="nav-item"><a href="{{ url('datahutangagent') }}"
+                                class="nav-link {{ request()->is('datahutangagent') ? 'active' : '' }}"
+                                class="nav-link">Hutang Agent</a>
+                        </li>
+                    </ul>
+                </li>
+                <li
                     class="nav-item nav-item-submenu {{ request()->is('karyawan') || request()->is('gaji') ? 'nav-item-expanded nav-item-open' : '' }}">
-                    <a href="#" class="nav-link"><i class="icon-users4"></i> <span>Data Karyawan</span></a>
+                    <a href="#" class="nav-link"><i class="icon-users4"></i><span>Data Karyawan</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="User pages">
                         <li class="nav-item"><a href="{{ url('karyawan') }}"
                                 class="nav-link {{ request()->is('karyawan') ? 'active' : '' }}"
@@ -93,6 +107,16 @@
                         </li>
                         <li class="nav-item"><a href="{{ url('gaji') }}"
                                 class="nav-link {{ request()->is('gaji') ? 'active' : '' }}" class="nav-link">Gaji</a>
+                        </li>
+                    </ul>
+                </li>
+                <li
+                    class="nav-item nav-item-submenu {{ request()->is('laporan') ? 'nav-item-expanded nav-item-open' : '' }}">
+                    <a href="#" class="nav-link"><i class="icon-file-stats"></i><span>Laporan</span></a>
+                    <ul class="nav nav-group-sub" data-submenu-title="User pages">
+                        <li class="nav-item"><a href="{{ url('laporan') }}"
+                                class="nav-link {{ request()->is('laporan') ? 'active' : '' }}" class="nav-link">Stok
+                                Barang</a>
                         </li>
                     </ul>
                 </li>

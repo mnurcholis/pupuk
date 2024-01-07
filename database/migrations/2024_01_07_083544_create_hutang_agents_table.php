@@ -11,19 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaksi_jual_sores', function (Blueprint $table) {
+        Schema::create('hutang_agents', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('transaksi_jual_pagi_id');
             $table->unsignedBigInteger('agent_id');
-            $table->string('invoice');
-            $table->date('tanggal');
-            $table->integer('total');
+            $table->unsignedBigInteger('transaksi_jual_sore_id');
+            $table->integer('awal');
             $table->integer('bayar');
             $table->integer('sisa');
             $table->timestamps();
 
-            $table->foreign('transaksi_jual_pagi_id')->references('id')->on('transaksi_jual_pagis')->onUpdate('restrict')->onDelete('restrict');
             $table->foreign('agent_id')->references('id')->on('agents')->onUpdate('restrict')->onDelete('restrict');
+            $table->foreign('transaksi_jual_sore_id')->references('id')->on('transaksi_jual_sores')->onUpdate('restrict')->onDelete('restrict');
         });
     }
 
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaksi_jual_sores');
+        Schema::dropIfExists('hutang_agents');
     }
 };

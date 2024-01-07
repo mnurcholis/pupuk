@@ -38,6 +38,8 @@ class DataProductTable extends DataTableComponent
                 ->html(),
             Column::make("Qty", "qty")
                 ->sortable()->searchable(),
+            Column::make("Satuan", "satuan")
+                ->sortable()->searchable(),
             Column::make('Total', 'total')
                 ->sortable()->searchable()
                 ->format(

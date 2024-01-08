@@ -34,6 +34,8 @@
     <script src="{{ asset('limitless/') }}/global_assets/js/main/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('limitless/') }}/global_assets/js/plugins/loaders/blockui.min.js"></script>
     <!-- /core JS files -->
+    <!-- Theme JS files -->
+    <script src="{{ asset('limitless/') }}/global_assets/js/plugins/visualization/echarts/echarts.min.js"></script>
 
     <!-- Theme JS files -->
     <script src="{{ asset('limitless/layout_1/LTR/default/full/') }}/assets/js/app.js"></script>

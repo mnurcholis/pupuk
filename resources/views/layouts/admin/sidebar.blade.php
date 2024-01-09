@@ -115,8 +115,8 @@
                     <a href="#" class="nav-link"><i class="icon-file-stats"></i><span>Laporan</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="User pages">
                         <li class="nav-item"><a href="{{ url('laporan') }}"
-                                class="nav-link {{ request()->is('laporan') ? 'active' : '' }}" class="nav-link">Stok
-                                Barang</a>
+                                class="nav-link {{ request()->is('laporan') ? 'active' : '' }}"
+                                class="nav-link">Laporan</a>
                         </li>
                     </ul>
                 </li>

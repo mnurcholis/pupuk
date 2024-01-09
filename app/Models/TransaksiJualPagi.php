@@ -20,6 +20,11 @@ class TransaksiJualPagi extends Model implements Auditable
         return $this->belongsTo(Agent::class, 'agent_id');
     }
 
+    public function transaksiJualSore()
+    {
+        return $this->belongsTo(TransaksiJualSore::class, 'id', 'transaksi_jual_pagi_id');
+    }
+
     public function detailTransaksiJual()
     {
         return $this->hasMany(TransaksiJualPagiDetail::class, 'transaksi_jual_pagi_id');

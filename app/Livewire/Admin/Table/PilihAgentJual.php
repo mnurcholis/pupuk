@@ -4,12 +4,12 @@ namespace App\Livewire\Admin\Table;
 
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use App\Models\Agent;
+use App\Models\TransaksiJualPagi;
 use Illuminate\Database\Eloquent\Builder;
 
 class PilihAgentJual extends DataTableComponent
 {
-    protected $model = Agent::class;
+    protected $model = TransaksiJualPagi::class;
 
     public function configure(): void
     {
@@ -18,9 +18,7 @@ class PilihAgentJual extends DataTableComponent
 
     public function builder(): Builder
     {
-        return Agent::whereHas('transaksi_pagi', function ($a) {
-            $a->where('tanggal', date('Y-m-d'));
-        });
+        return TransaksiJualPagi::where('tanggal', date('Y-m-d'));
     }
     public function PilihAgent($user_id)
     {
@@ -30,11 +28,13 @@ class PilihAgentJual extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make("Nama", "name")
+            Column::make("INVOICE", "invoice")
                 ->sortable()->searchable(),
-            Column::make("Nomor", "number")
+            Column::make("Nama", "agent.name")
                 ->sortable()->searchable(),
-            Column::make("Alamat", "address")
+            Column::make("Nomor", "agent.number")
+                ->sortable()->searchable(),
+            Column::make("Alamat", "agent.address")
                 ->sortable()->searchable(),
             Column::make('Action', 'id')
                 ->format(

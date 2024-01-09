@@ -38,9 +38,6 @@ Route::get('template', function () {
 });
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
 Route::get('show-picture}', [HelperController::class, 'showPicture'])->name('helper.show-picture');
 
 Route::middleware([
@@ -48,6 +45,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+    Route::get('/', Home::class);
     Route::get('/dashboard', Home::class)->name('home');
     Route::get('invoice-print/{id}', [CetakInvoiceController::class, 'printInvoiceBeli']);
     Route::get('invoice-pagi-print/{id}', [CetakInvoiceController::class, 'printInvoicePagi']);

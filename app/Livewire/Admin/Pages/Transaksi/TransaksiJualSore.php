@@ -261,15 +261,14 @@ class TransaksiJualSore extends Component
 
     public function SelectAgent($id)
     {
-        $this->agent_id = $id;
-        $this->agent = Agent::find($id);
-        $this->invoice_pagi = TransaksiJualPagi::where('agent_id', $this->agent_id)
-            ->where('tanggal', date('Y-m-d'))
-            ->first(); // Menggunakan first() untuk mendapatkan satu baris hasil
+        $pagi = TransaksiJualPagi::find($id);
+        $this->agent_id = $pagi->agent_id;
+        $this->agent = Agent::find($pagi->agent_id);
+        $this->invoice_pagi = $pagi->id;
 
         $this->dispatchBrowserEvent('close-select-agent-modal');
         if ($this->invoice_pagi) {
-            $this->invoice_pagi = $this->invoice_pagi->id;
+            $this->invoice_pagi = $this->invoice_pagi;
         } else {
             // Handle jika tidak ada hasil ditemukan
             $this->invoice_pagi = null;

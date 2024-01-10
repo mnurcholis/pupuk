@@ -16,3 +16,8 @@ DB_PASSWORD=root
 ## Learning Laravel
 
 import database pupuk.sql ke database yang anda buat
+
+```bash
+email : admin@app.com
+password : password
+```

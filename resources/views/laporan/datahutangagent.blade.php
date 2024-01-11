@@ -17,13 +17,16 @@
             <tr>
                 <th>INVOICE</th>
                 <th>Agent</th>
-                <th>Total Bayar</th>
+                <th>Total</th>
                 <th>Bayar</th>
                 <th>Sisa</th>
             </tr>
         </thead>
         <tbody>
             @if ($beli)
+                @php
+                    $total_hutang = 0;
+                @endphp
                 @foreach ($beli as $item)
                     <tr>
                         <td>{{ $item['invoice'] }}</td>
@@ -32,6 +35,9 @@
                         <td>{{ number_format($item['bayar'], 0, ',', '.') }}</td>
                         <td>{{ number_format($item['sisa'], 0, ',', '.') }}</td>
                     </tr>
+                    @php
+                        $total_hutang += $item['sisa'];
+                    @endphp
                 @endforeach
             @else
                 <tr>
@@ -41,6 +47,7 @@
         </tbody>
 
     </table>
+    <p><strong>Total Hutang ke Agent : {{ number_format($total_hutang, 0, ',', '.') }}</strong></p>
 
 </body>
 

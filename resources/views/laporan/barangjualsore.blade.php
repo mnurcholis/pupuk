@@ -25,6 +25,10 @@
         </thead>
         <tbody>
             @if ($beli)
+                @php
+                    $omset = 0;
+                    $bersih = 0;
+                @endphp
                 @foreach ($beli as $item)
                     <tr>
                         <td>{{ $item->product->name }}</td>
@@ -34,6 +38,11 @@
                         <td>{{ number_format($item['sub_total'], 0, ',', '.') }}</td>
                         <td>{{ $item->product->satuan }}</td>
                     </tr>
+                    @php
+                        $omset += $item['sub_total'];
+                        $dan = ($item['harga_jual'] - $item['harga_beli']) * $item['qty_keluar'];
+                        $bersih += $dan;
+                    @endphp
                 @endforeach
             @else
                 <tr>
@@ -42,7 +51,10 @@
             @endif
         </tbody>
 
+
     </table>
+    <p><strong>Pengmasukan Keseluhuran : {{ number_format($omset, 0, ',', '.') }}</strong></p>
+    <p><strong>Pengmasukan bersih : {{ number_format($bersih, 0, ',', '.') }}</strong></p>
 
 </body>
 

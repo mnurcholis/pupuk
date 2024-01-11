@@ -109,7 +109,7 @@
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header header-elements-inline">
                     <h5 class="card-title">Laporan Gaji Karyawan</h5>

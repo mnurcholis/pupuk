@@ -48,17 +48,19 @@
                                 wire:model="satuan" disabled>
                         </div>
                     </div>
-                    <div class="col-md-2 pl-0 pr-0">
-                        <div class="form-group">
-                            <label>Harga Beli:</label>
-                            <input type="number"
-                                class="form-control {{ $errors->has('harga_beli') ? ' border-danger' : null }}"
-                                wire:model="harga_beli">
-                            @error('harga_beli')
-                                <span class="form-text text-danger">{{ $message }}</span>
-                            @enderror
+                    @can('harga_beli')
+                        <div class="col-md-2 pl-0 pr-0">
+                            <div class="form-group">
+                                <label>Harga Beli:</label>
+                                <input type="number"
+                                    class="form-control {{ $errors->has('harga_beli') ? ' border-danger' : null }}"
+                                    wire:model="harga_beli">
+                                @error('harga_beli')
+                                    <span class="form-text text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
+                    @endcan
                     <div class="col-md-1 pl-0 pr-0">
                         <div class="form-group">
                             <label>QTY:</label>
@@ -70,17 +72,19 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-2 pl-0">
-                        <div class="form-group">
-                            <label>Sub Total:</label>
-                            <input type="number"
-                                class="form-control {{ $errors->has('sub_total') ? ' border-danger' : null }}"
-                                wire:model="sub_total">
-                            @error('sub_total')
-                                <span class="form-text text-danger">{{ $message }}</span>
-                            @enderror
+                    @can('harga_beli')
+                        <div class="col-md-2 pl-0">
+                            <div class="form-group">
+                                <label>Sub Total:</label>
+                                <input type="number"
+                                    class="form-control {{ $errors->has('sub_total') ? ' border-danger' : null }}"
+                                    wire:model="sub_total">
+                                @error('sub_total')
+                                    <span class="form-text text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
+                    @endcan
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -96,9 +100,13 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Harga Beli</th>
+                                        @can('harga_beli')
+                                            <th>Harga Beli</th>
+                                        @endcan
                                         <th>Qty</th>
-                                        <th>Sub Total</th>
+                                        @can('harga_beli')
+                                            <th>Sub Total</th>
+                                        @endcan
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -107,9 +115,13 @@
                                         <tr>
                                             <td>{{ $a['id'] }}</td>
                                             <td>{{ $a['name'] }}</td>
-                                            <td>{{ $a['harga_beli'] }}</td>
-                                            <td>{{ $a['qty'] }}</td>
-                                            <td>{{ $a['sub_total'] }}</td>
+                                            @can('harga_beli')
+                                                <td>{{ number_format($a['harga_beli'], 0, ',', '.') }}</td>
+                                            @endcan
+                                            <td>{{ number_format($a['qty'], 0, ',', '.') }}</td>
+                                            @can('harga_beli')
+                                                <td>{{ number_format($a['sub_total'], 0, ',', '.') }}</td>
+                                            @endcan
                                             <td><button type="button"
                                                     class="btn bg-pink-400 btn-icon rounded-round btn-sm"
                                                     wire:click="hapusProduct({{ $a['id'] }},{{ $a['sub_total'] }})"><i
@@ -121,9 +133,15 @@
                                         @endphp
                                     @endforeach
                                     <tr>
-                                        <td colspan="3"></td>
-                                        <td><b>{{ $jumlah }}</b></td>
-                                        <td><b>{{ $total }}</b></td>
+                                        @can('harga_beli')
+                                            <td colspan="3"></td>
+                                        @else
+                                            <td colspan="2"></td>
+                                        @endcan
+                                        <td><b>{{ number_format($jumlah, 0, ',', '.') }}</b></td>
+                                        @can('harga_beli')
+                                            <td><b>{{ number_format($total, 0, ',', '.') }}</b></td>
+                                        @endcan
                                     </tr>
                                 </tbody>
                             </table>
@@ -154,7 +172,7 @@
                     <div class="col-lg-10">
                         <input type="text"
                             class="form-control {{ $errors->has('total') ? ' border-danger' : null }}"
-                            value="{{ $total }}" disabled>
+                            value="{{ number_format($total, 0, ',', '.') }}" disabled>
                         @error('total')
                             <span class="form-text text-danger">{{ $message }}</span>
                         @enderror
@@ -368,9 +386,9 @@
             myWindow.print();
 
             // Close the new window after a delay of 10,000 milliseconds (10 seconds)
-            setTimeout(function() {
-                myWindow.close();
-            }, 1000);
+            // setTimeout(function() {
+            //     myWindow.close();
+            // }, 1000);
         });
     </script>
 @endpush

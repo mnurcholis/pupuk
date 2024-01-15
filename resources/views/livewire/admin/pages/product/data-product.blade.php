@@ -4,11 +4,13 @@
     </x-slot>
     <div class="card">
         <div class="card-header">
-            @if ($isEdit)
-                <a href="#" wire:click='cancel' class="btn btn-warning mt-md-0 mt-2 ml-md-8">Cancel</a>
-            @else
-                <a href="#" wire:click='add' class="btn btn-primary mt-md-0 mt-2">Add Product</a>
-            @endif
+            @can('harga_beli')
+                @if ($isEdit)
+                    <a href="#" wire:click='cancel' class="btn btn-warning mt-md-0 mt-2 ml-md-8">Cancel</a>
+                @else
+                    <a href="#" wire:click='add' class="btn btn-primary mt-md-0 mt-2">Add Product</a>
+                @endif
+            @endcan
 
         </div>
         <div class="card-body">

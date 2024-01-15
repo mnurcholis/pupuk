@@ -170,7 +170,7 @@ class TransaksiBeli extends Component
     public function CetakResi()
     {
         $this->emit('cetakInvoice', $this->invoice);
-        // $this->dispatchBrowserEvent('close-print-modal');
+        $this->dispatchBrowserEvent('close-print-modal');
     }
 
     public function ConfirmBatalBeli($id)

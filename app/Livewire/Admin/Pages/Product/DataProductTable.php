@@ -21,6 +21,7 @@ class DataProductTable extends DataTableComponent
             Column::make("Nama", "name")
                 ->sortable()->searchable(),
             Column::make('Beli', 'harga_beli')
+                ->hideIf(!auth()->user()->hasRole('admin'))
                 ->sortable()->searchable()
                 ->format(
                     function ($value, $row, Column $column) {

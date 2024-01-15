@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->string('bank')->nullable();
             $table->string('account')->nullable();
+            $table->string('posisi')->nullable();
             $table->string('status')->nullable();
             $table->timestamps();
         });

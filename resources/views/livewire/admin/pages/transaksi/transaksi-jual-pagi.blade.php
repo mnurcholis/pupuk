@@ -108,10 +108,10 @@
                                         <tr>
                                             <td>{{ $a['id'] }}</td>
                                             <td>{{ $a['name'] }}</td>
-                                            <td>{{ $a['harga_beli'] }}</td>
-                                            <td>{{ $a['harga_jual'] }}</td>
+                                            <td>{{ number_format($a['harga_beli'], 0, ',', '.') }}</td>
+                                            <td>{{ number_format($a['harga_jual'], 0, ',', '.') }}</td>
                                             <td>{{ $a['qty'] }}</td>
-                                            <td>{{ $a['sub_total'] }}</td>
+                                            <td>{{ number_format($a['sub_total'], 0, ',', '.') }}</td>
                                             <td><button type="button"
                                                     class="btn bg-pink-400 btn-icon rounded-round btn-sm"
                                                     wire:click="hapusProduct({{ $a['id'] }},{{ $a['sub_total'] }})"><i
@@ -124,8 +124,8 @@
                                     @endforeach
                                     <tr>
                                         <td colspan="4"></td>
-                                        <td><b>{{ $jumlah }}</b></td>
-                                        <td><b>{{ $total }}</b></td>
+                                        <td><b>{{ number_format($jumlah, 0, ',', '.') }}</b></td>
+                                        <td><b>{{ number_format($total, 0, ',', '.') }}</b></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -350,9 +350,9 @@
             myWindow.print();
 
             // Close the new window after a delay of 10,000 milliseconds (10 seconds)
-            setTimeout(function() {
-                myWindow.close();
-            }, 1000);
+            // setTimeout(function() {
+            //     myWindow.close();
+            // }, 1000);
         });
     </script>
 @endpush

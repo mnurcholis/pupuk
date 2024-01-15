@@ -28,6 +28,8 @@ class DataKaryawanTable extends DataTableComponent
                 ->sortable()->searchable(),
             Column::make("No Rekening", "account")
                 ->sortable()->searchable(),
+            Column::make("Posisi", "posisi")
+                ->sortable()->searchable(),
             Column::make("Status", "comcode.code_nm")
                 ->sortable()->searchable(),
             Column::make('Action', 'id')->view('components.table-action'),

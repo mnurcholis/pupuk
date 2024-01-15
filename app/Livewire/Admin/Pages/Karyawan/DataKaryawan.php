@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class DataKaryawan extends Component
 {
-    public $idNya, $name, $number, $address, $bank, $account, $status;
+    public $idNya, $name, $number, $address, $bank, $account, $status, $posisi;
     public $isEdit = false;
 
     protected $listeners = ['edit', 'delete'];
@@ -28,6 +28,7 @@ class DataKaryawan extends Component
         $this->bank = '';
         $this->account = '';
         $this->status = '';
+        $this->posisi = '';
     }
 
     public function edit($id)
@@ -41,6 +42,7 @@ class DataKaryawan extends Component
         $this->bank = $data->bank;
         $this->account = $data->account;
         $this->status = $data->status;
+        $this->posisi = $data->posisi;
     }
     public function save()
     {
@@ -50,6 +52,7 @@ class DataKaryawan extends Component
         $rules['bank'] = 'required';
         $rules['account'] = 'required';
         $rules['status'] = 'required';
+        $rules['posisi'] = 'required';
         $this->validate($rules);
         if ($this->idNya) {
             $this->update();
@@ -61,6 +64,7 @@ class DataKaryawan extends Component
                 'bank' => $this->bank,
                 'account' => $this->account,
                 'status' => $this->status,
+                'posisi' => $this->posisi,
             ]);
             $this->emit('refreshDatatable');
             $this->cancel();
@@ -79,6 +83,7 @@ class DataKaryawan extends Component
         $dataUser->bank = $this->bank;
         $dataUser->account = $this->account;
         $dataUser->status = $this->status;
+        $dataUser->posisi = $this->posisi;
         $dataUser->save();
         $this->emit('refreshDatatable');
         $this->cancel();

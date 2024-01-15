@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-6">
                         <label>Alamat:</label>
                         {{ Form::text(null, null, [
                             'class' => 'form-control' . ($errors->has('address') ? ' border-danger' : null),
@@ -89,6 +89,17 @@
                             'wire:model' => 'status',
                         ]) }}
                         @error('status')
+                            <span class="form-text text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="col-md-3">
+                        <label>Posisi:</label>
+                        {{ Form::text(null, null, [
+                            'class' => 'form-control' . ($errors->has('posisi') ? ' border-danger' : null),
+                            'placeholder' => 'Posisi Keryawan',
+                            'wire:model' => 'posisi',
+                        ]) }}
+                        @error('posisi')
                             <span class="form-text text-danger">{{ $message }}</span>
                         @enderror
                     </div>

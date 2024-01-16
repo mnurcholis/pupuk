@@ -90,17 +90,17 @@
                             <td>{{ $item->qty_asal }}</td>
                             <td>{{ $item->qty_keluar }}</td>
                             <td>{{ $item->qty_sisa }}</td>
-                            <td>{{ number_format($item->harga_jual, 0, ',', '.') }}</td>
-                            <td>{{ number_format($item->sub_total, 0, ',', '.') }}</td>
+                            <td>Rp. {{ number_format($item->harga_jual, 0, ',', '.') }}</td>
+                            <td>Rp. {{ number_format($item->sub_total, 0, ',', '.') }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
 
             <div class="invoice-total">
-                <p><strong>Total :</strong> {{ number_format($data->total, 0, ',', '.') }}</p>
-                <p><strong>Bayar :</strong> {{ number_format($data->bayar, 0, ',', '.') }}</p>
-                <p><strong>Sisa :</strong> {{ number_format($data->sisa, 0, ',', '.') }}</p>
+                <p><strong>Total :</strong> Rp. {{ number_format($data->total, 0, ',', '.') }}</p>
+                <p><strong>Bayar :</strong> Rp. {{ number_format($data->bayar, 0, ',', '.') }}</p>
+                <p><strong>Sisa :</strong> Rp. {{ number_format($data->sisa, 0, ',', '.') }}</p>
             </div>
         </div>
     </div>

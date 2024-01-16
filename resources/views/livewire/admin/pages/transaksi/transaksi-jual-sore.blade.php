@@ -48,14 +48,16 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-1 pl-0 pr-0">
-                        <div class="form-group">
-                            <label>Beli:</label>
-                            <input type="text"
-                                class="form-control {{ $errors->has('product_id') ? ' border-danger' : null }}"
-                                value="{{ $product->harga_beli ?? '' }}" readonly>
+                    @can('harga_beli')
+                        <div class="col-md-1 pl-0 pr-0">
+                            <div class="form-group">
+                                <label>Beli:</label>
+                                <input type="text"
+                                    class="form-control {{ $errors->has('product_id') ? ' border-danger' : null }}"
+                                    value="{{ $product->harga_beli ?? '' }}" readonly>
+                            </div>
                         </div>
-                    </div>
+                    @endcan
                     <div class="col-md-1 pl-0 pr-0">
                         <div class="form-group">
                             <label>Satuan:</label>
@@ -112,7 +114,9 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Beli</th>
+                                        @can('harga_beli')
+                                            <th>Beli</th>
+                                        @endcan
                                         <th>Jual</th>
                                         <th>Qty asal</th>
                                         <th>Qty keluar</th>
@@ -126,12 +130,14 @@
                                         <tr>
                                             <td>{{ $a['id'] }}</td>
                                             <td>{{ $a['name'] }}</td>
-                                            <td>{{ number_format($a['harga_beli'], 0, ',', '.') }}</td>
-                                            <td>{{ number_format($a['harga_jual'], 0, ',', '.') }}</td>
+                                            @can('harga_beli')
+                                                <td>Rp. {{ number_format($a['harga_beli'], 0, ',', '.') }}</td>
+                                            @endcan
+                                            <td>Rp. {{ number_format($a['harga_jual'], 0, ',', '.') }}</td>
                                             <td>{{ $a['qty_asal'] }}</td>
                                             <td>{{ $a['qty_keluar'] }}</td>
                                             <td>{{ $a['qty_sisa'] }}</td>
-                                            <td>{{ number_format($a['sub_total'], 0, ',', '.') }}</td>
+                                            <td>Rp. {{ number_format($a['sub_total'], 0, ',', '.') }}</td>
                                             <td><button type="button"
                                                     class="btn bg-pink-400 btn-icon rounded-round btn-sm"
                                                     wire:click="hapusProduct({{ $a['id'] }},{{ $a['sub_total'] }})"><i
@@ -143,10 +149,14 @@
                                         @endphp
                                     @endforeach
                                     <tr>
-                                        <td colspan="5"></td>
-                                        <td><b>{{ number_format($jumlah, 0, ',', '.') }}</b></td>
+                                        @can('harga_beli')
+                                            <td colspan="5"></td>
+                                        @else
+                                            <td colspan="4"></td>
+                                        @endcan
+                                        <td><b>Rp. {{ number_format($jumlah, 0, ',', '.') }}</b></td>
                                         <td></td>
-                                        <td><b>{{ number_format($total, 0, ',', '.') }}</b></td>
+                                        <td><b>Rp. {{ number_format($total, 0, ',', '.') }}</b></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -301,7 +311,9 @@
                                     <th>QTY Asal</th>
                                     <th>QTY Keluar</th>
                                     <th>QTY Sisa</th>
-                                    <th>Harga Beli</th>
+                                    @can('harga_beli')
+                                        <th>Harga Beli</th>
+                                    @endcan
                                     <th>Harga Jual</th>
                                     <th>Sub Total</th>
                                 </tr>
@@ -313,17 +325,19 @@
                                         <td>{{ $item->qty_asal }}</td>
                                         <td>{{ $item->qty_keluar }}</td>
                                         <td>{{ $item->qty_sisa }}</td>
-                                        <td>{{ number_format($item->harga_beli, 0, ',', '.') }}</td>
-                                        <td>{{ number_format($item->harga_jual, 0, ',', '.') }}</td>
-                                        <td>{{ number_format($item->sub_total, 0, ',', '.') }}</td>
+                                        @can('harga_beli')
+                                            <td>Rp. {{ number_format($item->harga_beli, 0, ',', '.') }}</td>
+                                        @endcan
+                                        <td>Rp. {{ number_format($item->harga_jual, 0, ',', '.') }}</td>
+                                        <td>Rp. {{ number_format($item->sub_total, 0, ',', '.') }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                         <div class="text-right mt-2">
-                            <p><strong>Total :</strong> {{ number_format($jual->total, 0, ',', '.') }}</p>
-                            <p><strong>Bayar :</strong> {{ number_format($jual->bayar, 0, ',', '.') }}</p>
-                            <p><strong>Sisa :</strong> {{ number_format($jual->sisa, 0, ',', '.') }}</p>
+                            <p><strong>Total :</strong>Rp. {{ number_format($jual->total, 0, ',', '.') }}</p>
+                            <p><strong>Bayar :</strong>Rp. {{ number_format($jual->bayar, 0, ',', '.') }}</p>
+                            <p><strong>Sisa :</strong>Rp. {{ number_format($jual->sisa, 0, ',', '.') }}</p>
                         </div>
                     </div>
                 </div>

@@ -40,32 +40,47 @@ class TransaksiBeliTable extends DataTableComponent
             Column::make("Tanggal", "tanggal")
                 ->sortable(),
             Column::make('Piutang', 'total')
+                ->hideIf(!auth()->user()->hasRole('admin'))
                 ->format(
                     function ($value, $row, Column $column) {
-                        return number_format($row->total, 0, ',', '.');
+                        return 'Rp. ' . number_format($row->total, 0, ',', '.');
                     }
                 )
                 ->html(),
             Column::make('Bayar', 'bayar')
+                ->hideIf(!auth()->user()->hasRole('admin'))
                 ->format(
                     function ($value, $row, Column $column) {
-                        return number_format($row->bayar, 0, ',', '.');
+                        return 'Rp. ' . number_format($row->bayar, 0, ',', '.');
                     }
                 )
                 ->html(),
             Column::make('Hutang', 'sisa')
+                ->hideIf(!auth()->user()->hasRole('admin'))
                 ->format(
                     function ($value, $row, Column $column) {
-                        return number_format($row->sisa, 0, ',', '.');
+                        return 'Rp. ' . number_format($row->sisa, 0, ',', '.');
                     }
                 )
                 ->html(),
             Column::make('Action', 'id')
+                ->hideIf(!auth()->user()->hasRole('admin'))
                 ->format(
                     function ($value, $row, Column $column) {
                         return '
                         <button type="button" class="btn btn-outline-info btn-sm" wire:click="DetailBeli(' . $row->id . ')")"><i class="icon-eye"></i></button>
                         <button type="button" class="btn btn-outline-success btn-sm" wire:click="CetakInvoiceBeli(' . $row->invoice . ')")"><i class="icon-printer"></i></button>
+                        <button type="button" class="btn btn-outline-primary btn-sm" wire:click="ConfirmBatalBeli(' . $row->id . ')")"><i class="icon-stack-cancel"></i> Batal</button>
+                        ';
+                    }
+                )
+                ->html(),
+            Column::make('Action', 'id')
+                ->hideIf(!auth()->user()->hasRole('karyawan'))
+                ->format(
+                    function ($value, $row, Column $column) {
+                        return '
+                        <button type="button" class="btn btn-outline-info btn-sm" wire:click="DetailBeli(' . $row->id . ')")"><i class="icon-eye"></i></button>
                         <button type="button" class="btn btn-outline-primary btn-sm" wire:click="ConfirmBatalBeli(' . $row->id . ')")"><i class="icon-stack-cancel"></i> Batal</button>
                         ';
                     }

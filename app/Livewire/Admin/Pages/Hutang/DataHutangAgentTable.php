@@ -45,21 +45,21 @@ class DataHutangAgentTable extends DataTableComponent
             Column::make('Piutang', 'total')
                 ->format(
                     function ($value, $row, Column $column) {
-                        return number_format($row->total, 0, ',', '.');
+                        return 'Rp. '.number_format($row->total, 0, ',', '.');
                     }
                 )
                 ->html(),
             Column::make('Bayar', 'bayar')
                 ->format(
                     function ($value, $row, Column $column) {
-                        return number_format($row->bayar, 0, ',', '.');
+                        return 'Rp. '.number_format($row->bayar, 0, ',', '.');
                     }
                 )
                 ->html(),
             Column::make('Hutang', 'sisa')
                 ->format(
                     function ($value, $row, Column $column) {
-                        return number_format($row->sisa, 0, ',', '.');
+                        return 'Rp. '.number_format($row->sisa, 0, ',', '.');
                     }
                 )
                 ->html(),

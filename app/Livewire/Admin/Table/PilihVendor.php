@@ -26,8 +26,9 @@ class PilihVendor extends DataTableComponent
             Column::make("Nama", "name")
                 ->sortable()->searchable(),
             Column::make("Nomor", "number")
+                ->hideIf(!auth()->user()->hasRole('admin'))
                 ->sortable()->searchable(),
-            Column::make("Alamat", "address")
+            Column::make("Alamat", "address")->hideIf(!auth()->user()->hasRole('admin'))
                 ->sortable()->searchable(),
             Column::make('Action', 'id')
                 ->format(

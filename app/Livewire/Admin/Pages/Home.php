@@ -21,7 +21,7 @@ class Home extends Component
 
     public function mount()
     {
-        if (auth()->user()->getRoleNames('karyawan')) {
+        if (auth()->user()->getRoleNames()->first() == 'karyawan') {
             return redirect()->route('dataproduct');
         }
         $this->karyawan = Karyawan::all();

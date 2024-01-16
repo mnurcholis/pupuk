@@ -27,22 +27,22 @@
                     <div class="col-md-2 pl-0 pr-0">
                         <div class="form-group">
                             <label>Total:</label>
-                            <input type="text" class="form-control" value="{{ $transaksibeli->total ?? '' }}"
-                                readonly>
+                            <input type="text" class="form-control"
+                                value="Rp. {{ number_format($transaksibeli->total ?? 0, 0, ',', '.') }}" readonly>
                         </div>
                     </div>
                     <div class="col-md-2 pl-0 pr-0">
                         <div class="form-group">
                             <label>Bayar:</label>
-                            <input type="text" class="form-control" value="{{ $transaksibeli->bayar ?? '' }}"
-                                readonly>
+                            <input type="text" class="form-control"
+                                value="Rp. {{ number_format($transaksibeli->bayar ?? 0, 0, ',', '.') }}" readonly>
                         </div>
                     </div>
                     <div class="col-md-2 pl-0 pr-0">
                         <div class="form-group">
                             <label>Sisa:</label>
-                            <input type="text" class="form-control" value="{{ $transaksibeli->sisa ?? '' }}"
-                                readonly>
+                            <input type="text" class="form-control"
+                                value="Rp. {{ number_format($transaksibeli->sisa ?? 0, 0, ',', '.') }}" readonly>
                         </div>
                     </div>
                     <div class="col-md-1">
@@ -85,7 +85,8 @@
                             <div class="form-group">
                                 <label>Hutang Awal:</label>
                                 <input type="text" class="form-control"
-                                    value="{{ $transaksibeli->HutangVendor->awal ?? '' }}" readonly>
+                                    value="Rp. {{ number_format($transaksibeli->HutangVendor->awal ?? 0, 0, ',', '.') }}"
+                                    readonly>
                                 @error('product_id')
                                     <span class="form-text text-danger">{{ $message }}</span>
                                 @enderror
@@ -95,14 +96,16 @@
                             <div class="form-group">
                                 <label>Bayar :</label>
                                 <input type="text" class="form-control"
-                                    value="{{ $transaksibeli->HutangVendor->bayar ?? '' }}" readonly>
+                                    value="Rp. {{ number_format($transaksibeli->HutangVendor->bayar ?? 0, 0, ',', '.') }}"
+                                    readonly>
                             </div>
                         </div>
                         <div class="col-md-2 pl-0 pr-0">
                             <div class="form-group">
                                 <label>Sisa :</label>
                                 <input type="text" class="form-control"
-                                    value="{{ $transaksibeli->HutangVendor->sisa ?? '' }}" readonly>
+                                    value="Rp. {{ number_format($transaksibeli->HutangVendor->sisa ?? 0, 0, ',', '.') }}"
+                                    readonly>
                             </div>
                         </div>
                     </div>
@@ -126,7 +129,7 @@
                                             <tr>
                                                 <td>{{ $a['id'] }}</td>
                                                 <td>{{ $a['tanggal'] }}</td>
-                                                <td>{{ $a['bayar'] }}</td>
+                                                <td>Rp. {{ number_format($a['bayar'], 0, ',', '.') }}</td>
                                                 <td><button type="button"
                                                         class="btn bg-pink-400 btn-icon rounded-round btn-sm"
                                                         wire:click="BatalTambahBayar({{ $a['id'] }},{{ $a['bayar'] }})"><i
@@ -139,7 +142,7 @@
                                         @endforeach
                                         <tr>
                                             <td colspan="2"></td>
-                                            <td><b>{{ $jumlah }}</b></td>
+                                            <td><b>Rp. {{ number_format($jumlah, 0, ',', '.') }}</b></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -150,94 +153,103 @@
                         </div>
                     </div>
                 @endif
-                @if ($beli)
-                    <div wire:ignore.self class="modal fade" id="DetailTransaksi" tabindex="-1" data-backdrop="static"
-                        data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-                        <div class="modal-dialog modal-full" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Detail Transaksi Beli</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <p><strong>Invoice Number:</strong> {{ $beli->invoice }}</p>
-                                    <p><strong>Invoice Date:</strong> {{ $beli->tanggal }}</p>
-                                    <p><strong>Nama Vendor:</strong> {{ $beli->vendor->name }}</p>
-                                    <p class="mt-2"><strong>Detail Transaksi:</strong></p>
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Barang</th>
-                                                <th>Quantity</th>
-                                                <th>Harga Beli</th>
-                                                <th>Sub Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($beli->detailTransaksiBeli as $item)
-                                                <tr>
-                                                    <td>{{ $item->product->name }}</td>
-                                                    <td>{{ $item->qty }}</td>
-                                                    <td>{{ number_format($item->harga_beli, 0, ',', '.') }}</td>
-                                                    <td>{{ number_format($item->sub_total, 0, ',', '.') }}</td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    <p class="mt-2"><strong>Detail HUtang:</strong></p>
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Awal Hutang</th>
-                                                <th>Bayar</th>
-                                                <th>Sisa</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>{{ number_format($beli->HutangVendor->awal ?? $beli->total, 0, ',', '.') }}
-                                                </td>
-                                                <td>{{ number_format($beli->HutangVendor->bayar ?? $beli->bayar, 0, ',', '.') }}
-                                                </td>
-                                                <td>{{ number_format($beli->HutangVendor->sisa ?? $beli->sisa, 0, ',', '.') }}
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <p class="mt-2"><strong>Detail Pembayaran:</strong></p>
-                                    @if ($beli->HutangVendor)
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>Tanggal</th>
-                                                    <th>Bayar</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($beli->HutangVendor->HutangVendorDetail as $val)
-                                                    <tr>
-                                                        <td>{{ $val->tanggal }}</td>
-                                                        <td>{{ number_format($val->bayar, 0, ',', '.') }}
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    @else
-                                        <p>Belum ada pembayaran</p>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
         </div>
     @else
         <livewire:admin.pages.hutang.data-hutang-vendor-table>
             @endif
     </div>
+    @if ($beli)
+        <div wire:ignore.self class="modal fade" id="DetailTransaksi" tabindex="-1" data-backdrop="static"
+            data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+            <div class="modal-dialog modal-full" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detail Transaksi Beli</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Invoice Number:</strong> {{ $beli->invoice }}</p>
+                        <p><strong>Invoice Date:</strong> {{ $beli->tanggal }}</p>
+                        <p><strong>Nama Vendor:</strong> {{ $beli->vendor->name }}</p>
+                        <p class="mt-2"><strong>Detail Transaksi:</strong></p>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Barang</th>
+                                    <th>Quantity</th>
+                                    @can('harga_beli')
+                                        <th>Harga Beli</th>
+                                        <th>Sub Total</th>
+                                    @endcan
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($beli->detailTransaksiBeli as $item)
+                                    <tr>
+                                        <td>{{ $item->product->name }}</td>
+                                        <td>{{ $item->qty }}</td>
+                                        @can('harga_beli')
+                                            <td>Rp. {{ number_format($item->harga_beli, 0, ',', '.') }}</td>
+                                            <td>Rp. {{ number_format($item->sub_total, 0, ',', '.') }}</td>
+                                        @endcan
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        @can('harga_beli')
+                            <p class="mt-2"><strong>Detail HUtang:</strong></p>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Awal Hutang</th>
+                                        <th>Bayar</th>
+                                        <th>Sisa</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Rp.
+                                            {{ number_format($beli->HutangVendor->awal ?? $beli->total, 0, ',', '.') }}
+                                        </td>
+                                        <td>Rp.
+                                            {{ number_format($beli->HutangVendor->bayar ?? $beli->bayar, 0, ',', '.') }}
+                                        </td>
+                                        <td>Rp.
+                                            {{ number_format($beli->HutangVendor->sisa ?? $beli->sisa, 0, ',', '.') }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="mt-2"><strong>Detail Pembayaran:</strong></p>
+                            @if ($beli->HutangVendor)
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal</th>
+                                            <th>Bayar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($beli->HutangVendor->HutangVendorDetail as $val)
+                                            <tr>
+                                                <td>{{ $val->tanggal }}</td>
+                                                <td>Rp. {{ number_format($val->bayar, 0, ',', '.') }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                <p>Belum ada pembayaran</p>
+                            @endif
+                        @endcan
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 </div>
 
 @push('js')

@@ -116,11 +116,11 @@
                                             <td>{{ $a['id'] }}</td>
                                             <td>{{ $a['name'] }}</td>
                                             @can('harga_beli')
-                                                <td>{{ number_format($a['harga_beli'], 0, ',', '.') }}</td>
+                                                <td>Rp. {{ number_format($a['harga_beli'], 0, ',', '.') }}</td>
                                             @endcan
-                                            <td>{{ number_format($a['qty'], 0, ',', '.') }}</td>
+                                            <td>Rp. {{ number_format($a['qty'], 0, ',', '.') }}</td>
                                             @can('harga_beli')
-                                                <td>{{ number_format($a['sub_total'], 0, ',', '.') }}</td>
+                                                <td>Rp. {{ number_format($a['sub_total'], 0, ',', '.') }}</td>
                                             @endcan
                                             <td><button type="button"
                                                     class="btn bg-pink-400 btn-icon rounded-round btn-sm"
@@ -138,9 +138,9 @@
                                         @else
                                             <td colspan="2"></td>
                                         @endcan
-                                        <td><b>{{ number_format($jumlah, 0, ',', '.') }}</b></td>
+                                        <td><b>Rp. {{ number_format($jumlah, 0, ',', '.') }}</b></td>
                                         @can('harga_beli')
-                                            <td><b>{{ number_format($total, 0, ',', '.') }}</b></td>
+                                            <td><b>Rp. {{ number_format($total, 0, ',', '.') }}</b></td>
                                         @endcan
                                     </tr>
                                 </tbody>
@@ -167,38 +167,53 @@
                         @enderror
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-lg-2">Total</label>
-                    <div class="col-lg-10">
-                        <input type="text"
-                            class="form-control {{ $errors->has('total') ? ' border-danger' : null }}"
-                            value="{{ number_format($total, 0, ',', '.') }}" disabled>
-                        @error('total')
-                            <span class="form-text text-danger">{{ $message }}</span>
-                        @enderror
+                @can('harga_beli')
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Total</label>
+                        <div class="col-lg-10">
+                            <input type="text"
+                                class="form-control {{ $errors->has('total') ? ' border-danger' : null }}"
+                                value="Rp. {{ number_format($total, 0, ',', '.') }}" disabled>
+                            @error('total')
+                                <span class="form-text text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-lg-2">Bayar</label>
-                    <div class="col-lg-10">
-                        <input type="number"
-                            class="form-control {{ $errors->has('bayar') ? ' border-danger' : null }}"
-                            wire:model="bayar">
-                        @error('bayar')
-                            <span class="form-text text-danger">{{ $message }}</span>
-                        @enderror
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Bayar</label>
+                        <div class="col-lg-10">
+                            <input type="number"
+                                class="form-control {{ $errors->has('bayar') ? ' border-danger' : null }}"
+                                wire:model="bayar">
+                            @error('bayar')
+                                <span class="form-text text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-form-label col-lg-2">Sisa</label>
-                    <div class="col-lg-10">
-                        <input type="number" class="form-control {{ $errors->has('sisa') ? ' border-danger' : null }}"
-                            wire:model="sisa" disabled>
-                        @error('sisa')
-                            <span class="form-text text-danger">{{ $message }}</span>
-                        @enderror
+                    <div class="form-group row">
+                        <label class="col-form-label col-lg-2">Sisa</label>
+                        <div class="col-lg-10">
+                            <input type="number" class="form-control {{ $errors->has('sisa') ? ' border-danger' : null }}"
+                                wire:model="sisa" disabled>
+                            @error('sisa')
+                                <span class="form-text text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
-                </div>
+                @else
+                    <div class="form-group row mt-2">
+                        <label class="col-form-label col-lg-2">Status Pembayaran</label>
+                        <div class="col-lg-10">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" checked=""
+                                        wire:model="statusbayar">
+                                    Bayar Lunas
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                @endcan
                 <div class="row">
                     <div class="col-md-12">
                         <button type="button" wire:click='Transaksi'
@@ -308,8 +323,10 @@
                                 <tr>
                                     <th>Barang</th>
                                     <th>Quantity</th>
-                                    <th>Harga Beli</th>
-                                    <th>Sub Total</th>
+                                    @can('harga_beli')
+                                        <th>Harga Beli</th>
+                                        <th>Sub Total</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -317,16 +334,20 @@
                                     <tr>
                                         <td>{{ $item->product->name }}</td>
                                         <td>{{ $item->qty }}</td>
-                                        <td>{{ number_format($item->harga_beli, 0, ',', '.') }}</td>
-                                        <td>{{ number_format($item->sub_total, 0, ',', '.') }}</td>
+                                        @can('harga_beli')
+                                            <td>Rp. {{ number_format($item->harga_beli, 0, ',', '.') }}</td>
+                                            <td>Rp. {{ number_format($item->sub_total, 0, ',', '.') }}</td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                         <div class="text-right mt-2">
-                            <p><strong>Total :</strong> {{ number_format($beli->total, 0, ',', '.') }}</p>
-                            <p><strong>Bayar:</strong> {{ number_format($beli->bayar, 0, ',', '.') }}</p>
-                            <p><strong>Hutang:</strong> {{ number_format($beli->sisa, 0, ',', '.') }}</p>
+                            @can('harga_beli')
+                                <p><strong>Total :</strong> Rp. {{ number_format($beli->total, 0, ',', '.') }}</p>
+                                <p><strong>Bayar:</strong> Rp. {{ number_format($beli->bayar, 0, ',', '.') }}</p>
+                                <p><strong>Hutang:</strong> Rp. {{ number_format($beli->sisa, 0, ',', '.') }}</p>
+                            @endcan
                         </div>
                     </div>
                 </div>

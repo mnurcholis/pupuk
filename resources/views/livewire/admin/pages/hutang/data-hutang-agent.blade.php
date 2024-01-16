@@ -171,7 +171,7 @@
                                         <tr>
                                             <th>Barang</th>
                                             <th>Quantity</th>
-                                            <th>Harga Beli</th>
+                                            <th>Harga Jual</th>
                                             <th>Sub Total</th>
                                         </tr>
                                     </thead>
@@ -180,8 +180,8 @@
                                             <tr>
                                                 <td>{{ $item->product->name }}</td>
                                                 <td>{{ $item->qty_keluar }}</td>
-                                                <td>{{ number_format($item->harga_beli, 0, ',', '.') }}</td>
-                                                <td>{{ number_format($item->sub_total, 0, ',', '.') }}</td>
+                                                <td>Rp. {{ number_format($item->harga_jual, 0, ',', '.') }}</td>
+                                                <td>Rp. {{ number_format($item->sub_total, 0, ',', '.') }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -197,11 +197,11 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>{{ number_format($beli->HutangAgent->awal ?? $beli->total, 0, ',', '.') }}
+                                            <td>Rp. {{ number_format($beli->HutangAgent->awal ?? $beli->total, 0, ',', '.') }}
                                             </td>
-                                            <td>{{ number_format($beli->HutangAgent->bayar ?? $beli->bayar, 0, ',', '.') }}
+                                            <td>Rp. {{ number_format($beli->HutangAgent->bayar ?? $beli->bayar, 0, ',', '.') }}
                                             </td>
-                                            <td>{{ number_format($beli->HutangAgent->sisa ?? $beli->sisa, 0, ',', '.') }}
+                                            <td>Rp. {{ number_format($beli->HutangAgent->sisa ?? $beli->sisa, 0, ',', '.') }}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -219,7 +219,7 @@
                                             @foreach ($beli->HutangAgent->HutangAgentDetail as $val)
                                                 <tr>
                                                     <td>{{ $val->tanggal }}</td>
-                                                    <td>{{ number_format($val->bayar, 0, ',', '.') }}
+                                                    <td>Rp. {{ number_format($val->bayar, 0, ',', '.') }}
                                                     </td>
                                                 </tr>
                                             @endforeach

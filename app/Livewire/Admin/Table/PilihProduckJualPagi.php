@@ -34,10 +34,11 @@ class PilihProduckJualPagi extends DataTableComponent
             Column::make("Nama", "product.name")
                 ->sortable()->searchable(),
             Column::make("Beli", "harga_beli")
+                ->hideIf(!auth()->user()->hasRole('admin'))
                 ->sortable()->searchable()
                 ->format(
                     function ($value, $row, Column $column) {
-                        return number_format($row->harga_beli, 0, ',', '.');
+                        return 'Rp. ' . number_format($row->harga_beli, 0, ',', '.');
                     }
                 )
                 ->html(),
@@ -45,7 +46,7 @@ class PilihProduckJualPagi extends DataTableComponent
                 ->sortable()->searchable()
                 ->format(
                     function ($value, $row, Column $column) {
-                        return number_format($row->harga_jual, 0, ',', '.');
+                        return 'Rp. ' . number_format($row->harga_jual, 0, ',', '.');
                     }
                 )
                 ->html(),
@@ -55,7 +56,7 @@ class PilihProduckJualPagi extends DataTableComponent
                 ->sortable()->searchable()
                 ->format(
                     function ($value, $row, Column $column) {
-                        return number_format($row->sub_total, 0, ',', '.');
+                        return 'Rp. ' . number_format($row->sub_total, 0, ',', '.');
                     }
                 )
                 ->html(),

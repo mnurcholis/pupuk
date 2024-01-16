@@ -11,10 +11,21 @@ use Livewire\Component;
 
 class TransaksiBeli extends Component
 {
-    public $idNya, $product_id, $product, $harga_beli, $qty, $sub_total, $satuan, $list_add_product = [], $jumlah = 0, $total = 0, $vendor_id, $vendor, $bayar = 0, $sisa, $invoice, $beli;
+    public $idNya, $product_id, $product, $harga_beli, $qty, $sub_total, $satuan, $list_add_product = [], $jumlah = 0, $total = 0, $vendor_id, $vendor, $bayar, $sisa, $invoice, $beli, $statusbayar = false;
     public $isEdit = false;
 
     protected $listeners = ['SelectProduct', 'SelectVendor', 'CetakInvoiceBeli', 'ConfirmBatalBeli', 'DetailBeli'];
+
+    public function updatedStatusbayar()
+    {
+        if ($this->statusbayar) {
+            $this->bayar = $this->total;
+            $this->sisa = 0;
+        } else {
+            $this->bayar = 0;
+            $this->sisa = $this->total;
+        }
+    }
 
     public function add()
     {
@@ -107,6 +118,13 @@ class TransaksiBeli extends Component
 
     public function Transaksi()
     {
+        if ($this->statusbayar) {
+            $this->bayar = $this->total;
+            $this->sisa = 0;
+        } else {
+            $this->bayar = 0;
+            $this->sisa = $this->total;
+        }
         $rules['list_add_product'] = 'required';
         $rules['vendor_id'] = 'required';
         $rules['bayar'] = 'required';
@@ -151,7 +169,10 @@ class TransaksiBeli extends Component
             $this->bayar = null;
             $this->total = null;
             $this->sisa = null;
-            $this->dispatchBrowserEvent('show-print-modal');
+            $this->statusbayar = false;
+            if (auth()->user()->hasRole('admin')) {
+                $this->dispatchBrowserEvent('show-print-modal');
+            }
         } catch (\Exception $e) {
             $this->emit('refreshDatatable');
             $this->dispatchBrowserEvent('swal:modal', [

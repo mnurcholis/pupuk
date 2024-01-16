@@ -25,7 +25,7 @@ class DataProductTable extends DataTableComponent
                 ->sortable()->searchable()
                 ->format(
                     function ($value, $row, Column $column) {
-                        return number_format($row->harga_beli, 0, ',', '.');
+                        return 'Rp. ' . number_format($row->harga_beli, 0, ',', '.');
                     }
                 )
                 ->html(),
@@ -33,7 +33,7 @@ class DataProductTable extends DataTableComponent
                 ->sortable()->searchable()
                 ->format(
                     function ($value, $row, Column $column) {
-                        return number_format($row->harga_jual, 0, ',', '.');
+                        return 'Rp. ' . number_format($row->harga_jual, 0, ',', '.');
                     }
                 )
                 ->html(),
@@ -45,7 +45,7 @@ class DataProductTable extends DataTableComponent
                 ->sortable()->searchable()
                 ->format(
                     function ($value, $row, Column $column) {
-                        return number_format($row->total, 0, ',', '.');
+                        return 'Rp. ' . number_format($row->total, 0, ',', '.');
                     }
                 )
                 ->html(),

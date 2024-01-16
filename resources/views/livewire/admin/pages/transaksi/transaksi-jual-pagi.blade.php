@@ -32,14 +32,16 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-1 pl-0 pr-0">
-                        <div class="form-group">
-                            <label>Beli:</label>
-                            <input type="text"
-                                class="form-control {{ $errors->has('product_id') ? ' border-danger' : null }}"
-                                value="{{ $product->harga_beli ?? '' }}" readonly>
+                    @can('harga_beli')
+                        <div class="col-md-1 pl-0 pr-0">
+                            <div class="form-group">
+                                <label>Beli:</label>
+                                <input type="text"
+                                    class="form-control {{ $errors->has('product_id') ? ' border-danger' : null }}"
+                                    value="Rp. {{ number_format($product->harga_beli ?? 0, 0, ',', '.') }}" readonly>
+                            </div>
                         </div>
-                    </div>
+                    @endcan
                     <div class="col-md-1 pl-0 pr-0">
                         <div class="form-group">
                             <label>Satuan:</label>
@@ -51,9 +53,9 @@
                     <div class="col-md-2 pl-0 pr-0">
                         <div class="form-group">
                             <label>Jual:</label>
-                            <input type="number"
+                            <input type="text"
                                 class="form-control {{ $errors->has('harga_jual') ? ' border-danger' : null }}"
-                                wire:model="harga_jual" readonly>
+                                value="Rp. {{ number_format($product->harga_beli ?? 0, 0, ',', '.') }}" readonly>
                             @error('harga_jual')
                                 <span class="form-text text-danger">{{ $message }}</span>
                             @enderror
@@ -73,9 +75,9 @@
                     <div class="col-md-2 pl-0">
                         <div class="form-group">
                             <label>Sub Total:</label>
-                            <input type="number"
+                            <input type="text"
                                 class="form-control {{ $errors->has('sub_total') ? ' border-danger' : null }}"
-                                wire:model="sub_total" readonly>
+                                value="Rp. {{ number_format($sub_total ?? 0, 0, ',', '.') }}" readonly>
                             @error('sub_total')
                                 <span class="form-text text-danger">{{ $message }}</span>
                             @enderror
@@ -96,7 +98,9 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Beli</th>
+                                        @can('harga_beli')
+                                            <th>Beli</th>
+                                        @endcan
                                         <th>Jual</th>
                                         <th>Qty</th>
                                         <th>Sub Total</th>
@@ -108,10 +112,12 @@
                                         <tr>
                                             <td>{{ $a['id'] }}</td>
                                             <td>{{ $a['name'] }}</td>
-                                            <td>{{ number_format($a['harga_beli'], 0, ',', '.') }}</td>
-                                            <td>{{ number_format($a['harga_jual'], 0, ',', '.') }}</td>
+                                            @can('harga_beli')
+                                                <td>Rp. {{ number_format($a['harga_beli'], 0, ',', '.') }}</td>
+                                            @endcan
+                                            <td>Rp. {{ number_format($a['harga_jual'], 0, ',', '.') }}</td>
                                             <td>{{ $a['qty'] }}</td>
-                                            <td>{{ number_format($a['sub_total'], 0, ',', '.') }}</td>
+                                            <td>Rp. {{ number_format($a['sub_total'], 0, ',', '.') }}</td>
                                             <td><button type="button"
                                                     class="btn bg-pink-400 btn-icon rounded-round btn-sm"
                                                     wire:click="hapusProduct({{ $a['id'] }},{{ $a['sub_total'] }})"><i
@@ -123,9 +129,13 @@
                                         @endphp
                                     @endforeach
                                     <tr>
-                                        <td colspan="4"></td>
-                                        <td><b>{{ number_format($jumlah, 0, ',', '.') }}</b></td>
-                                        <td><b>{{ number_format($total, 0, ',', '.') }}</b></td>
+                                        @can('harga_beli')
+                                            <td colspan="4"></td>
+                                        @else
+                                            <td colspan="3"></td>
+                                        @endcan
+                                        <td><b>Rp. {{ number_format($jumlah, 0, ',', '.') }}</b></td>
+                                        <td><b>Rp. {{ number_format($total, 0, ',', '.') }}</b></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -156,7 +166,7 @@
                     <div class="col-lg-10">
                         <input type="text"
                             class="form-control {{ $errors->has('total') ? ' border-danger' : null }}"
-                            value="{{ $total }}" readonly>
+                            value="Rp. {{ number_format($total, 0, ',', '.') }}" readonly>
                         @error('total')
                             <span class="form-text text-danger">{{ $message }}</span>
                         @enderror
@@ -272,7 +282,9 @@
                                 <tr>
                                     <th>Barang</th>
                                     <th>Quantity</th>
-                                    <th>Harga Beli</th>
+                                    @can('harga_beli')
+                                        <th>Harga Beli</th>
+                                    @endcan
                                     <th>Harga Jual</th>
                                     <th>Sub Total</th>
                                 </tr>
@@ -282,15 +294,17 @@
                                     <tr>
                                         <td>{{ $item->product->name }}</td>
                                         <td>{{ $item->qty }}</td>
-                                        <td>{{ number_format($item->harga_beli, 0, ',', '.') }}</td>
-                                        <td>{{ number_format($item->harga_jual, 0, ',', '.') }}</td>
-                                        <td>{{ number_format($item->sub_total, 0, ',', '.') }}</td>
+                                        @can('harga_beli')
+                                            <td>Rp. {{ number_format($item->harga_beli, 0, ',', '.') }}</td>
+                                        @endcan
+                                        <td>Rp. {{ number_format($item->harga_jual, 0, ',', '.') }}</td>
+                                        <td>Rp. {{ number_format($item->sub_total, 0, ',', '.') }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                         <div class="text-right mt-2">
-                            <p><strong>Total :</strong> {{ number_format($jual->total, 0, ',', '.') }}</p>
+                            <p><strong>Total :</strong> Rp. {{ number_format($jual->total, 0, ',', '.') }}</p>
                         </div>
                     </div>
                 </div>

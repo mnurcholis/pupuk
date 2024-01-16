@@ -41,7 +41,7 @@ class TransaksiJualPagiTable extends DataTableComponent
             Column::make('Total', 'total')
                 ->format(
                     function ($value, $row, Column $column) {
-                        return number_format($row->total, 0, ',', '.');
+                        return 'Rp. ' . number_format($row->total, 0, ',', '.');
                     }
                 )
                 ->html(),

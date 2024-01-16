@@ -45,30 +45,41 @@ class DataHutangVendorTable extends DataTableComponent
             Column::make('Piutang', 'total')
                 ->format(
                     function ($value, $row, Column $column) {
-                        return number_format($row->total, 0, ',', '.');
+                        return 'Rp. ' . number_format($row->total, 0, ',', '.');
                     }
                 )
                 ->html(),
             Column::make('Bayar', 'bayar')
                 ->format(
                     function ($value, $row, Column $column) {
-                        return number_format($row->bayar, 0, ',', '.');
+                        return 'Rp. ' . number_format($row->bayar, 0, ',', '.');
                     }
                 )
                 ->html(),
             Column::make('Hutang', 'sisa')
                 ->format(
                     function ($value, $row, Column $column) {
-                        return number_format($row->sisa, 0, ',', '.');
+                        return 'Rp. ' . number_format($row->sisa, 0, ',', '.');
                     }
                 )
                 ->html(),
             Column::make('Action', 'id')
+            ->hideIf(!auth()->user()->hasRole('admin'))
                 ->format(
                     function ($value, $row, Column $column) {
                         return '
                         <button type="button" class="btn btn-outline-info btn-sm" wire:click="Detail(' . $row->id . ')")"><i class="icon-eye"></i></button>
                         <button type="button" class="btn btn-outline-warning btn-sm" wire:click="Bayar(' . $row->id . ')")"><i class="icon-cart4"></i> Bayar</button>
+                        ';
+                    }
+                )
+                ->html(),
+            Column::make('Action', 'id')
+            ->hideIf(!auth()->user()->hasRole('karyawan'))
+                ->format(
+                    function ($value, $row, Column $column) {
+                        return '
+                        <button type="button" class="btn btn-outline-info btn-sm" wire:click="Detail(' . $row->id . ')")"><i class="icon-eye"></i></button>
                         ';
                     }
                 )

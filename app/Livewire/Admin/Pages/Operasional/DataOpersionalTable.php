@@ -21,7 +21,13 @@ class DataOpersionalTable extends DataTableComponent
             Column::make("Nama", "name")
                 ->sortable()->searchable(),
             Column::make("Total", "total")
-                ->sortable()->searchable(),
+                ->sortable()->searchable()
+                ->format(
+                    function ($value, $row, Column $column) {
+                        return 'Rp. ' . number_format($row->total, 0, ',', '.');
+                    }
+                )
+                ->html(),
             Column::make("Keterangan", "keterangan")
                 ->sortable()->searchable(),
             Column::make('Action', 'id')->view('components.table-action'),

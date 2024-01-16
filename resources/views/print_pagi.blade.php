@@ -86,15 +86,15 @@
                         <tr>
                             <td>{{ $item->product->name }}</td>
                             <td>{{ $item->qty }}</td>
-                            <td>{{ number_format($item->harga_jual, 0, ',', '.') }}</td>
-                            <td>{{ number_format($item->sub_total, 0, ',', '.') }}</td>
+                            <td>Rp. {{ number_format($item->harga_jual, 0, ',', '.') }}</td>
+                            <td>Rp. {{ number_format($item->sub_total, 0, ',', '.') }}</td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
 
             <div class="invoice-total">
-                <p><strong>Total :</strong> {{ number_format($data->total, 0, ',', '.') }}</p>
+                <p><strong>Total :</strong> Rp. {{ number_format($data->total, 0, ',', '.') }}</p>
             </div>
         </div>
     </div>

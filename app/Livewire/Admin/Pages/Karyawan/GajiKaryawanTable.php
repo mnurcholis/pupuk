@@ -27,9 +27,21 @@ class GajiKaryawanTable extends DataTableComponent
             Column::make("Rekening", "karyawan.account")
                 ->sortable()->searchable(),
             Column::make("Gaji", "gaji")
-                ->sortable()->searchable(),
+                ->sortable()->searchable()
+                ->format(
+                    function ($value, $row, Column $column) {
+                        return 'Rp. ' . number_format($row->gaji, 0, ',', '.');
+                    }
+                )
+                ->html(),
             Column::make("Bonus", "bonus")
-                ->sortable()->searchable(),
+                ->sortable()->searchable()
+                ->format(
+                    function ($value, $row, Column $column) {
+                        return 'Rp. ' . number_format($row->bonus, 0, ',', '.');
+                    }
+                )
+                ->html(),
             Column::make('Action', 'id')->view('components.table-action'),
         ];
     }

@@ -54,7 +54,7 @@
                                 <label>Beli:</label>
                                 <input type="text"
                                     class="form-control {{ $errors->has('product_id') ? ' border-danger' : null }}"
-                                    value="{{ $product->harga_beli ?? '' }}" readonly>
+                                    value="Rp. {{ number_format($product->harga_beli ?? 0, 0, ',', '.') }}" readonly>
                             </div>
                         </div>
                     @endcan
@@ -69,9 +69,9 @@
                     <div class="col-md-2 pl-0 pr-0">
                         <div class="form-group">
                             <label>Jual:</label>
-                            <input type="number"
+                            <input type="text"
                                 class="form-control {{ $errors->has('harga_jual') ? ' border-danger' : null }}"
-                                wire:model="harga_jual" readonly>
+                                value="Rp. {{ number_format($product->harga_jual ?? 0, 0, ',', '.') }}" readonly>
                             @error('harga_jual')
                                 <span class="form-text text-danger">{{ $message }}</span>
                             @enderror
@@ -91,9 +91,9 @@
                     <div class="col-md-2 pl-0">
                         <div class="form-group">
                             <label>Sub Total:</label>
-                            <input type="number"
+                            <input type="text"
                                 class="form-control {{ $errors->has('sub_total') ? ' border-danger' : null }}"
-                                wire:model="sub_total" readonly>
+                                value="Rp. {{ number_format($sub_total ?? 0, 0, ',', '.') }}" readonly>
                             @error('sub_total')
                                 <span class="form-text text-danger">{{ $message }}</span>
                             @enderror
@@ -171,7 +171,7 @@
                     <div class="col-lg-10">
                         <input type="text"
                             class="form-control {{ $errors->has('total') ? ' border-danger' : null }}"
-                            value="{{ $total }}" readonly>
+                            value="Rp. {{ number_format($total ?? 0, 0, ',', '.') }}" readonly>
                         @error('total')
                             <span class="form-text text-danger">{{ $message }}</span>
                         @enderror
@@ -191,9 +191,9 @@
                 <div class="form-group row">
                     <label class="col-form-label col-lg-2">Sisa</label>
                     <div class="col-lg-10">
-                        <input type="number"
+                        <input type="text"
                             class="form-control {{ $errors->has('sisa') ? ' border-danger' : null }}"
-                            wire:model="sisa" readonly>
+                            value="Rp. {{ number_format($sisa ?? 0, 0, ',', '.') }}" readonly>
                         @error('sisa')
                             <span class="form-text text-danger">{{ $message }}</span>
                         @enderror

@@ -118,7 +118,7 @@
                                             @can('harga_beli')
                                                 <td>Rp. {{ number_format($a['harga_beli'], 0, ',', '.') }}</td>
                                             @endcan
-                                            <td>Rp. {{ number_format($a['qty'], 0, ',', '.') }}</td>
+                                            <td>{{ $a['qty'] }}</td>
                                             @can('harga_beli')
                                                 <td>Rp. {{ number_format($a['sub_total'], 0, ',', '.') }}</td>
                                             @endcan
@@ -138,7 +138,7 @@
                                         @else
                                             <td colspan="2"></td>
                                         @endcan
-                                        <td><b>Rp. {{ number_format($jumlah, 0, ',', '.') }}</b></td>
+                                        <td><b>{{ $jumlah }}</b></td>
                                         @can('harga_beli')
                                             <td><b>Rp. {{ number_format($total, 0, ',', '.') }}</b></td>
                                         @endcan
@@ -193,8 +193,7 @@
                     <div class="form-group row">
                         <label class="col-form-label col-lg-2">Sisa</label>
                         <div class="col-lg-10">
-                            <input type="number" class="form-control {{ $errors->has('sisa') ? ' border-danger' : null }}"
-                                wire:model="sisa" disabled>
+                            <input type="text" class="form-control {{ $errors->has('sisa') ? ' border-danger' : null }}" value="Rp. {{ number_format($sisa, 0, ',', '.') }}" disabled>
                             @error('sisa')
                                 <span class="form-text text-danger">{{ $message }}</span>
                             @enderror

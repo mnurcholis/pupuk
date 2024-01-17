@@ -150,6 +150,31 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header header-elements-inline">
+                    <h5 class="card-title">LAPORAN LABA RUGI KESELURUHAN TRANSAKSI</h5>
+                </div>
+                <div class="card-body">
+                    <div>
+                        @if (session()->has('success'))
+                            <div class="alert alert-warning alert-styled-left alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+                                <span class="font-weight-semibold">Warning!</span> {{ session('success') }}
+                            </div>
+                        @endif
+                        <button class="btn btn-primary" wire:click="laporanKeseluruhan" wire:loading.attr="disabled">
+                            <span wire:loading.attr="laporanKeseluruhan">Generate PDF</span>
+                            <div wire:loading wire:target="laporanKeseluruhan">
+                                Downloading Report...
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

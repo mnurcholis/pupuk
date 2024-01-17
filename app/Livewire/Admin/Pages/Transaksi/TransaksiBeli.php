@@ -118,12 +118,14 @@ class TransaksiBeli extends Component
 
     public function Transaksi()
     {
-        if ($this->statusbayar) {
-            $this->bayar = $this->total;
-            $this->sisa = 0;
-        } else {
-            $this->bayar = 0;
-            $this->sisa = $this->total;
+        if (auth()->user()->hasRole('karyawan')) {
+            if ($this->statusbayar) {
+                $this->bayar = $this->total;
+                $this->sisa = 0;
+            } else {
+                $this->bayar = 0;
+                $this->sisa = $this->total;
+            }
         }
         $rules['list_add_product'] = 'required';
         $rules['vendor_id'] = 'required';

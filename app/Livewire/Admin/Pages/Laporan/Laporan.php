@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Pages\Laporan;
 
 use App\Models\DetailTransaksiBeli;
 use App\Models\Gaji;
+use App\Models\Operasional;
 use App\Models\Product;
 use App\Models\TransaksiBeli;
 use App\Models\TransaksiJualPagi;
@@ -154,6 +155,42 @@ class Laporan extends Component
         $pdf = Pdf::loadView('laporan.data_gaji', $data)->output();
 
         $filename = 'data_gaji_report_' . now()->format('Ymd_His') . '.pdf';
+
+        return response()->streamDownload(
+            fn () => print($pdf),
+            $filename
+        );
+    }
+
+    public function laporanKeseluruhan()
+    {
+        $beli = TransaksiBeli::where('sisa', '>', 0)->get();
+        if ($beli->count() > 0) {
+            session()->flash('success', 'Pembayaran Ke Vendor Belum Lunas Semua, Harap Selesaikan... Supaya Laporan Singkron...');
+            return;
+        }
+
+        $beli = TransaksiJualSore::where('sisa', '>', 0)->get();
+        if ($beli->count() > 0) {
+            session()->flash('success', 'Pembayaran Agent Belum Lunas Semua, Harap Selesaikan... Supaya Laporan Singkron...');
+            return;
+        }
+
+        $akun['databeli'] = TransaksiBeli::all();
+        $akun['datajual'] = TransaksiJualSore::all();
+        $akun['datajualdetail'] = TransaksiJualSoreDetail::all();
+        $akun['datagaji'] = Gaji::all();
+        $akun['dataoperasional'] = Operasional::all();
+
+        $data = [
+            'title' => get_setting()->title,
+            'date' => date('m/d/Y'),
+            'data' => $akun
+        ];
+
+        $pdf = Pdf::loadView('laporan.total', $data)->output();
+
+        $filename = 'data_total_report_' . now()->format('Ymd_His') . '.pdf';
 
         return response()->streamDownload(
             fn () => print($pdf),

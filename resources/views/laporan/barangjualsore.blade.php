@@ -33,9 +33,9 @@
                     <tr>
                         <td>{{ $item->product->name }}</td>
                         <td>{{ $item['qty_keluar'] }}</td>
-                        <td>{{ number_format($item['harga_beli'], 0, ',', '.') }}</td>
-                        <td>{{ number_format($item['harga_jual'], 0, ',', '.') }}</td>
-                        <td>{{ number_format($item['sub_total'], 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($item['harga_beli'], 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($item['harga_jual'], 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($item['sub_total'], 0, ',', '.') }}</td>
                         <td>{{ $item->product->satuan }}</td>
                     </tr>
                     @php
@@ -53,8 +53,8 @@
 
 
     </table>
-    <p><strong>Pengmasukan Keseluhuran : {{ number_format($omset, 0, ',', '.') }}</strong></p>
-    <p><strong>Pengmasukan bersih : {{ number_format($bersih, 0, ',', '.') }}</strong></p>
+    <p><strong>Pengmasukan Keseluhuran : Rp. {{ number_format($omset, 0, ',', '.') }}</strong></p>
+    <p><strong>Pengmasukan bersih : Rp. {{ number_format($bersih, 0, ',', '.') }}</strong></p>
 
 </body>
 

@@ -31,9 +31,9 @@
                     <tr>
                         <td>{{ $item['invoice'] }}</td>
                         <td>{{ $item['agent']['name'] }}</td>
-                        <td>{{ number_format($item['total'], 0, ',', '.') }}</td>
-                        <td>{{ number_format($item['bayar'], 0, ',', '.') }}</td>
-                        <td>{{ number_format($item['sisa'], 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($item['total'], 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($item['bayar'], 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($item['sisa'], 0, ',', '.') }}</td>
                     </tr>
                     @php
                         $total_hutang += $item['sisa'];
@@ -47,7 +47,7 @@
         </tbody>
 
     </table>
-    <p><strong>Total Hutang ke Agent : {{ number_format($total_hutang, 0, ',', '.') }}</strong></p>
+    <p><strong>Total Hutang ke Agent : Rp. {{ number_format($total_hutang, 0, ',', '.') }}</strong></p>
 
 </body>
 

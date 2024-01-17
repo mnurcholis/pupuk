@@ -29,9 +29,9 @@
                     <tr>
                         <td>{{ $item['name'] }}</td>
                         <td>{{ $item['qty'] }}</td>
-                        <td>{{ number_format($item['harga_beli'], 0, ',', '.') }}</td>
-                        <td>{{ number_format($item['harga_jual'], 0, ',', '.') }}</td>
-                        <td>{{ number_format($item['total'], 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($item['harga_beli'], 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($item['harga_jual'], 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($item['total'], 0, ',', '.') }}</td>
                         <td>{{ $item['satuan'] }}</td>
                     </tr>
                 @endforeach

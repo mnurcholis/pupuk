@@ -25,8 +25,8 @@
                 @foreach ($beli as $item)
                     <tr>
                         <td>{{ $item['karyawan']['name'] }}</td>
-                        <td>{{ number_format($item['gaji'], 0, ',', '.') }}</td>
-                        <td>{{ number_format($item['bonus'], 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($item['gaji'], 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($item['bonus'], 0, ',', '.') }}</td>
                         <td>{{ $item['karyawan']['comcode']['code_nm'] }}</td>
                     </tr>
                 @endforeach

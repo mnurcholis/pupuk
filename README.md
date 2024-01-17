@@ -19,7 +19,13 @@ import database pupuk.sql ke database yang anda buat
 
 
 ## email dan password login
+Admin
 ```bash
 email : admin@app.com
+password : password
+```
+Karyawan
+```bash
+email : user@app.com
 password : password
 ```

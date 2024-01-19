@@ -52,6 +52,6 @@ class RoleAndPermissionSeeder extends Seeder
 
         // or may be done by chaining
         $role = Role::create(['name' => 'admin'])
-            ->givePermissionTo(Permission::all());
+            ->givePermissionTo(Permission::all()->pluck('name'));
     }
 }

@@ -6,9 +6,9 @@
         <div class="card-header">
             @can('harga_beli')
                 @if ($isEdit)
-                    <a href="#" wire:click='cancel' class="btn btn-warning mt-md-0 mt-2 ml-md-8">Cancel</a>
+                    <button type="button" wire:click='cancel' class="btn btn-warning mt-md-0 mt-2 ml-md-8">Cancel</button>
                 @else
-                    <a href="#" wire:click='add' class="btn btn-primary mt-md-0 mt-2">Add Product</a>
+                    <button type="button" wire:click='add' class="btn btn-primary mt-md-0 mt-2">Add Product</button>
                 @endif
             @endcan
 

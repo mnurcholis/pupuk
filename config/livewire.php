@@ -89,6 +89,8 @@ return [
 
     'render_on_redirect' => false,
 
+    'asset_url' => url(''),
+
     /*
     |---------------------------------------------------------------------------
     | Eloquent Model Binding

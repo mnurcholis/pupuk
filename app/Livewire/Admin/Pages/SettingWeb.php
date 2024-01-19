@@ -35,7 +35,7 @@ class SettingWeb extends Component
                     Storage::delete($this->edit_logo);
                 }
             }
-            $setting->logo = $this->logo->store('public/setting_web');
+            $setting->logo = $this->logo->store('public/images');
         }
         if ($this->favicon != '') {
             if ($this->edit_favicon != "") {
@@ -43,7 +43,7 @@ class SettingWeb extends Component
                     Storage::delete($this->edit_favicon);
                 }
             }
-            $setting->favicon = $this->favicon->store('public/setting_web');
+            $setting->favicon = $this->favicon->store('public/images');
         }
         $setting->save();
         $this->dispatchBrowserEvent('swal:modal', [

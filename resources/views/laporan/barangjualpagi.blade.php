@@ -35,6 +35,13 @@
                         <td>{{ $item->product->satuan }}</td>
                     </tr>
                 @endforeach
+                <tr class="text-bold">
+                    <td>Jumlah</td>
+                    <td>{{ $beli->sum('qty') }}</td>
+                    <td>Rp. {{ number_format($beli->sum('harga_beli'), 0, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($beli->sum('harga_jual'), 0, ',', '.') }}</td>
+                    <td colspan="2">Rp. {{ number_format($beli->sum('sub_total'), 0, ',', '.') }}</td>
+                </tr>
             @else
                 <tr>
                     <td colspan="6">No data available</td>

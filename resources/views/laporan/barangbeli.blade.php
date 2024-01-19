@@ -22,6 +22,9 @@
             </tr>
         </thead>
         <tbody>
+            @php
+                $total = 0;
+            @endphp
             @if ($beli)
                 @foreach ($beli as $item)
                     <tr>
@@ -30,7 +33,16 @@
                         <td>Rp. {{ number_format($item['harga_beli'], 0, ',', '.') }}</td>
                         <td>Rp. {{ number_format($item['sub_total'], 0, ',', '.') }}</td>
                     </tr>
+                    @php
+                        $total += $item['sub_total'];
+                    @endphp
                 @endforeach
+                <tr>
+                    <td>jumlah qty</td>
+                    <td>{{ $beli->sum('qty') }}</td>
+                    <td>jumlah belanjan</td>
+                    <td>Rp. {{ number_format($beli->sum('sub_total'), 0, ',', '.') }}</td>
+                </tr>
             @else
                 <tr>
                     <td colspan="6">No data available</td>

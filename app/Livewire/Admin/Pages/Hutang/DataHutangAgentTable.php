@@ -42,24 +42,24 @@ class DataHutangAgentTable extends DataTableComponent
                 ->sortable(),
             Column::make("Tanggal", "tanggal")
                 ->sortable(),
-            Column::make('Piutang', 'total')
+            Column::make('Total', 'total')
                 ->format(
                     function ($value, $row, Column $column) {
-                        return 'Rp. '.number_format($row->total, 0, ',', '.');
+                        return 'Rp. ' . number_format($row->total, 0, ',', '.');
                     }
                 )
                 ->html(),
             Column::make('Bayar', 'bayar')
                 ->format(
                     function ($value, $row, Column $column) {
-                        return 'Rp. '.number_format($row->bayar, 0, ',', '.');
+                        return 'Rp. ' . number_format($row->bayar, 0, ',', '.');
                     }
                 )
                 ->html(),
-            Column::make('Hutang', 'sisa')
+            Column::make('Sisa Piutang', 'sisa')
                 ->format(
                     function ($value, $row, Column $column) {
-                        return 'Rp. '.number_format($row->sisa, 0, ',', '.');
+                        return 'Rp. ' . number_format($row->sisa, 0, ',', '.');
                     }
                 )
                 ->html(),

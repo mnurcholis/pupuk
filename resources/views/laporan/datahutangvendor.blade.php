@@ -19,7 +19,7 @@
                 <th>Vendor</th>
                 <th>Total</th>
                 <th>Bayar</th>
-                <th>Sisa</th>
+                <th>Hutang</th>
             </tr>
         </thead>
         <tbody>
@@ -39,6 +39,12 @@
                         $total_hutang += $item['sisa'];
                     @endphp
                 @endforeach
+                <tr class="text-bold">
+                    <td colspan="2" class="text-right">Total</td>
+                    <td>Rp. {{ number_format($beli->sum('total'), 0, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($beli->sum('bayar'), 0, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($beli->sum('sisa'), 0, ',', '.') }}</td>
+                </tr>
             @else
                 <tr>
                     <td colspan="6">No data available</td>

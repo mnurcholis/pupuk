@@ -42,7 +42,7 @@ class DataHutangVendorTable extends DataTableComponent
                 ->sortable(),
             Column::make("Tanggal", "tanggal")
                 ->sortable(),
-            Column::make('Piutang', 'total')
+            Column::make('Total', 'total')
                 ->format(
                     function ($value, $row, Column $column) {
                         return 'Rp. ' . number_format($row->total, 0, ',', '.');
@@ -56,7 +56,7 @@ class DataHutangVendorTable extends DataTableComponent
                     }
                 )
                 ->html(),
-            Column::make('Hutang', 'sisa')
+            Column::make('Sisa Hutang', 'sisa')
                 ->format(
                     function ($value, $row, Column $column) {
                         return 'Rp. ' . number_format($row->sisa, 0, ',', '.');

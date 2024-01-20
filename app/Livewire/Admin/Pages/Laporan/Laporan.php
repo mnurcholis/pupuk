@@ -21,7 +21,7 @@ class Laporan extends Component
 
     public function stokProduct()
     {
-        $users = Product::get();
+        $users = Product::orderBy('created_at', 'desc')->get();
 
         $data = [
             'title' => get_setting()->title,
@@ -41,7 +41,7 @@ class Laporan extends Component
 
     public function BarangDatang()
     {
-        $beli = DetailTransaksiBeli::get();
+        $beli = DetailTransaksiBeli::orderBy('created_at', 'desc')->get();
 
         $data = [
             'title' => get_setting()->title,
@@ -61,7 +61,7 @@ class Laporan extends Component
 
     public function BarangKeluarPagi()
     {
-        $beli = TransaksiJualPagiDetail::get();
+        $beli = TransaksiJualPagiDetail::orderBy('created_at', 'desc')->get();
 
         $data = [
             'title' => get_setting()->title,
@@ -81,7 +81,7 @@ class Laporan extends Component
 
     public function BarangKeluarSore()
     {
-        $beli = TransaksiJualSoreDetail::get();
+        $beli = TransaksiJualSoreDetail::orderBy('created_at', 'desc')->get();
 
         $data = [
             'title' => get_setting()->title,
@@ -101,7 +101,7 @@ class Laporan extends Component
 
     public function dataHutangVendor()
     {
-        $beli = TransaksiBeli::where('sisa', '>', 0)->get();
+        $beli = TransaksiBeli::where('sisa', '>', 0)->orderBy('created_at', 'desc')->get();
 
         $data = [
             'title' => get_setting()->title,
@@ -121,7 +121,7 @@ class Laporan extends Component
 
     public function dataHutangAgent()
     {
-        $beli = TransaksiJualSore::where('sisa', '>', 0)->get();
+        $beli = TransaksiJualSore::where('sisa', '>', 0)->orderBy('created_at', 'desc')->get();
 
         $data = [
             'title' => get_setting()->title,
@@ -144,7 +144,7 @@ class Laporan extends Component
         $rules['d_awal'] = 'required';
         $rules['d_akhir'] = 'required';
         $this->validate($rules);
-        $beli = Gaji::whereBetween('created_at', [$this->d_awal, $this->d_akhir])->get();
+        $beli = Gaji::whereBetween('created_at', [$this->d_awal, $this->d_akhir])->orderBy('created_at', 'desc')->get();
 
         $data = [
             'title' => get_setting()->title,
@@ -162,20 +162,22 @@ class Laporan extends Component
         );
     }
 
-    public function laporanKeseluruhan()
+    public function CekLaporan()
     {
         $beli = TransaksiBeli::where('sisa', '>', 0)->get();
+        $jual = TransaksiJualSore::where('sisa', '>', 0)->get();
         if ($beli->count() > 0) {
-            session()->flash('success', 'Pembayaran Ke Vendor Belum Lunas Semua, Harap Selesaikan... Supaya Laporan Singkron...');
-            return;
+            $this->dispatchBrowserEvent('show-cetak-modal');
+        } else if ($jual->count() > 0) {
+            $this->dispatchBrowserEvent('show-cetak-modal');
+        } else {
+            $this->laporanKeseluruhan();
         }
+    }
 
-        $beli = TransaksiJualSore::where('sisa', '>', 0)->get();
-        if ($beli->count() > 0) {
-            session()->flash('success', 'Pembayaran Agent Belum Lunas Semua, Harap Selesaikan... Supaya Laporan Singkron...');
-            return;
-        }
-
+    public function laporanKeseluruhan()
+    {
+        $this->dispatchBrowserEvent('close-cetak-modal');
         $akun['databeli'] = TransaksiBeli::all();
         $akun['datajual'] = TransaksiJualSore::all();
         $akun['datajualdetail'] = TransaksiJualSoreDetail::all();

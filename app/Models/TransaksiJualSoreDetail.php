@@ -19,4 +19,9 @@ class TransaksiJualSoreDetail extends Model implements Auditable
     {
         return $this->belongsTo(Product::class, 'product_id');
     }
+
+    public function jualsore()
+    {
+        return $this->belongsTo(TransaksiJualSore::class, 'transaksi_jual_sore_id');
+    }
 }

@@ -19,4 +19,9 @@ class DetailTransaksiBeli extends Model implements Auditable
     {
         return $this->belongsTo(Product::class, 'product_id');
     }
+
+    public function beli()
+    {
+        return $this->belongsTo(TransaksiBeli::class, 'transaksi_beli_id');
+    }
 }

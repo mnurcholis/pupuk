@@ -19,4 +19,9 @@ class TransaksiJualPagiDetail extends Model implements Auditable
     {
         return $this->belongsTo(Product::class, 'product_id');
     }
+
+    public function jualpagi()
+    {
+        return $this->belongsTo(TransaksiJualPagi::class, 'transaksi_jual_pagi_id');
+    }
 }

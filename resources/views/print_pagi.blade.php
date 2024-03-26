@@ -67,6 +67,7 @@
         </div>
 
         <div class="invoice-body">
+            <p><strong>Barang Dibawa Pagi</strong></p>
             <p><strong>Invoice Number:</strong> {{ $data->invoice }}</p>
             <p><strong>Invoice Date:</strong> {{ $data->tanggal }}</p>
             <p><strong>Nama Agent:</strong> {{ $data->agent->name }}</p>

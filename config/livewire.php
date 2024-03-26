@@ -89,7 +89,7 @@ return [
 
     'render_on_redirect' => false,
 
-    'asset_url' => url(''),
+    'asset_url' => env('APP_URL', 'http://localhost/pupuk'),
 
     /*
     |---------------------------------------------------------------------------

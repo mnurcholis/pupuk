@@ -55,7 +55,7 @@
                             <label>Jual:</label>
                             <input type="text"
                                 class="form-control {{ $errors->has('harga_jual') ? ' border-danger' : null }}"
-                                value="Rp. {{ number_format($product->harga_beli ?? 0, 0, ',', '.') }}" readonly>
+                                wire:model="harga_jual">
                             @error('harga_jual')
                                 <span class="form-text text-danger">{{ $message }}</span>
                             @enderror

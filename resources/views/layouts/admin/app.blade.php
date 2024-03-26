@@ -36,9 +36,13 @@
     <!-- /core JS files -->
     <!-- Theme JS files -->
     <script src="{{ asset('limitless/') }}/global_assets/js/plugins/visualization/echarts/echarts.min.js"></script>
+    <script src="{{ asset('limitless/') }}/global_assets/js/plugins/forms/styling/uniform.min.js"></script>
+    <script src="{{ asset('limitless/') }}/global_assets/js/plugins/forms/styling/switchery.min.js"></script>
+    <script src="{{ asset('limitless/') }}/global_assets/js/plugins/forms/styling/switch.min.js"></script>
 
     <!-- Theme JS files -->
     <script src="{{ asset('limitless/layout_1/LTR/default/full/') }}/assets/js/app.js"></script>
+    <script src="{{ asset('limitless/') }}/global_assets/js/demo_pages/form_checkboxes_radios.js"></script>
     <!-- /theme JS files -->
     @stack('css')
     @vite(['resources/js/app.js'])

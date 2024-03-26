@@ -13,6 +13,7 @@ class TransaksiBeliTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id');
+        $this->setDefaultSort('id', 'DESC');
     }
 
     public function DetailBeli($id)

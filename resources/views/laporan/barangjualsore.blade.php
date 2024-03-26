@@ -8,13 +8,14 @@
 </head>
 
 <body>
-    <h1>{{ $title }}</h1>
-    <p>{{ $date }}</p>
-    <p>Laporan Detail Barang Jual Sore</p>
+    <h3 class="text-center">Laporan Detail Barang Transaksi Sore</h3>
 
     <table class="table table-bordered p-1">
         <thead>
             <tr>
+                <th>Tanggal</th>
+                <th>Agent</th>
+                
                 <th>Barang</th>
                 <th>Quantity</th>
                 <th>Harga Beli</th>
@@ -31,6 +32,9 @@
                 @endphp
                 @foreach ($beli as $item)
                     <tr>
+                        <td>{{ $item->jualsore->tanggal }}</td>
+                        <td>{{ $item->jualsore->agent->name }}</td>
+                        
                         <td>{{ $item->product->name }}</td>
                         <td>{{ $item['qty_keluar'] }}</td>
                         <td>Rp. {{ number_format($item['harga_beli'], 0, ',', '.') }}</td>
@@ -45,7 +49,7 @@
                     @endphp
                 @endforeach
                 <tr class="text-bold">
-                    <td>Jumlah</td>
+                    <td colspan="3" class="text-right">Jumlah</td>
                     <td>{{ $beli->sum('qty_keluar') }}</td>
                     <td>Rp. {{ number_format($beli->sum('harga_beli'), 0, ',', '.') }}</td>
                     <td>Rp. {{ number_format($beli->sum('harga_jual'), 0, ',', '.') }}</td>
@@ -62,6 +66,11 @@
     </table>
     <p><strong>Pengmasukan Keseluhuran : Rp. {{ number_format($omset, 0, ',', '.') }}</strong></p>
     <p><strong>Pengmasukan bersih : Rp. {{ number_format($bersih, 0, ',', '.') }}</strong></p>
+
+      <Br><br>
+    <p>{{ $title }}</p>
+    <br><Br>
+    <p>{{ $date }}</p>
 
 </body>
 

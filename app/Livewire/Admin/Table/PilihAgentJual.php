@@ -18,7 +18,7 @@ class PilihAgentJual extends DataTableComponent
 
     public function builder(): Builder
     {
-        return TransaksiJualPagi::where('tanggal', date('Y-m-d'));
+        return TransaksiJualPagi::whereDoesntHave('transaksiJualSore');
     }
     public function PilihAgent($user_id)
     {
@@ -28,6 +28,8 @@ class PilihAgentJual extends DataTableComponent
     public function columns(): array
     {
         return [
+            Column::make("Tanggal", "tanggal")
+                ->sortable()->searchable(),
             Column::make("INVOICE", "invoice")
                 ->sortable()->searchable(),
             Column::make("Nama", "agent.name")

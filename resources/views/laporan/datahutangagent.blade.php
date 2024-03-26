@@ -8,13 +8,14 @@
 </head>
 
 <body>
-    <h1>{{ $title }}</h1>
-    <p>{{ $date }}</p>
-    <p>Laporan Data Hutang Agent</p>
+    
+    <h3 class="text-center">Laporan Data Hutang Agent Ke Kita</h3>
+    <br>
 
     <table class="table table-bordered p-1">
         <thead>
             <tr>
+                <th>Tanggal</th>
                 <th>INVOICE</th>
                 <th>Agent</th>
                 <th>Total</th>
@@ -29,6 +30,7 @@
                 @endphp
                 @foreach ($beli as $item)
                     <tr>
+                        <td>{{ $item['tanggal'] }}</td>
                         <td>{{ $item['invoice'] }}</td>
                         <td>{{ $item['agent']['name'] }}</td>
                         <td>Rp. {{ number_format($item['total'], 0, ',', '.') }}</td>
@@ -40,7 +42,7 @@
                     @endphp
                 @endforeach
                 <tr class="text-bold">
-                    <td colspan="2" class="text-right">Total</td>
+                    <td colspan="3" class="text-right">Total</td>
                     <td>Rp. {{ number_format($beli->sum('total'), 0, ',', '.') }}</td>
                     <td>Rp. {{ number_format($beli->sum('bayar'), 0, ',', '.') }}</td>
                     <td>Rp. {{ number_format($beli->sum('sisa'), 0, ',', '.') }}</td>
@@ -53,7 +55,15 @@
         </tbody>
 
     </table>
-    <p><strong>Total Hutang ke Agent : Rp. {{ number_format($total_hutang, 0, ',', '.') }}</strong></p>
+    <p><strong>Total Hutang Agent : Rp. {{ number_format($total_hutang, 0, ',', '.') }}</strong></p>
+
+
+     <Br><br>
+    <p>{{ $title }}</p>
+    <br><Br>
+    <p>{{ $date }}</p>
+    
+
 
 </body>
 

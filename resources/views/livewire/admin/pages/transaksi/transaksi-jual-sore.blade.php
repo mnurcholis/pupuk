@@ -161,6 +161,27 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="form-group mt-2">
+                            <label class="font-weight-semibold">Sisa Stok Masuk ke : </label>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="radio" wire:model="sisastok" value="gudang" class="form-check-input"
+                                        name="unstyled-radio-left">
+                                    Gudang
+                                </label>
+                            </div>
+
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="radio" wire:model="sisastok" value="agent" class="form-check-input"
+                                        name="unstyled-radio-left" checked="">
+                                    Masih di Agent
+                                </label>
+                            </div>
+                            @error('sisastok')
+                                <span class="form-text text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                         @error('list_add_product')
                             <span class="form-text text-danger">{{ $message }}</span>
                         @enderror

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 17, 2024 at 02:08 PM
+-- Generation Time: Jan 19, 2024 at 12:46 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,13 +37,6 @@ CREATE TABLE `agents` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `agents`
---
-
-INSERT INTO `agents` (`id`, `name`, `number`, `address`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Agent Satu', '082243041272', 'Bandingan', 'STATUS_AGENT_01', '2024-01-17 05:44:26', '2024-01-17 05:44:26');
-
 -- --------------------------------------------------------
 
 --
@@ -67,57 +60,6 @@ CREATE TABLE `audits` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `audits`
---
-
-INSERT INTO `audits` (`id`, `user_type`, `user_id`, `event`, `auditable_type`, `auditable_id`, `old_values`, `new_values`, `url`, `ip_address`, `user_agent`, `tags`, `created_at`, `updated_at`) VALUES
-(1, 'App\\Models\\User', 1, 'created', 'App\\Models\\Product', 1, '[]', '{\"name\":\"Satu\",\"satuan\":\"pcs\",\"harga_beli\":\"2000\",\"harga_jual\":\"5000\",\"id\":1}', 'http://127.0.0.1:8000/livewire/message/admin.pages.product.data-product', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:32:15', '2024-01-17 05:32:15'),
-(2, 'App\\Models\\User', 1, 'created', 'App\\Models\\Product', 2, '[]', '{\"name\":\"Dua\",\"satuan\":\"box\",\"harga_beli\":\"5000\",\"harga_jual\":\"10000\",\"id\":2}', 'http://127.0.0.1:8000/livewire/message/admin.pages.product.data-product', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:32:35', '2024-01-17 05:32:35'),
-(3, 'App\\Models\\User', 1, 'created', 'App\\Models\\Agent', 1, '[]', '{\"name\":\"Agent Satu\",\"number\":\"082243041272\",\"address\":\"Bandingan\",\"status\":\"STATUS_AGENT_01\",\"id\":1}', 'http://127.0.0.1:8000/livewire/message/admin.pages.agent.data-agent', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:44:26', '2024-01-17 05:44:26'),
-(4, 'App\\Models\\User', 1, 'created', 'App\\Models\\Vendor', 1, '[]', '{\"name\":\"Vendor  1\",\"number\":\"082243041272\",\"address\":\"Bandingan\",\"id\":1}', 'http://127.0.0.1:8000/livewire/message/admin.pages.vendor.data-vendor', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:44:45', '2024-01-17 05:44:45'),
-(5, 'App\\Models\\User', 1, 'created', 'App\\Models\\Operasional', 1, '[]', '{\"name\":\"Uji COba\",\"total\":\"2000\",\"keterangan\":\"asasas\",\"id\":1}', 'http://127.0.0.1:8000/livewire/message/admin.pages.operasional.data-opersional', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:45:01', '2024-01-17 05:45:01'),
-(6, 'App\\Models\\User', 1, 'created', 'App\\Models\\TransaksiBeli', 1, '[]', '{\"vendor_id\":1,\"invoice\":1705495552,\"tanggal\":\"2024-01-17\",\"total\":350000,\"bayar\":0,\"sisa\":350000,\"id\":1}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-beli', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:45:52', '2024-01-17 05:45:52'),
-(7, 'App\\Models\\User', 1, 'created', 'App\\Models\\DetailTransaksiBeli', 1, '[]', '{\"transaksi_beli_id\":1,\"product_id\":1,\"harga_beli\":2000,\"qty\":\"50\",\"sub_total\":100000,\"id\":1}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-beli', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:45:52', '2024-01-17 05:45:52'),
-(8, 'App\\Models\\User', 1, 'updated', 'App\\Models\\Product', 1, '{\"qty\":0,\"total\":0}', '{\"qty\":50,\"total\":250000}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-beli', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:45:52', '2024-01-17 05:45:52'),
-(9, 'App\\Models\\User', 1, 'created', 'App\\Models\\DetailTransaksiBeli', 2, '[]', '{\"transaksi_beli_id\":1,\"product_id\":2,\"harga_beli\":5000,\"qty\":\"50\",\"sub_total\":250000,\"id\":2}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-beli', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:45:52', '2024-01-17 05:45:52'),
-(10, 'App\\Models\\User', 1, 'updated', 'App\\Models\\Product', 2, '{\"qty\":0,\"total\":0}', '{\"qty\":50,\"total\":500000}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-beli', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:45:52', '2024-01-17 05:45:52'),
-(11, 'App\\Models\\User', 1, 'created', 'App\\Models\\TransaksiBeli', 2, '[]', '{\"vendor_id\":1,\"invoice\":1705495660,\"tanggal\":\"2024-01-17\",\"total\":2000,\"bayar\":0,\"sisa\":2000,\"id\":2}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-beli', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:47:40', '2024-01-17 05:47:40'),
-(12, 'App\\Models\\User', 1, 'created', 'App\\Models\\DetailTransaksiBeli', 3, '[]', '{\"transaksi_beli_id\":2,\"product_id\":1,\"harga_beli\":2000,\"qty\":\"1\",\"sub_total\":2000,\"id\":3}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-beli', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:47:40', '2024-01-17 05:47:40'),
-(13, 'App\\Models\\User', 1, 'updated', 'App\\Models\\Product', 1, '{\"qty\":50,\"total\":250000}', '{\"qty\":51,\"total\":255000}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-beli', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:47:40', '2024-01-17 05:47:40'),
-(14, 'App\\Models\\User', 1, 'created', 'App\\Models\\TransaksiJualPagi', 1, '[]', '{\"agent_id\":1,\"invoice\":1705495684,\"tanggal\":\"2024-01-17\",\"total\":255000,\"id\":1}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-jual-pagi', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:48:04', '2024-01-17 05:48:04'),
-(15, 'App\\Models\\User', 1, 'created', 'App\\Models\\TransaksiJualPagiDetail', 1, '[]', '{\"transaksi_jual_pagi_id\":1,\"product_id\":1,\"harga_beli\":2000,\"harga_jual\":5000,\"qty\":\"51\",\"sub_total\":255000,\"id\":1}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-jual-pagi', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:48:04', '2024-01-17 05:48:04'),
-(16, 'App\\Models\\User', 1, 'updated', 'App\\Models\\Product', 1, '{\"qty\":51,\"total\":255000}', '{\"qty\":0,\"total\":0}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-jual-pagi', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:48:04', '2024-01-17 05:48:04'),
-(17, 'App\\Models\\User', 1, 'created', 'App\\Models\\TransaksiJualPagi', 2, '[]', '{\"agent_id\":1,\"invoice\":1705495724,\"tanggal\":\"2024-01-17\",\"total\":500000,\"id\":2}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-jual-pagi', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:48:44', '2024-01-17 05:48:44'),
-(18, 'App\\Models\\User', 1, 'created', 'App\\Models\\TransaksiJualPagiDetail', 2, '[]', '{\"transaksi_jual_pagi_id\":2,\"product_id\":2,\"harga_beli\":5000,\"harga_jual\":10000,\"qty\":\"50\",\"sub_total\":500000,\"id\":2}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-jual-pagi', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:48:44', '2024-01-17 05:48:44'),
-(19, 'App\\Models\\User', 1, 'updated', 'App\\Models\\Product', 2, '{\"qty\":50,\"total\":500000}', '{\"qty\":0,\"total\":0}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-jual-pagi', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:48:44', '2024-01-17 05:48:44'),
-(20, 'App\\Models\\User', 1, 'created', 'App\\Models\\TransaksiJualSore', 1, '[]', '{\"agent_id\":1,\"transaksi_jual_pagi_id\":1,\"invoice\":1705496118,\"tanggal\":\"2024-01-17\",\"total\":255000,\"bayar\":\"255000\",\"sisa\":0,\"id\":1}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-jual-sore', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:55:18', '2024-01-17 05:55:18'),
-(21, 'App\\Models\\User', 1, 'created', 'App\\Models\\TransaksiJualSoreDetail', 1, '[]', '{\"transaksi_jual_sore_id\":1,\"product_id\":1,\"harga_beli\":2000,\"harga_jual\":5000,\"qty_asal\":51,\"qty_keluar\":\"51\",\"qty_sisa\":0,\"sub_total\":255000,\"id\":1}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-jual-sore', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:55:18', '2024-01-17 05:55:18'),
-(22, 'App\\Models\\User', 1, 'created', 'App\\Models\\TransaksiJualSore', 2, '[]', '{\"agent_id\":1,\"transaksi_jual_pagi_id\":2,\"invoice\":1705496145,\"tanggal\":\"2024-01-17\",\"total\":500000,\"bayar\":\"500000\",\"sisa\":0,\"id\":2}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-jual-sore', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:55:45', '2024-01-17 05:55:45'),
-(23, 'App\\Models\\User', 1, 'created', 'App\\Models\\TransaksiJualSoreDetail', 2, '[]', '{\"transaksi_jual_sore_id\":2,\"product_id\":2,\"harga_beli\":5000,\"harga_jual\":10000,\"qty_asal\":50,\"qty_keluar\":\"50\",\"qty_sisa\":0,\"sub_total\":500000,\"id\":2}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-jual-sore', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:55:45', '2024-01-17 05:55:45'),
-(24, 'App\\Models\\User', 1, 'created', 'App\\Models\\TransaksiBeli', 3, '[]', '{\"vendor_id\":1,\"invoice\":1705496201,\"tanggal\":\"2024-01-17\",\"total\":100000,\"bayar\":0,\"sisa\":100000,\"id\":3}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-beli', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:56:41', '2024-01-17 05:56:41'),
-(25, 'App\\Models\\User', 1, 'created', 'App\\Models\\DetailTransaksiBeli', 4, '[]', '{\"transaksi_beli_id\":3,\"product_id\":1,\"harga_beli\":2000,\"qty\":\"50\",\"sub_total\":100000,\"id\":4}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-beli', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:56:41', '2024-01-17 05:56:41'),
-(26, 'App\\Models\\User', 1, 'updated', 'App\\Models\\Product', 1, '{\"qty\":0,\"total\":0}', '{\"qty\":50,\"total\":250000}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-beli', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:56:41', '2024-01-17 05:56:41'),
-(27, 'App\\Models\\User', 1, 'created', 'App\\Models\\TransaksiBeli', 4, '[]', '{\"vendor_id\":1,\"invoice\":1705496310,\"tanggal\":\"2024-01-17\",\"total\":100000,\"bayar\":\"100000\",\"sisa\":0,\"id\":4}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-beli', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:58:30', '2024-01-17 05:58:30'),
-(28, 'App\\Models\\User', 1, 'created', 'App\\Models\\DetailTransaksiBeli', 5, '[]', '{\"transaksi_beli_id\":4,\"product_id\":1,\"harga_beli\":2000,\"qty\":\"50\",\"sub_total\":100000,\"id\":5}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-beli', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:58:30', '2024-01-17 05:58:30'),
-(29, 'App\\Models\\User', 1, 'updated', 'App\\Models\\Product', 1, '{\"qty\":50,\"total\":250000}', '{\"qty\":100,\"total\":500000}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-beli', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 05:58:30', '2024-01-17 05:58:30'),
-(30, 'App\\Models\\User', 1, 'created', 'App\\Models\\TransaksiJualPagi', 3, '[]', '{\"agent_id\":1,\"invoice\":1705496437,\"tanggal\":\"2024-01-17\",\"total\":500000,\"id\":3}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-jual-pagi', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 06:00:37', '2024-01-17 06:00:37'),
-(31, 'App\\Models\\User', 1, 'created', 'App\\Models\\TransaksiJualPagiDetail', 3, '[]', '{\"transaksi_jual_pagi_id\":3,\"product_id\":1,\"harga_beli\":2000,\"harga_jual\":5000,\"qty\":\"100\",\"sub_total\":500000,\"id\":3}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-jual-pagi', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 06:00:37', '2024-01-17 06:00:37'),
-(32, 'App\\Models\\User', 1, 'updated', 'App\\Models\\Product', 1, '{\"qty\":100,\"total\":500000}', '{\"qty\":0,\"total\":0}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-jual-pagi', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 06:00:37', '2024-01-17 06:00:37'),
-(33, 'App\\Models\\User', 1, 'created', 'App\\Models\\TransaksiJualSore', 3, '[]', '{\"agent_id\":1,\"transaksi_jual_pagi_id\":3,\"invoice\":1705496460,\"tanggal\":\"2024-01-17\",\"total\":500000,\"bayar\":\"500000\",\"sisa\":0,\"id\":3}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-jual-sore', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 06:01:00', '2024-01-17 06:01:00'),
-(34, 'App\\Models\\User', 1, 'created', 'App\\Models\\TransaksiJualSoreDetail', 3, '[]', '{\"transaksi_jual_sore_id\":3,\"product_id\":1,\"harga_beli\":2000,\"harga_jual\":5000,\"qty_asal\":100,\"qty_keluar\":\"100\",\"qty_sisa\":0,\"sub_total\":500000,\"id\":3}', 'http://127.0.0.1:8000/livewire/message/admin.pages.transaksi.transaksi-jual-sore', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 06:01:00', '2024-01-17 06:01:00'),
-(35, 'App\\Models\\User', 1, 'created', 'App\\Models\\HutangVendor', 1, '[]', '{\"vendor_id\":1,\"transaksi_beli_id\":1,\"awal\":350000,\"bayar\":\"350000\",\"sisa\":0,\"id\":1}', 'http://127.0.0.1:8000/livewire/message/admin.pages.hutang.data-hutang-vendor', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 06:01:15', '2024-01-17 06:01:15'),
-(36, 'App\\Models\\User', 1, 'created', 'App\\Models\\HutangVendorDetail', 1, '[]', '{\"hutang_vendor_id\":1,\"bayar\":\"350000\",\"tanggal\":\"2024-01-17\",\"id\":1}', 'http://127.0.0.1:8000/livewire/message/admin.pages.hutang.data-hutang-vendor', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 06:01:15', '2024-01-17 06:01:15'),
-(37, 'App\\Models\\User', 1, 'updated', 'App\\Models\\TransaksiBeli', 1, '{\"bayar\":0,\"sisa\":350000}', '{\"bayar\":350000,\"sisa\":0}', 'http://127.0.0.1:8000/livewire/message/admin.pages.hutang.data-hutang-vendor', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 06:01:15', '2024-01-17 06:01:15'),
-(38, 'App\\Models\\User', 1, 'created', 'App\\Models\\HutangVendor', 2, '[]', '{\"vendor_id\":1,\"transaksi_beli_id\":2,\"awal\":2000,\"bayar\":\"2000\",\"sisa\":0,\"id\":2}', 'http://127.0.0.1:8000/livewire/message/admin.pages.hutang.data-hutang-vendor', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 06:01:25', '2024-01-17 06:01:25'),
-(39, 'App\\Models\\User', 1, 'created', 'App\\Models\\HutangVendorDetail', 2, '[]', '{\"hutang_vendor_id\":2,\"bayar\":\"2000\",\"tanggal\":\"2024-01-17\",\"id\":2}', 'http://127.0.0.1:8000/livewire/message/admin.pages.hutang.data-hutang-vendor', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 06:01:25', '2024-01-17 06:01:25'),
-(40, 'App\\Models\\User', 1, 'updated', 'App\\Models\\TransaksiBeli', 2, '{\"bayar\":0,\"sisa\":2000}', '{\"bayar\":2000,\"sisa\":0}', 'http://127.0.0.1:8000/livewire/message/admin.pages.hutang.data-hutang-vendor', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 06:01:25', '2024-01-17 06:01:25'),
-(41, 'App\\Models\\User', 1, 'created', 'App\\Models\\HutangVendor', 3, '[]', '{\"vendor_id\":1,\"transaksi_beli_id\":3,\"awal\":100000,\"bayar\":\"100000\",\"sisa\":0,\"id\":3}', 'http://127.0.0.1:8000/livewire/message/admin.pages.hutang.data-hutang-vendor', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 06:01:37', '2024-01-17 06:01:37'),
-(42, 'App\\Models\\User', 1, 'created', 'App\\Models\\HutangVendorDetail', 3, '[]', '{\"hutang_vendor_id\":3,\"bayar\":\"100000\",\"tanggal\":\"2024-01-17\",\"id\":3}', 'http://127.0.0.1:8000/livewire/message/admin.pages.hutang.data-hutang-vendor', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 06:01:37', '2024-01-17 06:01:37'),
-(43, 'App\\Models\\User', 1, 'updated', 'App\\Models\\TransaksiBeli', 3, '{\"bayar\":0,\"sisa\":100000}', '{\"bayar\":100000,\"sisa\":0}', 'http://127.0.0.1:8000/livewire/message/admin.pages.hutang.data-hutang-vendor', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 06:01:37', '2024-01-17 06:01:37'),
-(44, 'App\\Models\\User', 1, 'created', 'App\\Models\\Karyawan', 1, '[]', '{\"name\":\"ds\",\"number\":\"asd\",\"address\":\"das\",\"bank\":\"ads\",\"account\":\"ads\",\"status\":\"STATUS_KARYAWAN_01\",\"posisi\":\"asd\",\"id\":1}', 'http://127.0.0.1:8000/livewire/message/admin.pages.karyawan.data-karyawan', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 06:02:14', '2024-01-17 06:02:14'),
-(45, 'App\\Models\\User', 1, 'created', 'App\\Models\\Gaji', 1, '[]', '{\"karyawan_id\":1,\"gaji\":\"600000\",\"bonus\":\"50000\",\"kategori\":\"GAJI_01\",\"id\":1}', 'http://127.0.0.1:8000/livewire/message/admin.pages.karyawan.gaji-karyawan', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', NULL, '2024-01-17 06:02:49', '2024-01-17 06:02:49');
-
 -- --------------------------------------------------------
 
 --
@@ -138,12 +80,12 @@ CREATE TABLE `com_codes` (
 --
 
 INSERT INTO `com_codes` (`code_cd`, `code_nm`, `code_group`, `code_value`, `created_at`, `updated_at`) VALUES
-('GAJI_01', 'Bulan', 'STATUS_GAJI', '', '2024-01-17 05:31:28', '2024-01-17 05:31:28'),
-('GAJI_02', 'Harian', 'STATUS_GAJI', '', '2024-01-17 05:31:28', '2024-01-17 05:31:28'),
-('STATUS_AGENT_01', 'Agent Tetap', 'STATUS_AGENT', '', '2024-01-17 05:31:28', '2024-01-17 05:31:28'),
-('STATUS_AGENT_02', 'Agent Tidak Tetap', 'STATUS_AGENT', '', '2024-01-17 05:31:28', '2024-01-17 05:31:28'),
-('STATUS_KARYAWAN_01', 'Karyawan Tetap', 'STATUS_KARYAWAN', '', '2024-01-17 05:31:28', '2024-01-17 05:31:28'),
-('STATUS_KARYAWAN_02', 'Karyawan Tidak Tetap', 'STATUS_KARYAWAN', '', '2024-01-17 05:31:28', '2024-01-17 05:31:28');
+('GAJI_01', 'Bulan', 'STATUS_GAJI', '', '2024-01-19 04:45:10', '2024-01-19 04:45:10'),
+('GAJI_02', 'Harian', 'STATUS_GAJI', '', '2024-01-19 04:45:10', '2024-01-19 04:45:10'),
+('STATUS_AGENT_01', 'Agent Tetap', 'STATUS_AGENT', '', '2024-01-19 04:45:10', '2024-01-19 04:45:10'),
+('STATUS_AGENT_02', 'Agent Tidak Tetap', 'STATUS_AGENT', '', '2024-01-19 04:45:10', '2024-01-19 04:45:10'),
+('STATUS_KARYAWAN_01', 'Karyawan Tetap', 'STATUS_KARYAWAN', '', '2024-01-19 04:45:10', '2024-01-19 04:45:10'),
+('STATUS_KARYAWAN_02', 'Karyawan Tidak Tetap', 'STATUS_KARYAWAN', '', '2024-01-19 04:45:10', '2024-01-19 04:45:10');
 
 -- --------------------------------------------------------
 
@@ -161,17 +103,6 @@ CREATE TABLE `detail_transaksi_belis` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `detail_transaksi_belis`
---
-
-INSERT INTO `detail_transaksi_belis` (`id`, `transaksi_beli_id`, `product_id`, `harga_beli`, `qty`, `sub_total`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 2000, 50, 100000, '2024-01-17 05:45:52', '2024-01-17 05:45:52'),
-(2, 1, 2, 5000, 50, 250000, '2024-01-17 05:45:52', '2024-01-17 05:45:52'),
-(3, 2, 1, 2000, 1, 2000, '2024-01-17 05:47:40', '2024-01-17 05:47:40'),
-(4, 3, 1, 2000, 50, 100000, '2024-01-17 05:56:41', '2024-01-17 05:56:41'),
-(5, 4, 1, 2000, 50, 100000, '2024-01-17 05:58:30', '2024-01-17 05:58:30');
 
 -- --------------------------------------------------------
 
@@ -204,13 +135,6 @@ CREATE TABLE `gajis` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `gajis`
---
-
-INSERT INTO `gajis` (`id`, `karyawan_id`, `gaji`, `bonus`, `kategori`, `created_at`, `updated_at`) VALUES
-(1, 1, 600000, 50000, 'GAJI_01', '2024-01-17 06:02:49', '2024-01-17 06:02:49');
 
 -- --------------------------------------------------------
 
@@ -261,15 +185,6 @@ CREATE TABLE `hutang_vendors` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `hutang_vendors`
---
-
-INSERT INTO `hutang_vendors` (`id`, `vendor_id`, `transaksi_beli_id`, `awal`, `bayar`, `sisa`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 350000, 350000, 0, '2024-01-17 06:01:15', '2024-01-17 06:01:15'),
-(2, 1, 2, 2000, 2000, 0, '2024-01-17 06:01:25', '2024-01-17 06:01:25'),
-(3, 1, 3, 100000, 100000, 0, '2024-01-17 06:01:37', '2024-01-17 06:01:37');
-
 -- --------------------------------------------------------
 
 --
@@ -284,15 +199,6 @@ CREATE TABLE `hutang_vendor_details` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `hutang_vendor_details`
---
-
-INSERT INTO `hutang_vendor_details` (`id`, `hutang_vendor_id`, `bayar`, `tanggal`, `created_at`, `updated_at`) VALUES
-(1, 1, 350000, '2024-01-17', '2024-01-17 06:01:15', '2024-01-17 06:01:15'),
-(2, 2, 2000, '2024-01-17', '2024-01-17 06:01:25', '2024-01-17 06:01:25'),
-(3, 3, 100000, '2024-01-17', '2024-01-17 06:01:37', '2024-01-17 06:01:37');
 
 -- --------------------------------------------------------
 
@@ -312,13 +218,6 @@ CREATE TABLE `karyawans` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `karyawans`
---
-
-INSERT INTO `karyawans` (`id`, `name`, `number`, `address`, `bank`, `account`, `posisi`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'ds', 'asd', 'das', 'ads', 'ads', 'asd', 'STATUS_KARYAWAN_01', '2024-01-17 06:02:14', '2024-01-17 06:02:14');
 
 -- --------------------------------------------------------
 
@@ -411,13 +310,6 @@ CREATE TABLE `operasionals` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `operasionals`
---
-
-INSERT INTO `operasionals` (`id`, `name`, `total`, `keterangan`, `created_at`, `updated_at`) VALUES
-(1, 'Uji COba', 2000, 'asasas', '2024-01-17 05:45:01', '2024-01-17 05:45:01');
-
 -- --------------------------------------------------------
 
 --
@@ -449,25 +341,25 @@ CREATE TABLE `permissions` (
 --
 
 INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'dashboard', 'web', '2024-01-17 05:31:26', '2024-01-17 05:31:26'),
-(2, 'master', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(3, 'home', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(4, 'dataproduct', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(5, 'harga_beli', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(6, 'agent', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(7, 'vendor', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(8, 'operasional', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(9, 'beli', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(10, 'jualpagi', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(11, 'jualsore', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(12, 'datahutangvendor', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(13, 'datahutangagent', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(14, 'karyawan', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(15, 'gaji', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(16, 'laporan', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(17, 'user', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(18, 'role', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(19, 'permission', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27');
+(1, 'dashboard', 'web', '2024-01-19 04:45:06', '2024-01-19 04:45:06'),
+(2, 'master', 'web', '2024-01-19 04:45:06', '2024-01-19 04:45:06'),
+(3, 'home', 'web', '2024-01-19 04:45:07', '2024-01-19 04:45:07'),
+(4, 'dataproduct', 'web', '2024-01-19 04:45:07', '2024-01-19 04:45:07'),
+(5, 'harga_beli', 'web', '2024-01-19 04:45:07', '2024-01-19 04:45:07'),
+(6, 'agent', 'web', '2024-01-19 04:45:07', '2024-01-19 04:45:07'),
+(7, 'vendor', 'web', '2024-01-19 04:45:07', '2024-01-19 04:45:07'),
+(8, 'operasional', 'web', '2024-01-19 04:45:07', '2024-01-19 04:45:07'),
+(9, 'beli', 'web', '2024-01-19 04:45:07', '2024-01-19 04:45:07'),
+(10, 'jualpagi', 'web', '2024-01-19 04:45:07', '2024-01-19 04:45:07'),
+(11, 'jualsore', 'web', '2024-01-19 04:45:07', '2024-01-19 04:45:07'),
+(12, 'datahutangvendor', 'web', '2024-01-19 04:45:07', '2024-01-19 04:45:07'),
+(13, 'datahutangagent', 'web', '2024-01-19 04:45:07', '2024-01-19 04:45:07'),
+(14, 'karyawan', 'web', '2024-01-19 04:45:07', '2024-01-19 04:45:07'),
+(15, 'gaji', 'web', '2024-01-19 04:45:07', '2024-01-19 04:45:07'),
+(16, 'laporan', 'web', '2024-01-19 04:45:07', '2024-01-19 04:45:07'),
+(17, 'user', 'web', '2024-01-19 04:45:07', '2024-01-19 04:45:07'),
+(18, 'role', 'web', '2024-01-19 04:45:08', '2024-01-19 04:45:08'),
+(19, 'permission', 'web', '2024-01-19 04:45:08', '2024-01-19 04:45:08');
 
 -- --------------------------------------------------------
 
@@ -506,14 +398,6 @@ CREATE TABLE `products` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `products`
---
-
-INSERT INTO `products` (`id`, `name`, `qty`, `harga_beli`, `harga_jual`, `total`, `satuan`, `created_at`, `updated_at`) VALUES
-(1, 'Satu', 0, 2000, 5000, 0, 'pcs', '2024-01-17 05:32:15', '2024-01-17 06:00:37'),
-(2, 'Dua', 0, 5000, 10000, 0, 'box', '2024-01-17 05:32:35', '2024-01-17 05:48:44');
-
 -- --------------------------------------------------------
 
 --
@@ -533,8 +417,8 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
-(1, 'karyawan', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(2, 'admin', 'web', '2024-01-17 05:31:27', '2024-01-17 05:31:27');
+(1, 'karyawan', 'web', '2024-01-19 04:45:08', '2024-01-19 04:45:08'),
+(2, 'admin', 'web', '2024-01-19 04:45:08', '2024-01-19 04:45:08');
 
 -- --------------------------------------------------------
 
@@ -598,7 +482,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('ZoFIEo7D0aFR1bx9TAhtmgkrXasXXyHoaT8xpvs2', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoib084b3BCNURPRkU1eHB4YlNoc3JDcXFhbGhtN2wyQVlvNWswd2xObiI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjMxOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvZGFzaGJvYXJkIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjIxOiJwYXNzd29yZF9oYXNoX3NhbmN0dW0iO3M6NjA6IiQyeSQxMiRNNEw1YmFuTlZSUjJrRVB4VHZsU0llLnpZOGhaQ091cWttbnRFNFpMbUZnN0RoV3RSd1AxcSI7fQ==', 1705496833);
+('ViHKzicLUAN1g8OT1Bvqyvz4oWCtaMjYM6K22TZX', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoic25FaDMyVnBzTHJjdHQyZnU4QWdFYUNuSnZGenlXV0FTNjJOZkNVMCI7czozOiJ1cmwiO2E6MDp7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjMyOiJodHRwOi8vbG9jYWxob3N0L3B1cHVrL2Rhc2hib2FyZCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoyMToicGFzc3dvcmRfaGFzaF9zYW5jdHVtIjtzOjYwOiIkMnkkMTIkMXhCQzExQm9wSDg4blhLZm5IRlVwdThmQUZXSS83bzNpS0k0YW9FZDZGRlJMeG55NzQuSXUiO30=', 1705664733);
 
 -- --------------------------------------------------------
 
@@ -622,7 +506,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `title`, `slogan`, `deskripsi_situs`, `logo`, `favicon`, `created_at`, `updated_at`) VALUES
-(1, 'admin', NULL, NULL, NULL, NULL, '2024-01-17 05:31:28', '2024-01-17 05:31:28');
+(1, 'admin', NULL, NULL, NULL, NULL, '2024-01-19 04:45:10', '2024-01-19 04:45:10');
 
 -- --------------------------------------------------------
 
@@ -642,16 +526,6 @@ CREATE TABLE `transaksi_belis` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `transaksi_belis`
---
-
-INSERT INTO `transaksi_belis` (`id`, `vendor_id`, `invoice`, `tanggal`, `total`, `bayar`, `sisa`, `created_at`, `updated_at`) VALUES
-(1, 1, '1705495552', '2024-01-17', 350000, 350000, 0, '2024-01-17 05:45:52', '2024-01-17 06:01:15'),
-(2, 1, '1705495660', '2024-01-17', 2000, 2000, 0, '2024-01-17 05:47:40', '2024-01-17 06:01:25'),
-(3, 1, '1705496201', '2024-01-17', 100000, 100000, 0, '2024-01-17 05:56:41', '2024-01-17 06:01:37'),
-(4, 1, '1705496310', '2024-01-17', 100000, 100000, 0, '2024-01-17 05:58:30', '2024-01-17 05:58:30');
-
 -- --------------------------------------------------------
 
 --
@@ -667,15 +541,6 @@ CREATE TABLE `transaksi_jual_pagis` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `transaksi_jual_pagis`
---
-
-INSERT INTO `transaksi_jual_pagis` (`id`, `agent_id`, `invoice`, `tanggal`, `total`, `created_at`, `updated_at`) VALUES
-(1, 1, '1705495684', '2024-01-17', 255000, '2024-01-17 05:48:04', '2024-01-17 05:48:04'),
-(2, 1, '1705495724', '2024-01-17', 500000, '2024-01-17 05:48:44', '2024-01-17 05:48:44'),
-(3, 1, '1705496437', '2024-01-17', 500000, '2024-01-17 06:00:37', '2024-01-17 06:00:37');
 
 -- --------------------------------------------------------
 
@@ -694,15 +559,6 @@ CREATE TABLE `transaksi_jual_pagi_details` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `transaksi_jual_pagi_details`
---
-
-INSERT INTO `transaksi_jual_pagi_details` (`id`, `transaksi_jual_pagi_id`, `product_id`, `harga_beli`, `harga_jual`, `qty`, `sub_total`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 2000, 5000, 51, 255000, '2024-01-17 05:48:04', '2024-01-17 05:48:04'),
-(2, 2, 2, 5000, 10000, 50, 500000, '2024-01-17 05:48:44', '2024-01-17 05:48:44'),
-(3, 3, 1, 2000, 5000, 100, 500000, '2024-01-17 06:00:37', '2024-01-17 06:00:37');
 
 -- --------------------------------------------------------
 
@@ -723,15 +579,6 @@ CREATE TABLE `transaksi_jual_sores` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `transaksi_jual_sores`
---
-
-INSERT INTO `transaksi_jual_sores` (`id`, `transaksi_jual_pagi_id`, `agent_id`, `invoice`, `tanggal`, `total`, `bayar`, `sisa`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, '1705496118', '2024-01-17', 255000, 255000, 0, '2024-01-17 05:55:18', '2024-01-17 05:55:18'),
-(2, 2, 1, '1705496145', '2024-01-17', 500000, 500000, 0, '2024-01-17 05:55:45', '2024-01-17 05:55:45'),
-(3, 3, 1, '1705496460', '2024-01-17', 500000, 500000, 0, '2024-01-17 06:01:00', '2024-01-17 06:01:00');
-
 -- --------------------------------------------------------
 
 --
@@ -751,15 +598,6 @@ CREATE TABLE `transaksi_jual_sore_details` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `transaksi_jual_sore_details`
---
-
-INSERT INTO `transaksi_jual_sore_details` (`id`, `transaksi_jual_sore_id`, `product_id`, `harga_beli`, `harga_jual`, `qty_asal`, `qty_keluar`, `qty_sisa`, `sub_total`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 2000, 5000, 51, 51, 0, 255000, '2024-01-17 05:55:18', '2024-01-17 05:55:18'),
-(2, 2, 2, 5000, 10000, 50, 50, 0, 500000, '2024-01-17 05:55:45', '2024-01-17 05:55:45'),
-(3, 3, 1, 2000, 5000, 100, 100, 0, 500000, '2024-01-17 06:01:00', '2024-01-17 06:01:00');
 
 -- --------------------------------------------------------
 
@@ -791,8 +629,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `status`, `email`, `wa`, `wa_verified_at`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `remember_token`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 1, 'admin@app.com', '0851', '2024-01-17 05:31:27', '2024-01-17 05:31:27', '$2y$12$M4L5banNVRR2kEPxTvlSIe.zY8hZCOuqkmntE4ZLmFg7DhWtRwP1q', NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-17 05:31:27', '2024-01-17 05:31:27'),
-(2, 'user', 1, 'user@app.com', '08512', '2024-01-17 05:31:28', '2024-01-17 05:31:28', '$2y$12$1GXNWZGXV94xixWQ7DS8.ujn790SlVTM4UotDXBlOf.q9zx.ybVXS', NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-17 05:31:28', '2024-01-17 05:31:28');
+(1, 'admin', 1, 'admin@app.com', '0851', '2024-01-19 04:45:09', '2024-01-19 04:45:09', '$2y$12$1xBC11BopH88nXKfnHFUpu8fAFWI/7o3iKI4aoEd6FFRLxny74.Iu', NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-19 04:45:09', '2024-01-19 04:45:09'),
+(2, 'user', 1, 'user@app.com', '08512', '2024-01-19 04:45:09', '2024-01-19 04:45:09', '$2y$12$QWwP0YEgKCJpEjyWcwRzfO2W07MSqwmNKpAAjXU2PjwfWjf1gnKGG', NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-19 04:45:09', '2024-01-19 04:45:09');
 
 -- --------------------------------------------------------
 
@@ -808,13 +646,6 @@ CREATE TABLE `vendors` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `vendors`
---
-
-INSERT INTO `vendors` (`id`, `name`, `number`, `address`, `created_at`, `updated_at`) VALUES
-(1, 'Vendor  1', '082243041272', 'Bandingan', '2024-01-17 05:44:45', '2024-01-17 05:44:45');
 
 --
 -- Indexes for dumped tables
@@ -1038,19 +869,19 @@ ALTER TABLE `vendors`
 -- AUTO_INCREMENT for table `agents`
 --
 ALTER TABLE `agents`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `audits`
 --
 ALTER TABLE `audits`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `detail_transaksi_belis`
 --
 ALTER TABLE `detail_transaksi_belis`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1062,7 +893,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `gajis`
 --
 ALTER TABLE `gajis`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `hutang_agents`
@@ -1080,19 +911,19 @@ ALTER TABLE `hutang_agent_details`
 -- AUTO_INCREMENT for table `hutang_vendors`
 --
 ALTER TABLE `hutang_vendors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `hutang_vendor_details`
 --
 ALTER TABLE `hutang_vendor_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `karyawans`
 --
 ALTER TABLE `karyawans`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1104,7 +935,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `operasionals`
 --
 ALTER TABLE `operasionals`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -1122,7 +953,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -1140,31 +971,31 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `transaksi_belis`
 --
 ALTER TABLE `transaksi_belis`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `transaksi_jual_pagis`
 --
 ALTER TABLE `transaksi_jual_pagis`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `transaksi_jual_pagi_details`
 --
 ALTER TABLE `transaksi_jual_pagi_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `transaksi_jual_sores`
 --
 ALTER TABLE `transaksi_jual_sores`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `transaksi_jual_sore_details`
 --
 ALTER TABLE `transaksi_jual_sore_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -1176,7 +1007,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `vendors`
 --
 ALTER TABLE `vendors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

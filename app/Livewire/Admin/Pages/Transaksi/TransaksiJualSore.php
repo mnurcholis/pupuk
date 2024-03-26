@@ -14,7 +14,7 @@ use Livewire\Component;
 
 class TransaksiJualSore extends Component
 {
-    public $idNya, $product_id, $product, $harga_beli, $harga_jual, $stock, $qty, $sub_total, $satuan, $list_add_product = [], $jumlah = 0, $total = 0, $agent_id, $agent, $invoice, $invoice_pagi, $jual, $bayar, $sisa;
+    public $idNya, $product_id, $product, $harga_beli, $harga_jual, $stock, $qty, $sub_total, $satuan, $list_add_product = [], $jumlah = 0, $total = 0, $agent_id, $agent, $invoice, $invoice_pagi, $jual, $bayar, $sisa, $sisastok = "gudang", $detailjualpagiid;
     public $isEdit = false;
 
     protected $listeners = ['SelectProduct', 'SelectAgent', 'CetakInvoice', 'ConfirmBatal', 'Detail'];
@@ -82,6 +82,7 @@ class TransaksiJualSore extends Component
             $newProduct = [
                 'id' => $maxId + 1,
                 'product_id' => $this->product_id,
+                'detailjualpagiid' => $this->detailjualpagiid,
                 'name' => $this->product->product->name,
                 'harga_beli' => $this->harga_beli,
                 'harga_jual' => $this->harga_jual,
@@ -95,6 +96,7 @@ class TransaksiJualSore extends Component
         }
 
         // Reset properties
+        $this->detailjualpagiid = null;
         $this->product_id = null;
         $this->product = null;
         $this->harga_beli = null;
@@ -137,13 +139,14 @@ class TransaksiJualSore extends Component
         $rules['total'] = 'required';
         $rules['bayar'] = 'required';
         $rules['sisa'] = 'required';
+        $rules['sisastok'] = 'required';
 
         $this->validate($rules);
-        if (count($this->list_add_product) != TransaksiJualPagiDetail::where('transaksi_jual_pagi_id', $this->invoice_pagi)->count()) {
-            throw ValidationException::withMessages([
-                'list_add_product' => 'Jumlah Item Belum sama Transaksi Pagi......',
-            ]);
-        }
+        // if ((count($this->list_add_product) != TransaksiJualPagiDetail::where('transaksi_jual_pagi_id', $this->invoice_pagi)->count() || count($this->list_add_product) == 0) && $this->sisastok == "gudang") {
+        //     throw ValidationException::withMessages([
+        //         'list_add_product' => 'Jumlah Item Belum sama Transaksi Pagi......',
+        //     ]);
+        // }
         if ($this->agent->status == 'STATUS_AGENT_02' and $this->sisa != 0) {
             throw ValidationException::withMessages([
                 'agent_id' => 'Agent Tidak Tetap tidak boleh Hutang...',
@@ -151,16 +154,28 @@ class TransaksiJualSore extends Component
         }
         try {
             DB::transaction(function () {
+                if ($this->sisastok == "agent") {
+                    $c = TransaksiJualPagi::find($this->invoice_pagi);
+                    $d = TransaksiJualPagi::create([
+                        'agent_id' => $this->agent_id,
+                        'tanggal' => $c->tanggal,
+                        'invoice' => $c->invoice,
+                        'total' => $this->total,
+                    ]);
+                }
+
                 $this->invoice = time();
                 $b = ModelsTransaksiJualSore::create([
                     'agent_id' => $this->agent_id,
-                    'transaksi_jual_pagi_id' => $this->invoice_pagi,
+                    'transaksi_jual_pagi_id' => $this->sisastok == "agent" ? $d->id : $this->invoice_pagi,
                     'invoice' => $this->invoice,
                     'tanggal' => date('Y-m-d'),
                     'total' => $this->total,
                     'bayar' => $this->bayar,
                     'sisa' => $this->sisa,
                 ]);
+
+                $terjual = [];
 
                 foreach ($this->list_add_product as $v) {
                     $a['transaksi_jual_sore_id'] = $b->id;
@@ -172,11 +187,60 @@ class TransaksiJualSore extends Component
                     $a['qty_sisa'] = $v['qty_sisa'];
                     $a['sub_total'] = $v['sub_total'];
                     TransaksiJualSoreDetail::create($a);
-                    $c = Product::find($v['product_id']);
-                    $c->update([
-                        'qty' => $c->qty + $v['qty_sisa'],
-                        'total' => ($c->qty + $v['qty_sisa']) * $c->harga_jual,
-                    ]);
+                    if ($this->sisastok == "gudang") {
+                        $c = Product::find($v['product_id']);
+                        $c->update([
+                            'qty' => $c->qty + $v['qty_sisa'],
+                            'total' => ($c->qty + $v['qty_sisa']) * $c->harga_jual,
+                        ]);
+
+                        $terjual[] = $v['product_id'];
+                    } else {
+                        if ($v['qty_sisa'] > 0) {
+                            TransaksiJualPagiDetail::create([
+                                'transaksi_jual_pagi_id' => $d->id,
+                                'product_id' => $v['product_id'],
+                                'harga_beli' => $v['harga_beli'],
+                                'harga_jual' => $v['harga_jual'],
+                                'qty' => $v['qty_keluar'],
+                                'sub_total' => $v['qty_keluar'] * $v['harga_jual'],
+                            ]);
+
+                            TransaksiJualPagiDetail::find($v['detailjualpagiid'])->update([
+                                'qty' => $v['qty_sisa'],
+                                'sub_total' => $v['qty_sisa'] * $v['harga_jual'],
+                            ]);
+                        }
+                    }
+                }
+
+                if ($this->sisastok == "agent") {
+                    $h = TransaksiJualPagi::find($this->invoice_pagi);
+                    $total = TransaksiJualPagiDetail::where('transaksi_jual_pagi_id', $h->id);
+                    $h->total = $total->sum('sub_total');
+                    $h->save();
+                } else {
+                    $data = TransaksiJualPagiDetail::with('jualpagi')->where('transaksi_jual_pagi_id', $this->invoice_pagi)->whereNotIn('product_id', $terjual)->get();
+                    if ($data->count() > 0) {
+                        foreach ($data as $da) {
+                            $a['transaksi_jual_sore_id'] = $b->id;
+                            $a['product_id'] = $da['product_id'];
+                            $a['harga_beli'] = $da['harga_beli'];
+                            $a['harga_jual'] = $da['harga_jual'];
+                            $a['qty_asal'] = $da['qty'];
+                            $a['qty_keluar'] = 0;
+                            $a['qty_sisa'] = $da['qty'];
+                            $a['sub_total'] = 0;
+                            TransaksiJualSoreDetail::create($a);
+                            if ($this->sisastok == "gudang") {
+                                $c = Product::find($da['product_id']);
+                                $c->update([
+                                    'qty' => $c->qty + $da['qty'],
+                                    'total' => ($c->qty + $da['qty']) * $c->harga_jual,
+                                ]);
+                            }
+                        }
+                    }
                 }
             });
             $this->emit('refreshDatatable');
@@ -185,16 +249,21 @@ class TransaksiJualSore extends Component
                 'type' => 'success', // Jenis alert, misalnya 'success', 'error', atau 'warning
                 'text' => 'Transaksi Berhasil...', // Isi pesan
             ]);
+            $this->agent_id = null;
+            $this->agent = null;
+            $this->invoice_pagi = null;
+
             $this->list_add_product = [];
             $this->agent_id = null;
             $this->total = null;
+            $this->sisastok = "gudang";
             $this->dispatchBrowserEvent('show-print-modal');
         } catch (\Exception $e) {
             dd($e);
             $this->emit('refreshDatatable');
             $this->dispatchBrowserEvent('swal:modal', [
                 'type' => 'error', // Jenis alert, misalnya 'success', 'error', atau 'warning
-                'text' => 'Gaji Tidak dapat dihapus...', // Isi pesan
+                'text' => 'transaksi error...' . $e, // Isi pesan
             ]);
         }
     }
@@ -296,6 +365,7 @@ class TransaksiJualSore extends Component
 
     public function SelectProduct($id)
     {
+        $this->detailjualpagiid = $id;
         $this->product = TransaksiJualPagiDetail::find($id);
         $this->product_id = $this->product->product->id;
         $this->harga_beli = $this->product->harga_beli;

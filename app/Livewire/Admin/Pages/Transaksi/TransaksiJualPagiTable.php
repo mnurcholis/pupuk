@@ -13,6 +13,7 @@ class TransaksiJualPagiTable extends DataTableComponent
     public function configure(): void
     {
         $this->setPrimaryKey('id');
+        $this->setDefaultSort('id', 'DESC');
     }
 
     public function Detail($id)
@@ -35,9 +36,9 @@ class TransaksiJualPagiTable extends DataTableComponent
         return [
             Column::make("Agent", "agent.name"),
             Column::make("Invoice", "invoice")
-                ->sortable(),
+                ->sortable()->searchable(),
             Column::make("Tanggal", "tanggal")
-                ->sortable(),
+                ->sortable()->searchable(),
             Column::make('Total', 'total')
                 ->format(
                     function ($value, $row, Column $column) {

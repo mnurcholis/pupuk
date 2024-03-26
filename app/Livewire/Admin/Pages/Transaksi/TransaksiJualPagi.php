@@ -28,6 +28,25 @@ class TransaksiJualPagi extends Component
         $this->idNya = null;
     }
 
+    public function updatedHargaJual()
+    {
+        $rules = [
+            'qty' => 'required|numeric|not_in:0',
+        ];
+
+        // Validasi apakah stock kurang dari atau sama dengan qty
+        if ($this->qty > $this->stock) {
+            throw ValidationException::withMessages([
+                'qty' => 'Qty Sudah Maksimal Barang yang tersedia.',
+            ]);
+        }
+
+        $this->validate($rules);
+
+        // Jika validasi berhasil, hitung sub_total
+        $this->sub_total = $this->qty * $this->harga_jual;
+    }
+
     public function updatedQty()
     {
         $rules = [

@@ -13,9 +13,8 @@
     <table class="table table-bordered p-1">
         <thead>
             <tr>
-                <th>Tanggal</th>
                 <th>Agent</th>
-                
+                <th>Tanggal</th>
                 <th>Barang</th>
                 <th>Quantity</th>
                 <th>Harga Beli</th>
@@ -32,9 +31,8 @@
                 @endphp
                 @foreach ($beli as $item)
                     <tr>
-                        <td>{{ $item->jualsore->tanggal }}</td>
                         <td>{{ $item->jualsore->agent->name }}</td>
-                        
+                        <td>{{ $item->jualsore->tanggal }}</td>
                         <td>{{ $item->product->name }}</td>
                         <td>{{ $item['qty_keluar'] }}</td>
                         <td>Rp. {{ number_format($item['harga_beli'], 0, ',', '.') }}</td>

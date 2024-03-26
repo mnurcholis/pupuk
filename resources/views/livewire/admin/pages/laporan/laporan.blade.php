@@ -192,6 +192,9 @@
                         <button class="btn btn-primary" wire:click="CekLaporan" wire:loading.attr="disabled">
                             <span wire:loading.attr="CekLaporan">Generate PDF</span>
                             <div wire:loading wire:target="CekLaporan">
+                        <button class="btn btn-primary" wire:click="CekLaporan" wire:loading.attr="disabled">
+                            <span wire:loading.attr="CekLaporan">Generate PDF</span>
+                            <div wire:loading wire:target="CekLaporan">
                                 Downloading Report...
                             </div>
                         </button>
@@ -222,7 +225,41 @@
             </div>
         </div>
     </div>
+    <div wire:ignore.self class="modal fade" id="lanjutCetakLaporan" tabindex="-1" data-backdrop="static"
+        data-keyboard="false" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-orange">
+                    <h5 class="modal-title">Cetak Laporan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><i class="icon-warning22 mr-3 icon-2x text-danger"></i> Ada ketidakseimbangan antara transaksi
+                        pembelian dan utang Anda. Mohon cek keuangan dan sesuaikan segera. mau lanjut cetak laporan?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn bg-warning" data-dismiss="modal">Tidak</button>
+                    <button type="button" class="btn bg-primary" wire:click="laporanKeseluruhan">Ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+@push('js')
+    <script>
+        $(document).ready(function() {
+            window.addEventListener('show-cetak-modal', event => {
+                $('#lanjutCetakLaporan').modal('show');
+            });
+
+            window.addEventListener('close-cetak-modal', event => {
+                $('#lanjutCetakLaporan').modal('hide');
+            });
+        });
+    </script>
+@endpush
 @push('js')
     <script>
         $(document).ready(function() {

@@ -15,9 +15,8 @@
     <table class="table table-bordered p-1">
         <thead>
             <tr>
-                <th>Tanggal</th>
                 <th>Agent</th>
-
+                <th>Tanggal</th>
                 <th>Barang</th>
                 <th>Quantity</th>
                 <th>Harga Beli</th>
@@ -27,27 +26,25 @@
         </thead>
         <tbody>
             @if ($beli)
-            @foreach ($beli as $item)
-            <tr>
-                <td>{{ $item->jualpagi->tanggal }}</td>
-                <td>{{ $item->jualpagi->agent->name }}</td>
-
-                <td>{{ $item->product->name }}</td>
-                <td>{{ $item['qty'] .' '. $item->product->satuan }}</td>
-
-                <td>Rp. {{ number_format($item['harga_beli'], 0, ',', '.') }}</td>
-                <td>Rp. {{ number_format($item['harga_jual'], 0, ',', '.') }}</td>
-                <td>Rp. {{ number_format($item['sub_total'], 0, ',', '.') }}</td>
-
-            </tr>
-            @endforeach
-            <tr class="text-bold">
-                <td colspan="3" class="text-right">Jumlah</td>
-                <td>{{ $beli->sum('qty') .' '. $item->product->satuan }}</td>
-                <td>Rp. {{ number_format($beli->sum('harga_beli'), 0, ',', '.') }}</td>
-                <td>Rp. {{ number_format($beli->sum('harga_jual'), 0, ',', '.') }}</td>
-                <td colspan="2">Rp. {{ number_format($beli->sum('sub_total'), 0, ',', '.') }}</td>
-            </tr>
+                @foreach ($beli as $item)
+                    <tr>
+                        <td>{{ $item->jualpagi->agent->name }}</td>
+                        <td>{{ $item->jualpagi->tanggal }}</td>
+                        <td>{{ $item->product->name }}</td>
+                        <td>{{ $item['qty'] }}</td>
+                        <td>Rp. {{ number_format($item['harga_beli'], 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($item['harga_jual'], 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($item['sub_total'], 0, ',', '.') }}</td>
+                        <td>{{ $item->product->satuan }}</td>
+                    </tr>
+                @endforeach
+                <tr class="text-bold">
+                    <td colspan="3" class="text-right">Jumlah</td>
+                    <td>{{ $beli->sum('qty') }}</td>
+                    <td>Rp. {{ number_format($beli->sum('harga_beli'), 0, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($beli->sum('harga_jual'), 0, ',', '.') }}</td>
+                    <td colspan="2">Rp. {{ number_format($beli->sum('sub_total'), 0, ',', '.') }}</td>
+                </tr>
             @else
             <tr>
                 <td colspan="6">No data available</td>

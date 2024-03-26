@@ -29,28 +29,28 @@
             $total = 0;
             @endphp
             @if ($beli)
-            @foreach ($beli as $item)
-            <tr>
-                <td>{{ $item->beli->vendor->name }}</td>
-                <td>{{ $item->product->name }}</td>
-                <td>{{ $item['qty'] }}</td>
-                <td>Rp. {{ number_format($item['harga_beli'], 0, ',', '.') }}</td>
-                <td>Rp. {{ number_format($item['sub_total'], 0, ',', '.') }}</td>
-            </tr>
-            @php
-            $total += $item['sub_total'];
-            @endphp
-            @endforeach
-            <tr>
-                <td colspan="2" class="text-right">jumlah qty</td>
-                <td>{{ $beli->sum('qty') }}</td>
-                <td>jumlah belanja</td>
-                <td>Rp. {{ number_format($beli->sum('sub_total'), 0, ',', '.') }}</td>
-            </tr>
+                @foreach ($beli as $item)
+                    <tr>
+                        <td>{{ $item->beli->vendor->name }}</td>
+                        <td>{{ $item->product->name }}</td>
+                        <td>{{ $item['qty'] }}</td>
+                        <td>Rp. {{ number_format($item['harga_beli'], 0, ',', '.') }}</td>
+                        <td>Rp. {{ number_format($item['sub_total'], 0, ',', '.') }}</td>
+                    </tr>
+                    @php
+                        $total += $item['sub_total'];
+                    @endphp
+                @endforeach
+                <tr>
+                    <td colspan="2" class="text-right">jumlah qty</td>
+                    <td>{{ $beli->sum('qty') }}</td>
+                    <td>jumlah belanja</td>
+                    <td>Rp. {{ number_format($beli->sum('sub_total'), 0, ',', '.') }}</td>
+                </tr>
             @else
-            <tr>
-                <td colspan="5">No data available</td>
-            </tr>
+                <tr>
+                    <td colspan="5">No data available</td>
+                </tr>
             @endif
         </tbody>
 
